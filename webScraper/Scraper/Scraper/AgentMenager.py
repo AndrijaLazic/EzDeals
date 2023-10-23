@@ -1,4 +1,5 @@
 from ast import List
+import random
 import threading
 
 class UserAgent:
@@ -19,6 +20,9 @@ class AgentMenager:
     _instance = None
     _lock = threading.Lock()
     AgentLIST:[UserAgent]=[]
+    RandomCombination:[int]=[]
+
+    combinationCounter=0
 
     #__new__ is called whenever Python instantiates a new object of a class
     def __new__(cls):
@@ -40,6 +44,10 @@ class AgentMenager:
                 AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"))
                 AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.3"))
                 AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 OPR/105.0.0."))
+
+                arraySize=len(AgentMenager.AgentLIST)
+                AgentMenager.RandomCombination=AgentMenager.generate_list(arraySize*4,arraySize)
+
                 return instance
 
     def giveAgent(self):
@@ -47,7 +55,35 @@ class AgentMenager:
         Returns random user agent
         :return: UserAgent
         """
-        return self.AgentLIST[1].info
+        if self.combinationCounter>len(self.RandomCombination):
+            self.combinationCounter=0
+        agent=self.AgentLIST[self.RandomCombination[self.combinationCounter]].info
+        self.combinationCounter=self.combinationCounter+1
+
+        return agent
+    
+
+    def generate_list(m:int, n:int):
+        """
+        Generates a list with m elements. Element can be number from 0 to n 
+        with an equal number of occurrences
+        :param m: number of elements
+        :param n: Element can be a number in range from 0-n
+        :return: [int]
+        """
+        # Ensure m is divisible by n
+        if m % n != 0:
+            raise ValueError("m must be divisible by n for equal occurrences")
+
+        occurrences_per_number = m // n
+        result = []
+
+        for num in range(0, n):
+            result.extend([num] * occurrences_per_number)
+
+        # Shuffle the list to make the order random
+        random.shuffle(result)
+        return result
 
         
 
