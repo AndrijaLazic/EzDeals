@@ -13,13 +13,13 @@ from Scraper.dataBase.Database import Database
 from Scraper.dataTypes.Product import *
 
 class MongoDBpipeline:
-    collection_name="gigatronScrape"
     
     def open_spider(self,spider):
         self.database=Database()
 
-    def close_spider(self,spider):
-        self.database.close_db()
+    # def close_spider(self,spider):
+    #     self.database.close_db()
+        
 
         
 
@@ -31,7 +31,7 @@ class MongoDBpipeline:
         historyID=self.database.insertHistory(productHistory)
         item.historyID=historyID
         
-        self.database.insertProduct(item,self.collection_name)
+        self.database.insertProduct(item,item.primaryCategory)
         return
         
         

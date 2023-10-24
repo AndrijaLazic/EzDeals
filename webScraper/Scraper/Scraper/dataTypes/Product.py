@@ -34,6 +34,7 @@ class Product:
     historyID:str
     dateAdded:str
     lastScraped:str
+    primaryCategory:str
 
     @staticmethod
     def from_dict(obj: Any) -> 'Product':
@@ -42,6 +43,7 @@ class Product:
         _historyID = str(obj.get("historyID"))
         _dateAdded = str(obj.get("dateAdded"))
         _lastScraped = str(obj.get("lastScraped"))
+        _primaryCategory = str(obj.get("primaryCategory"))
         _prices = [Price.from_dict(y) for y in obj.get("prices")]
         product=Product(_name, _image)
         product.prices=_prices
@@ -50,12 +52,13 @@ class Product:
         product.lastScraped=_lastScraped
         return product
     
-    def __init__(self,name,image,dateAdded,lastScraped=None):
+    def __init__(self,name,image,dateAdded,primaryCategory,lastScraped=None):
         self.name=name
         self.image=image
         self.prices=[]
         self.historyID=""
         self.dateAdded=dateAdded
+        self.primaryCategory=primaryCategory
         if lastScraped is None:
             lastScraped=dateAdded
 

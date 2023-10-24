@@ -7,17 +7,6 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# class UserAgent:
-#     counter:int
-#     info:str
-#     def __init__(self,info,counter=0):
-#         """
-#         :param info: User Agent information
-#         :param counter: used to balance out Agent workload
-#         :return: UserAgent
-#         """
-#         self.info=info
-#         self.counter=counter
 
 
 #singleton
@@ -46,10 +35,13 @@ class AgentMenager:
                 instance=cls._instance = super().__new__(cls)
 
                 # Open the JSON file
-                with open('../UserAgents.json', 'r') as file:
+                with open('UserAgents.json', 'r') as file:
                     AgentMenager.AgentLIST = (json.load(file))["Agents"]
 
                 arraySize=len(AgentMenager.AgentLIST)
+
+                
+
                 AgentMenager.RandomCombination=AgentMenager.generate_list(arraySize*4,arraySize)
                 return instance
 
@@ -60,6 +52,7 @@ class AgentMenager:
         Returns random user agent
         :return: UserAgent
         """
+
         if self.combinationCounter>len(self.RandomCombination):
             self.combinationCounter=0
         agent=self.AgentLIST[self.RandomCombination[self.combinationCounter]]
