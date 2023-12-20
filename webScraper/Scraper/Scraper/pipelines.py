@@ -7,7 +7,28 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
+import logging
+import pymongo
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+from .dataTypes.Product import *
 
-class ScraperPipeline:
+class MongoDBpipeline:
+    collection_name="gigatronScrape"
+
+    def open_spider(self,spider):
+        dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../../.env')))
+        load_dotenv(dotenv_path=dotenv_path)
+        self.client=pymongo.MongoClient(os.getenv('MongoDBConnectionString'))
+        self.db=self.client[os.getenv('MongoDBName')]
+
+    def close_spider(self,spider):
+        self.client.close()
+
     def process_item(self, item, spider):
-        return item
+        self.db[self.collection_name].insert_one(item)
+        
+        
+        
+        
