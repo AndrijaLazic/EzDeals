@@ -44,7 +44,9 @@ class GigatronscraperSpider(scrapy.Spider):
             #     "productURL":self.start_urls[0]+rowJSON["url"],
             #     "productPrice":rowJSON["price"]
             # }
-            product=Product(rowJSON["name"],rowJSON["image"])
+            product=Product()
+            product["name"]=rowJSON["name"]
+            product["image"]=rowJSON["image"]
             product.addPrice(Price(rowJSON["price"],self.dt_string,"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
             yield product
 
@@ -58,6 +60,6 @@ class GigatronscraperSpider(scrapy.Spider):
 
 
        
-
+#scrapy crawl gigatronScraper
 
         

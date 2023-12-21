@@ -13,6 +13,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from .dataTypes.Product import *
+from itemadapter import ItemAdapter
 
 class MongoDBpipeline:
     collection_name="gigatronScrape"
@@ -27,7 +28,10 @@ class MongoDBpipeline:
         self.client.close()
 
     def process_item(self, item, spider):
-        self.db[self.collection_name].insert_one(item)
+        # print("\n\n\n")
+        # print(item)
+        # print("\n\n\n")
+        self.db[self.collection_name].insert_one(ItemAdapter(item).asdict())
         
         
         

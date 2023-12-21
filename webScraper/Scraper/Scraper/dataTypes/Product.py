@@ -1,17 +1,29 @@
-class Product:
-        
-    def __init__(self, productName, image):
-        self.name=productName
-        self.prices=[]
-        self.image=image
+from dataclasses import dataclass
+import json
+from scrapy.item import Item,Field
+
+class Product(Item):
+    name=Field()
+    prices=Field()
+    image=Field()
 
     def addPrice(self,price):
-        self.prices.append(price)
+        # Ensure 'prices' is a list, create an empty list if it doesn't exist
+        prices = self.setdefault("prices", [])
+        # Append the new price to the list
+        prices.append(json.dumps(price.__dict__))
+        
 
 
 
-
+@dataclass
 class Price:
+    value: int
+    date: str
+    shopname: str
+    dealURL: str
+    shopImageURL: str
+
     def __init__(self,value,date,shopname,dealURL,shopImageURL):
         self.value=value
         self.date=date
