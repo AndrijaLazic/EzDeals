@@ -11,7 +11,7 @@ class Product(Item):
         # Ensure 'prices' is a list, create an empty list if it doesn't exist
         prices = self.setdefault("prices", [])
         # Append the new price to the list
-        prices.append(json.dumps(price.__dict__))
+        prices.append(price)
         
 
 
