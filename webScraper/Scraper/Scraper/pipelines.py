@@ -9,8 +9,8 @@
 
 from dotenv import load_dotenv
 
-from .dataBase.Database import Database
-from .dataTypes.Product import *
+from Scraper.dataBase.Database import Database
+from Scraper.dataTypes.Product import *
 
 class MongoDBpipeline:
     collection_name="gigatronScrape"
@@ -22,7 +22,9 @@ class MongoDBpipeline:
 
         
 
-    def process_item(self, item, spider):
+    def process_item(self, item:Product, spider):
+        historyID=self.database.insertHistory(ProductHistory())
+        item.historyID=historyID
         self.database.insertProduct(item,self.collection_name)
         return
         

@@ -2,7 +2,7 @@ import scrapy
 import json
 from datetime import datetime
 
-from ..dataTypes.Product import Product,Price
+from Scraper.dataTypes.Product import Product,Price
 
 class GigatronscraperSpider(scrapy.Spider):
     name = "gigatronScraper"
@@ -10,6 +10,7 @@ class GigatronscraperSpider(scrapy.Spider):
     start_urls = ["https://gigatron.rs"]
     currentPage=1
     maxPages=-1
+    dt_string=""
     
     def parse(self, initialResponse):
         if(initialResponse.status!=200):
@@ -32,17 +33,13 @@ class GigatronscraperSpider(scrapy.Spider):
         data=response.json()
 
         if(self.maxPages==-1):
-            self.maxPages=3#data["totalPages"]
+            self.maxPages=2#data["totalPages"]
 
         for hit in data["hits"]["hits"]:
             rowJSON=hit["_source"]["search_result_data"]
             # product={
-            #     "productName":rowJSON["name"],
-            #     "productImageURL":rowJSON["image"],
             #     "productCategory":rowJSON["group_name"],
             #     "productSubcategory":rowJSON["subcategory"],
-            #     "productURL":self.start_urls[0]+rowJSON["url"],
-            #     "productPrice":rowJSON["price"]
             # }
             product=Product(rowJSON["name"],rowJSON["image"])
             product.addPrice(Price(rowJSON["price"],self.dt_string,"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
