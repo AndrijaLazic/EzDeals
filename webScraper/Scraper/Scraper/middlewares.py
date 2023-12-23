@@ -7,7 +7,7 @@ from scrapy import signals
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
-
+from Scraper.AgentMenager import AgentMenager
 
 class ScraperSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -110,4 +110,6 @@ class ShowRequestHeadersMiddleware:
         print(f"Request Headers:{request.headers} ,URL:{request.url}")
         print("\n\n\n")
 
-# class RotateUserAgentMiddleware:
+class RotateUserAgentMiddleware:
+    def process_request(self, request, spider):
+        request.headers["User-Agent"]=AgentMenager().giveAgent()
