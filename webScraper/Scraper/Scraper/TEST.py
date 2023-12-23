@@ -1,12 +1,14 @@
 import sys
 import time
-from util import ROOT_DIRECTORY
-sys.path.append(ROOT_DIRECTORY)
+
 
 from Scraper.dataBase.Database import Database
+from Scraper.AgentMenager import AgentMenager
 
-test=Database()
-print(test)
+test1=AgentMenager()
+test2=AgentMenager()
+
+print(test1 is test2)
 time.sleep(3)
 
 #python -m TEST

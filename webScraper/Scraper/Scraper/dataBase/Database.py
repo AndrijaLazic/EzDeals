@@ -8,6 +8,7 @@ from pathlib import Path
 from Scraper.dataTypes.Product import *
 
 
+#The wrapper function is the actual decorator that will replace the original class constructor.
 def singleton(cls):
     instances = {}
 
@@ -26,7 +27,6 @@ class Database:
 
     
     def __init__(self):
-
         dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../../.env')))
         load_dotenv(dotenv_path=dotenv_path)
         self.client = MongoClient(os.getenv('MongoDBConnectionString'))
@@ -39,7 +39,8 @@ class Database:
         return self.db
     
     def close_db(self):
-        return self.client.close()
+        if self is not None:
+            self.client.close()
 
     
     def insertProduct(self,item:Product,collection_name:str):

@@ -101,3 +101,13 @@ class ScraperDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+
+
+class ShowRequestHeadersMiddleware:
+    def process_request(self,request,spider):
+        print("\n\n\n")
+        print(f"Request Headers:{request.headers} ,URL:{request.url}")
+        print("\n\n\n")
+
+# class RotateUserAgentMiddleware:

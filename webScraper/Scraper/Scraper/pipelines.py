@@ -14,6 +14,7 @@ from Scraper.dataTypes.Product import *
 
 class MongoDBpipeline:
     collection_name="gigatronScrape"
+    
     def open_spider(self,spider):
         self.database=Database()
 

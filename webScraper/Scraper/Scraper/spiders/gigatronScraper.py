@@ -18,7 +18,7 @@ class GigatronscraperSpider(scrapy.Spider):
             return
         self.now = datetime.now()
         self.dt_string = self.now.strftime("%d/%m/%Y %H:%M")
-        return scrapy.Request(url="https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente?strana=1",callback=self.parsePage)
+        yield scrapy.Request(url="https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente?strana=1",callback=self.parsePage)
 
         
         #https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente?strana=2
@@ -27,6 +27,8 @@ class GigatronscraperSpider(scrapy.Spider):
         if(response.status!=200):
             print("Could not access the: https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente?strana="+self.currentPage)
             return
+        
+        
         
         self.currentPage=self.currentPage+1     
         
