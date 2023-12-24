@@ -24,8 +24,13 @@ class MongoDBpipeline:
         
 
     def process_item(self, item:Product, spider):
-        historyID=self.database.insertHistory(ProductHistory())
+        lowestPrice=(min(item.prices, key=lambda x: x.value)).value
+        productHistory=ProductHistory()
+        productHistory.history.append(ProductHistoryNode(item.lastScraped,lowestPrice))
+        
+        historyID=self.database.insertHistory(productHistory)
         item.historyID=historyID
+        
         self.database.insertProduct(item,self.collection_name)
         return
         

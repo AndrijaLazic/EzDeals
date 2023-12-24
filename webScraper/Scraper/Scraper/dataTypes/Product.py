@@ -8,7 +8,6 @@ import datetime
 @dataclass
 class Price:
     value: str
-    date: str
     shopname: str
     dealURL: str
     shopImageURL: str
@@ -16,15 +15,13 @@ class Price:
     @staticmethod
     def from_dict(obj: Any) -> 'Price':
         _value = str(obj.get("value"))
-        _date = str(obj.get("date"))
         _shopname = str(obj.get("shopname"))
         _dealURL = str(obj.get("dealURL"))
         _shopImageURL = str(obj.get("shopImageURL"))
-        return Price(_value, _date, _shopname, _dealURL, _shopImageURL)
+        return Price(_value, _shopname, _dealURL, _shopImageURL)
     
-    def __init__(self,value,date,shopname,dealURL,shopImageURL):
+    def __init__(self,value,shopname,dealURL,shopImageURL):
         self.value=value
-        self.date=date
         self.shopname=shopname
         self.dealURL=dealURL
         self.shopImageURL=shopImageURL
@@ -35,23 +32,34 @@ class Product:
     image: str
     prices: List[Price]
     historyID:str
+    dateAdded:str
+    lastScraped:str
 
     @staticmethod
     def from_dict(obj: Any) -> 'Product':
         _name = str(obj.get("name"))
         _image = str(obj.get("image"))
         _historyID = str(obj.get("historyID"))
+        _dateAdded = str(obj.get("dateAdded"))
+        _lastScraped = str(obj.get("lastScraped"))
         _prices = [Price.from_dict(y) for y in obj.get("prices")]
         product=Product(_name, _image)
         product.prices=_prices
         product.historyID=_historyID
+        product.dateAdded=_dateAdded
+        product.lastScraped=_lastScraped
         return product
     
-    def __init__(self,name,image):
+    def __init__(self,name,image,dateAdded,lastScraped=None):
         self.name=name
         self.image=image
         self.prices=[]
         self.historyID=""
+        self.dateAdded=dateAdded
+        if lastScraped is None:
+            lastScraped=dateAdded
+
+        self.lastScraped=lastScraped
     
     def addPrice(self,price):
         # Append the new price to the list

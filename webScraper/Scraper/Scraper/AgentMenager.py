@@ -1,25 +1,30 @@
 from ast import List
+import json
+import os
 import random
 import threading
+from pathlib import Path
 
-class UserAgent:
-    counter:int
-    info:str
-    def __init__(self,info,counter=0):
-        """
-        :param info: User Agent information
-        :param counter: used to balance out Agent workload
-        :return: UserAgent
-        """
-        self.info=info
-        self.counter=counter
+from dotenv import load_dotenv
+
+# class UserAgent:
+#     counter:int
+#     info:str
+#     def __init__(self,info,counter=0):
+#         """
+#         :param info: User Agent information
+#         :param counter: used to balance out Agent workload
+#         :return: UserAgent
+#         """
+#         self.info=info
+#         self.counter=counter
 
 
 #singleton
 class AgentMenager:
     _instance = None
     _lock = threading.Lock()
-    AgentLIST:[UserAgent]=[]
+    AgentLIST:[str]=[]
     RandomCombination:[int]=[]
 
     combinationCounter=0
@@ -39,16 +44,16 @@ class AgentMenager:
             # instance is still nonexistent.
             if not cls._instance:
                 instance=cls._instance = super().__new__(cls)
-                AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0"))
-                AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"))
-                AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"))
-                AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.3"))
-                AgentMenager.AgentLIST.append(UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 OPR/105.0.0."))
+
+                # Open the JSON file
+                with open('../UserAgents.json', 'r') as file:
+                    AgentMenager.AgentLIST = (json.load(file))["Agents"]
 
                 arraySize=len(AgentMenager.AgentLIST)
                 AgentMenager.RandomCombination=AgentMenager.generate_list(arraySize*4,arraySize)
-
                 return instance
+
+                
 
     def giveAgent(self):
         """
@@ -57,7 +62,7 @@ class AgentMenager:
         """
         if self.combinationCounter>len(self.RandomCombination):
             self.combinationCounter=0
-        agent=self.AgentLIST[self.RandomCombination[self.combinationCounter]].info
+        agent=self.AgentLIST[self.RandomCombination[self.combinationCounter]]
         self.combinationCounter=self.combinationCounter+1
 
         return agent
