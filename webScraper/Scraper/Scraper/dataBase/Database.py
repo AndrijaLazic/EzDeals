@@ -1,3 +1,4 @@
+import threading
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
@@ -8,29 +9,35 @@ from pathlib import Path
 from Scraper.dataTypes.Product import *
 
 
-#The wrapper function is the actual decorator that will replace the original class constructor.
-def singleton(cls):
-    instances = {}
-
-    def wrapper(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-
-    return wrapper
-  
-@singleton
 class Database:
     db = None
     client = None
     productHistoryCollectionName="productHistory"
+    _instance = None
+    _lock = threading.Lock()
 
-    
-    def __init__(self):
-        dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../../.env')))
-        load_dotenv(dotenv_path=dotenv_path)
-        self.client = MongoClient(os.getenv('MongoDBConnectionString'))
-        self.db = self.client[os.getenv('MongoDBName')]
+    #__new__ is called whenever Python instantiates a new object of a class
+    def __new__(cls):
+        #if instance already exists return it
+        if cls._instance is not None: 
+            return cls._instance
+        
+        #create new instance if it doesnt exist
+        with cls._lock:
+            
+            # Another thread could have created the instance
+            # before we acquired the lock. So check that the
+            # instance is still nonexistent.
+            if not cls._instance:
+                instance=cls._instance = super().__new__(cls)
+
+                dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
+                load_dotenv(dotenv_path=dotenv_path)
+                
+                cls.client = MongoClient(os.getenv('MongoDBConnectionString'))
+                cls.db = cls.client[os.getenv('MongoDBName')]
+                
+                return instance
             
         
 
