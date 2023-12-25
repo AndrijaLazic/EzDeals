@@ -37,7 +37,7 @@ class Product:
     primaryCategory:str
     _id:str
 
-
+        
     @staticmethod
     def from_dict(obj: Any) -> 'Product':
         _name = str(obj.get("name"))
@@ -71,6 +71,26 @@ class Product:
     def addPrice(self,price):
         # Append the new price to the list
         self.prices.append(price)
+        
+    @staticmethod
+    def returnProductChanges(oldProduct:'Product',newProduct:'Product'):
+        """
+        used to get product changes
+
+        :param oldProduct: Old version of a product
+        :param newProduct: New version of a product
+        :return: dict
+        """ 
+        differences = {}
+        old_vars = vars(oldProduct)
+        news_vars = vars(newProduct)
+
+        for key in old_vars:
+            if old_vars[key] != news_vars[key]:
+                differences["$"+key] = news_vars[key]
+
+        return differences
+    
 
     
 
