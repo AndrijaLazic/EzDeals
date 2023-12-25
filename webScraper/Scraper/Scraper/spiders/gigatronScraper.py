@@ -13,7 +13,8 @@ class GigatronscraperSpider(scrapy.Spider):
 
     pagesToScrape=[
         PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente?strana=",1,"RacunarskeKomponente"),
-        PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/monitori?strana=",1,"Monitori")
+        PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/monitori?strana=",1,"Monitori"),
+        PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?strana=",1,"Slusalice")
     ]
     
     def parse(self, initialResponse):
@@ -44,8 +45,8 @@ class GigatronscraperSpider(scrapy.Spider):
                 
         data=response.json()
 
-        if(page.maxIndex==-1):
-            page.maxIndex=3#data["totalPages"]
+        if(currentPage.maxIndex==-1):
+            currentPage.maxIndex=3#data["totalPages"]
 
         for hit in data["hits"]["hits"]:
             rowJSON=hit["_source"]["search_result_data"]
@@ -53,17 +54,17 @@ class GigatronscraperSpider(scrapy.Spider):
             #     "productCategory":rowJSON["group_name"],
             #     "productSubcategory":rowJSON["subcategory"],
             # }
-            product=Product(rowJSON["name"],rowJSON["image"],self.dt_string,page.category)
+            product=Product(rowJSON["name"],rowJSON["image"],self.dt_string,currentPage.category)
             product.addPrice(Price(rowJSON["price"],"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
             yield product
 
         
 
         
-        if page.index>page.maxIndex:
+        if currentPage.index>currentPage.maxIndex:
             return #self.products
         
-        yield scrapy.Request(url=page.getCurrentURL(),callback=self.parsePage)
+        yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
 
 
        

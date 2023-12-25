@@ -89,6 +89,27 @@ class Database:
         :return: ProductHistory
         """ 
         return self.db[collection_name].find_one({'_id':historyID})
+    
+
+    def updateProduct(self,item:Product,collection_name:str):
+        """
+        used to update item in selected collection
+
+        :param item: item u want to update
+        :param collection_name: name of collection u want item to insert into
+        :return: _id
+        """ 
+        return (self.db[collection_name].update_one({'_id':item._id},ItemAdapter(item).asdict())).inserted_id
+    
+    def updateHistory(self,item:ProductHistory,collection_name:str=productHistoryCollectionName):
+        """
+        used to update item history
+
+        :param item: item u want to update
+        :param collection_name: name of collection u want item to insert into
+        :return: _id
+        """ 
+        return (self.db[collection_name].update_one({'_id':item._id},ItemAdapter(item).asdict())).inserted_id
 
 
 

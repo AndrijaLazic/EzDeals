@@ -35,6 +35,8 @@ class Product:
     dateAdded:str
     lastScraped:str
     primaryCategory:str
+    _id:str
+
 
     @staticmethod
     def from_dict(obj: Any) -> 'Product':
@@ -45,11 +47,13 @@ class Product:
         _lastScraped = str(obj.get("lastScraped"))
         _primaryCategory = str(obj.get("primaryCategory"))
         _prices = [Price.from_dict(y) for y in obj.get("prices")]
-        product=Product(_name, _image)
+        _id=str(obj.get("_id"))
+        product=Product(_name, _image,_dateAdded,_primaryCategory)
         product.prices=_prices
         product.historyID=_historyID
-        product.dateAdded=_dateAdded
         product.lastScraped=_lastScraped
+        product._id=_id
+
         return product
     
     def __init__(self,name,image,dateAdded,primaryCategory,lastScraped=None):
@@ -68,6 +72,8 @@ class Product:
         # Append the new price to the list
         self.prices.append(price)
 
+    
+
 @dataclass
 class ProductHistoryNode:
     date:datetime.date
@@ -76,12 +82,14 @@ class ProductHistoryNode:
 @dataclass
 class ProductHistory:
     history:List[ProductHistoryNode]
-
+    _id:str
     @staticmethod
     def from_dict(obj: Any) -> 'ProductHistory':
         _history = [ProductHistoryNode.from_dict(y) for y in obj.get("history")]
+        _id=str(obj.get("_id"))
         productHist=ProductHistory()
         productHist.history=_history
+        productHist._id=_id
         return productHist
     
     def __init__(self):
