@@ -6,26 +6,38 @@ from bson import ObjectId
 
 
 from Scraper.dataBase.Database import Database
-from Scraper.dataTypes.Product import Product
+from Scraper.dataTypes.Product import ProductHistory,ProductHistoryNode
 test1=Database()
-product=test1.getOneProduct('LG 23.8" IPS 24QP750-B Monitor',"Monitori")
-product1=Product.from_dict(product)
 
-# product2=test1.getOneProduct('LG 34" IPS 34WP88CP-B Ergo monitor',"Monitori")
-product2=Product.from_dict(product)
+filter={'_id':ObjectId("6589d664213c1235ce8c0496")} 
 
-product2.name="TEST"
+product=test1.getOneProduct(filter,"productHistory")
+product1=ProductHistory.from_dict(product)
+
+print(product1)
+
+filter={'_id':ObjectId("6589d664213c1235ce8c0496")} 
 
 
 
-filter={'_id':ObjectId(product2._id)}
-result=Product.returnProductChanges(product1,product2)
 
-print(product2)
-print(filter)
-print(result)
+# print(product2)
+# print(filter)
+# print(result)
 
-print(test1.updateProduct(filter,result,"Monitori"))
+change=product1.lastChanges()
+
+
+print(change)
+
+product1.history.append(ProductHistoryNode("25/12/2023 20:22","15999.00"))
+product1.history.append(ProductHistoryNode("25/12/2023 20:22","25999.00"))
+change=product1.lastChanges(2)
+
+
+
+print(test1.insertHistoryNode(filter,product1.history[0],"productHistory"))
+#print(test1.insertHistoryNode(filter,change,"Monitori"))
 
 #product1.name="TEST"
 #print(product)

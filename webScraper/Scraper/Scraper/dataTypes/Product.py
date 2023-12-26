@@ -97,7 +97,23 @@ class Product:
 @dataclass
 class ProductHistoryNode:
     date:datetime.date
-    value:int
+    value:str
+    @staticmethod
+    def from_dict(obj: Any) -> 'ProductHistoryNode':
+        _date=str(obj.get("date"))
+        _value=str(obj.get("value"))
+        productHist=ProductHistoryNode(_date,_value)
+        return productHist
+    
+    def __init__(self,date,value):
+        self.date=date
+        self.value=value
+
+    def giveDict(self):
+        return {
+            "date":self.date,
+            "value":self.value
+        }
 
 @dataclass
 class ProductHistory:
@@ -116,7 +132,20 @@ class ProductHistory:
         self.history=[]
         self.historyID=""
 
+    def lastChanges(self,numberOfNodes:int=1):
+        """
+        used to get last history change
+        :return: dict
+        """
+        
+        newArray=[]
+        for item in self.history[-numberOfNodes:]:
+            newArray.append(item.giveDict())
+
+        return {'history':{
+            '$each':newArray
+            }
+        }
 
 
-
-    
+    #{'history': [{'date': '25/12/2023 20:22', 'value': '5999.00'}], '_id': '6589d664213c1235ce8c0496'}

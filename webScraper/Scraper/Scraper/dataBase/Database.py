@@ -70,15 +70,15 @@ class Database:
         """ 
         return (self.db[collection_name].insert_one(ItemAdapter(item).asdict())).inserted_id
     
-    def getOneProduct(self,product_name:str,collection_name:str):
+    def getOneProduct(self,filter:dict,collection_name:str):
         """
         used to get item from selected collection
 
         :param collection_name: name of collection 
-        :param product_name: name of product
+        :param filter: what product you want to get, needs to be in following format:{'_id':ObjectId(item._id)} or any other 
         :return: Item
         """ 
-        return self.db[collection_name].find_one({'name':product_name})
+        return self.db[collection_name].find_one(filter)
     
     def getHistoryOfProduct(self,historyID:str,collection_name:str):
         """
@@ -95,7 +95,7 @@ class Database:
         """
         used to update item in selected collection
 
-        :param filter: what product you want to update, needs to be in following format:{'_id':item._id}
+        :param filter: what product you want to update, needs to be in following format:{'_id':ObjectId(item._id)}
         :param update: changes made to a product
         :param collection_name: name of collection where item can be found
         :return: _id
@@ -106,16 +106,20 @@ class Database:
         }
         return (self.db[collection_name].update_one(filter,update))
     
-    def updateHistory(self,filter:dict ,update:dict,collection_name:str=productHistoryCollectionName):
+    def insertHistoryNode(self,filter:dict ,historyNode:ProductHistoryNode,collection_name:str=productHistoryCollectionName):
         """
-        used to update item history
+        used to insert node into item history
 
-        :param item: item u want to update
-        :param collection_name: name of collection u want item to insert into
+        :param filter: what history you want to update, needs to be in following format:{'_id':ObjectId(item._id)}
+        :param historyNode: node you want to insert
+        :param collection_name: name of collection where item can be found
         :return: _id
         """ 
         update={
-            "$set":update
+            "$push":{'history':{
+                '$each':[historyNode.giveDict()]
+                }
+            }
         }
         return (self.db[collection_name].update_one(filter,update))
 
