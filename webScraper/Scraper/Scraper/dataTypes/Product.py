@@ -87,7 +87,7 @@ class Product:
 
         for key in old_vars:
             if old_vars[key] != news_vars[key]:
-                differences["$"+key] = news_vars[key]
+                differences[key] = news_vars[key]
 
         return differences
     

@@ -91,17 +91,22 @@ class Database:
         return self.db[collection_name].find_one({'_id':historyID})
     
 
-    def updateProduct(self,item:Product,collection_name:str):
+    def updateProduct(self,filter:dict ,update:dict,collection_name:str):
         """
         used to update item in selected collection
 
-        :param item: item u want to update
-        :param collection_name: name of collection u want item to insert into
+        :param filter: what product you want to update, needs to be in following format:{'_id':item._id}
+        :param update: changes made to a product
+        :param collection_name: name of collection where item can be found
         :return: _id
         """ 
-        return (self.db[collection_name].update_one({'_id':item._id},ItemAdapter(item).asdict())).inserted_id
+
+        update={
+            "$set":update
+        }
+        return (self.db[collection_name].update_one(filter,update))
     
-    def updateHistory(self,item:ProductHistory,collection_name:str=productHistoryCollectionName):
+    def updateHistory(self,filter:dict ,update:dict,collection_name:str=productHistoryCollectionName):
         """
         used to update item history
 
@@ -109,7 +114,10 @@ class Database:
         :param collection_name: name of collection u want item to insert into
         :return: _id
         """ 
-        return (self.db[collection_name].update_one({'_id':item._id},ItemAdapter(item).asdict())).inserted_id
+        update={
+            "$set":update
+        }
+        return (self.db[collection_name].update_one(filter,update))
 
 
 
