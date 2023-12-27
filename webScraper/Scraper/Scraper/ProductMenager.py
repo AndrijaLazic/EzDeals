@@ -4,17 +4,20 @@ import threading
 from Scraper.dataTypes.Product import Product,Price
 
 class ProductMenager:
-    _instance = None
+    _instances = {}
     _lock = threading.Lock()
 
     productsMap={}
 
     #__new__ is called whenever Python instantiates a new object of a class
-    def __new__(cls):
-
+    def __new__(cls,productCategory:str):
         #if instance already exists return it
-        if cls._instance is not None: 
-            return cls._instance
+        if not cls._instances:
+            cls._instances=defaultdict(ProductMenager)
+
+
+        if productCategory in cls._instances: 
+            return cls._instances.get(productCategory)
         
         #create new instance if it doesnt exist
         with cls._lock:
@@ -22,11 +25,13 @@ class ProductMenager:
             # Another thread could have created the instance
             # before we acquired the lock. So check that the
             # instance is still nonexistent.
-            if not cls._instance:
-                instance=cls._instance = super().__new__(cls)
-                instance.productsMap=defaultdict(Product)
+            if productCategory not in cls._instances: 
+                cls._instances[productCategory] = super().__new__(cls)
+                cls._instances[productCategory].productsMap=defaultdict(Product)
 
-                return instance
+        return cls._instances.get(productCategory)
+        
+
             
     def clearMap(self):
         """
@@ -49,7 +54,7 @@ class ProductMenager:
                 return
             
 
-            productOld.addPrice(Price(product.prices[0]))
+            productOld.addPrice(product.prices[0])
 
     def giveProduct(self,name:str):
         """
@@ -65,5 +70,9 @@ class ProductMenager:
             raise Exception("Date provided can't be in the past")
         
         return product
+    
+    def resetProductMenager(cls):
+        with cls._lock:
+            cls._instances = {}
 
     

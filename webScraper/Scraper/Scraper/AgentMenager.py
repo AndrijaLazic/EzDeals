@@ -32,7 +32,7 @@ class AgentMenager:
             # before we acquired the lock. So check that the
             # instance is still nonexistent.
             if not cls._instance:
-                instance=cls._instance = super().__new__(cls)
+                cls._instance = super().__new__(cls)
 
                 # Open the JSON file
                 with open('UserAgents.json', 'r') as file:
@@ -43,7 +43,7 @@ class AgentMenager:
                 
 
                 AgentMenager.RandomCombination=AgentMenager.generate_list(arraySize*4,arraySize)
-                return instance
+            return cls._instance
 
                 
 

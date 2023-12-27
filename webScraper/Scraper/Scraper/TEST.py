@@ -10,7 +10,9 @@ from Scraper.dataTypes.Product import ProductHistory,ProductHistoryNode,Product
 from Scraper.ProductMenager import ProductMenager
 
 test1=Database()
-test2=ProductMenager()
+test2=ProductMenager("Monitori")
+test3=ProductMenager("RacunarskeKomponente")
+test4=ProductMenager("Monitori")
 
 filter={'_id':ObjectId("6589d664213c1235ce8c04b7")} 
 
@@ -18,8 +20,17 @@ product:Product=test1.getOneProduct(filter,"Monitori")
 product=Product.from_dict(product)
 
 test2.addProduct(product)
+test4.addProduct(product)
+
+
+
+print(test2)
+print(test3)
+print(test4)
 
 print(test2.giveProduct(product.name))
+
+
 # product1=ProductHistory.from_dict(product)
 
 # print(product1)
