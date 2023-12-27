@@ -1,7 +1,7 @@
 from collections import defaultdict
 import threading
 
-from Scraper.dataTypes.Product import Product
+from Scraper.dataTypes.Product import Product,Price
 
 class ProductMenager:
     _instance = None
@@ -33,15 +33,23 @@ class ProductMenager:
         Clears map of products
         :return: None
         """
-        self.productsMap=defaultdict(Product)
+        with self._lock:
+            self.productsMap=defaultdict(Product)
     
     def addProduct(self,product:Product):
         """
         Add a product to the map
         :param product: product you wish to add
-        :return: [int]
+        :return: None
         """
-        self.productsMap[product.name]=product
+        with self._lock:
+            productOld:Product=self.productsMap.get(product.name)
+            if productOld is None:
+                self.productsMap[product.name]=product
+                return
+            
+
+            productOld.addPrice(Price(product.prices[0]))
 
     def giveProduct(self,name:str):
         """
@@ -49,6 +57,13 @@ class ProductMenager:
         :param name: name of a product
         :return: Product
         """
-        return self.productsMap[name]
+        product=None
+        with self._lock:
+            product=self.productsMap.get(name)
+
+        if product is None:
+            raise Exception("Date provided can't be in the past")
+        
+        return product
 
     

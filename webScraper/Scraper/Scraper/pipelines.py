@@ -8,9 +8,10 @@
 
 
 from dotenv import load_dotenv
-
+from itemadapter import ItemAdapter
 from Scraper.dataBase.Database import Database
 from Scraper.dataTypes.Product import *
+from scrapy.exceptions import DropItem
 
 class MongoDBpipeline:
     
@@ -33,7 +34,22 @@ class MongoDBpipeline:
         
         self.database.insertProduct(item,item.primaryCategory)
         return
+    
+
+class DuplicateProducts:
+    def __init__(self):
+        self.seen_items  = set()
+
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
         
+        if adapter["name"] in self.seen_items :
+            raise DropItem(f"Duplicate item found: {item!r}")
+        else:
+            self.seen_items.add(adapter["id"])
+            return item
+
+                
         
         
         
