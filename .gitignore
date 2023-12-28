@@ -2,4 +2,4 @@
 .env
 
 # Include scraper rules
-include /webScraper/Scraper/.gitignore
+include webScraper/Scraper/.gitignore
