@@ -67,12 +67,25 @@ class ProductMenager:
             product=self.productsMap.get(name)
 
         if product is None:
-            raise Exception("Date provided can't be in the past")
+            raise Exception("No product with that name found")
         
         return product
     
     def resetProductMenager(cls):
         with cls._lock:
             cls._instances = {}
+
+    def getCurrentInstanceCategory(self):
+        """
+        Returns a category of current instance
+        :return: str
+        """
+        for key, val in self._instances.items():
+            if val == self:
+                return key
+        raise Exception("No product menager found")
+
+    def uploadProductsToDatabase(self):
+        print(self.getCurrentInstanceCategory())
 
     

@@ -12,8 +12,15 @@ from itemadapter import ItemAdapter
 from Scraper.dataBase.Database import Database
 from Scraper.dataTypes.Product import *
 from scrapy.exceptions import DropItem
+from Scraper.ProductMenager import ProductMenager
+
+
+
 
 class MongoDBpipeline:
+    monitoriMenager:ProductMenager=ProductMenager("Monitori")
+    racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
+    slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
     
     def open_spider(self,spider):
         self.database=Database()
@@ -25,29 +32,30 @@ class MongoDBpipeline:
         
 
     def process_item(self, item:Product, spider):
-        lowestPrice=(min(item.prices, key=lambda x: x.value)).value
-        productHistory=ProductHistory()
-        productHistory.history.append(ProductHistoryNode(item.lastScraped,lowestPrice))
+        match item.primaryCategory:
+            case "Monitori":
+                self.monitoriMenager.addProduct(item)
+
+            case "RacunarskeKomponente":
+                self.racunarskeKomponenteMenager.addProduct(item)
+
+            case "Slusalice":
+                self.slusaliceMenager.addProduct(item)
+
+            
+
+
+        # lowestPrice=(min(item.prices, key=lambda x: x.value)).value
+        # productHistory=ProductHistory()
+        # productHistory.history.append(ProductHistoryNode(item.lastScraped,lowestPrice))
         
-        historyID=self.database.insertHistory(productHistory)
-        item.historyID=historyID
+        # historyID=self.database.insertHistory(productHistory)
+        # item.historyID=historyID
         
-        self.database.insertProduct(item,item.primaryCategory)
+        # self.database.insertProduct(item,item.primaryCategory)
         return
     
 
-class DuplicateProducts:
-    def __init__(self):
-        self.seen_items  = set()
-
-    def process_item(self, item, spider):
-        adapter = ItemAdapter(item)
-        
-        if adapter["name"] in self.seen_items :
-            raise DropItem(f"Duplicate item found: {item!r}")
-        else:
-            self.seen_items.add(adapter["id"])
-            return item
 
                 
         

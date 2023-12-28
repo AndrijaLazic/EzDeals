@@ -1,1 +1,5 @@
+# Main .gitignore file
 .env
+
+# Include scraper rules
+include /webScraper/Scraper/.gitignore

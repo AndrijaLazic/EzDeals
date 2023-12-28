@@ -16,11 +16,13 @@ test4=ProductMenager("Monitori")
 
 filter={'_id':ObjectId("6589d664213c1235ce8c04b7")} 
 
-product:Product=test1.getOneProduct(filter,"Monitori")
-product=Product.from_dict(product)
+# product:Product=test1.getOneProduct(filter,"Monitori")
+# product=Product.from_dict(product)
 
-test2.addProduct(product)
-test4.addProduct(product)
+
+# test2.addProduct(product)
+# product.name="test"
+# test3.addProduct(product)
 
 
 
@@ -28,8 +30,8 @@ print(test2)
 print(test3)
 print(test4)
 
-print(test2.giveProduct(product.name))
-
+#print(test3.giveProduct(product.name))
+test2.uploadProductsToDatabase()
 
 # product1=ProductHistory.from_dict(product)
 
