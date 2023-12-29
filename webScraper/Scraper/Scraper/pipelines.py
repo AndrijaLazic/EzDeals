@@ -45,14 +45,7 @@ class MongoDBpipeline:
             
 
 
-        # lowestPrice=(min(item.prices, key=lambda x: x.value)).value
-        # productHistory=ProductHistory()
-        # productHistory.history.append(ProductHistoryNode(item.lastScraped,lowestPrice))
         
-        # historyID=self.database.insertHistory(productHistory)
-        # item.historyID=historyID
-        
-        # self.database.insertProduct(item,item.primaryCategory)
         return
     
 

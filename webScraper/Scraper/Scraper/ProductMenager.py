@@ -1,12 +1,14 @@
 from collections import defaultdict
 import threading
 
-from Scraper.dataTypes.Product import Product,Price
+from Scraper.dataTypes.Product import Product,Price,ProductHistory,ProductHistoryNode
+from Scraper.dataBase.Database import Database
+from bson import ObjectId
 
 class ProductMenager:
     _instances = {}
     _lock = threading.Lock()
-
+    
     productsMap={}
 
     #__new__ is called whenever Python instantiates a new object of a class
@@ -86,6 +88,32 @@ class ProductMenager:
         raise Exception("No product menager found")
 
     def uploadProductsToDatabase(self):
-        print(self.getCurrentInstanceCategory())
+        """
+        Uploads all products to the selected category
+        :return: None
+        """
+        category=self.getCurrentInstanceCategory()
+        database=Database()
+
+        #Iterating trough all items and checking if they already exist in database
+        for key, val in self.productsMap.items():
+            oldProduct=database.getOneProduct({'name':key},category)
+
+            if oldProduct is None:
+                lowestPrice=(min(val.prices, key=lambda x: x.value)).value
+                productHistory=ProductHistory()
+                productHistory.history.append(ProductHistoryNode(val.lastScraped,lowestPrice))
+                
+                historyID=database.insertHistory(productHistory)
+                val.historyID=historyID
+
+                database.insertProduct(val,category)
+                continue
+            
+            changes=Product.returnProductChanges(oldProduct,val)
+            database.updateProduct({'_id':ObjectId(oldProduct._id)},changes,category)
+            
+            
+
 
     
