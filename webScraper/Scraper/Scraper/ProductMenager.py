@@ -109,7 +109,8 @@ class ProductMenager:
 
                 database.insertProduct(val,category)
                 continue
-            
+
+            val._id=oldProduct._id
             changes=Product.returnProductChanges(oldProduct,val)
             database.updateProduct({'_id':ObjectId(oldProduct._id)},changes,category)
             

@@ -72,13 +72,16 @@ class Database:
     
     def getOneProduct(self,filter:dict,collection_name:str):
         """
-        used to get item from selected collection
+        used to get Product from selected collection
 
         :param collection_name: name of collection 
         :param filter: what product you want to get, needs to be in following format:{'_id':ObjectId(item._id)} or any other 
-        :return: Item
+        :return: Product
         """ 
-        return self.db[collection_name].find_one(filter)
+        product=(self.db[collection_name].find_one(filter))
+        if product is None:
+            return None
+        return Product.from_dict(product)
     
     def getHistoryOfProduct(self,historyID:str,collection_name:str):
         """
@@ -104,6 +107,11 @@ class Database:
         update={
             "$set":update
         }
+        if 'prices' in update:
+            for price in update.get("prices"):
+                index_to_update = update['prices'].index(price)
+                update['prices'][index_to_update]=price.serialize_price()
+
         return (self.db[collection_name].update_one(filter,update))
     
     def insertHistoryNode(self,filter:dict ,historyNode:ProductHistoryNode,collection_name:str=productHistoryCollectionName):

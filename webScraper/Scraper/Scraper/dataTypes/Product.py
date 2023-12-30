@@ -26,6 +26,14 @@ class Price:
         self.dealURL=dealURL
         self.shopImageURL=shopImageURL
 
+    # Custom serialization function for the 'Price' class
+    def serialize_price(self):
+        return {'value': self.value, 
+                'shopname': self.shopname,
+                'dealURL': self.dealURL,
+                'shopImageURL': self.shopImageURL}
+
+
 @dataclass
 class Product:
     name: str
@@ -80,7 +88,7 @@ class Product:
         :param oldProduct: Old version of a product
         :param newProduct: New version of a product
         :return: dict
-        """ 
+        """
         differences = {}
         old_vars = vars(oldProduct)
         news_vars = vars(newProduct)
