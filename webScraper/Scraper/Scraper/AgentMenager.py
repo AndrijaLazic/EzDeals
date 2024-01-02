@@ -53,7 +53,7 @@ class AgentMenager:
         :return: UserAgent
         """
 
-        if self.combinationCounter>len(self.RandomCombination):
+        if self.combinationCounter>=len(self.RandomCombination):
             self.combinationCounter=0
         agent=self.AgentLIST[self.RandomCombination[self.combinationCounter]]
         self.combinationCounter=self.combinationCounter+1

@@ -73,7 +73,6 @@ class Product:
         self.primaryCategory=primaryCategory
         if lastScraped is None:
             lastScraped=dateAdded
-
         self.lastScraped=lastScraped
     
     def addPrice(self,price):
@@ -90,12 +89,13 @@ class Product:
         :return: dict
         """
         differences = {}
-        old_vars = vars(oldProduct)
-        news_vars = vars(newProduct)
-
-        for key in old_vars:
-            if old_vars[key] != news_vars[key]:
-                differences[key] = news_vars[key]
+        
+        
+        if oldProduct.lastScraped!= newProduct.lastScraped:
+            differences["lastScraped"] = newProduct.lastScraped
+        
+        if oldProduct.prices!= newProduct.prices:
+            differences["prices"] = newProduct.prices
 
         return differences
     

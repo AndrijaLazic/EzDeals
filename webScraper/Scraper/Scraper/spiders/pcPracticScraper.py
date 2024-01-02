@@ -13,8 +13,8 @@ class PcPracticSpider(scrapy.Spider):
 
     pagesToScrape=[
         PageInfo("https://pcpractic.rs/racunari-monitori-komponente/komponente/procesori.html?p=",1,"RacunarskeKomponente"),
-        PageInfo("https://pcpractic.rs/racunari-monitori-komponente/komponente/maticne-ploce.html?p=",1,"RacunarskeKomponente")
-        # PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/monitori?strana=",1,"Monitori"),
+        PageInfo("https://pcpractic.rs/racunari-monitori-komponente/komponente/maticne-ploce.html?p=",1,"RacunarskeKomponente"),
+        PageInfo("https://pcpractic.rs/racunari-monitori-komponente/monitori.html?p=",1,"Monitori"),
         # PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?strana=",1,"Slusalice")
         
     ]
@@ -52,37 +52,28 @@ class PcPracticSpider(scrapy.Spider):
 
         productsElements=response.xpath('.//div[@id="amasty-shopby-product-list"]//div[@class="product-item-info"]')
 
+        if len(productsElements) ==0:
+            return
         
         for productEl in productsElements:
-            print("\n\n")
-            print(productEl.xpath('.//a[@class="product-item-link"]/text()').get())
-            print("\n\n")
+            product=Product(
+                (productEl.xpath('.//a[@class="product-item-link"]/text()').get()).strip(),
+                (productEl.xpath('.//img[@class="product-image-photo"]/@src').get()).strip(),
+                self.dt_string,
+                currentPage.category
+            )
+            product.addPrice(Price(
+                (productEl.xpath('.//span[@class="price"]/text()').get()).strip(),
+                "PcPractic",
+                (productEl.xpath('.//a[@class="product photo product-item-photo"]/@href').get()).strip(),
+                "https://pcpractic.rs/media/logo/stores/1/logo.png"))
+            yield product
         
-                
-        #data=response.json()
+            
 
-        
 
-        # if(currentPage.maxIndex==-1):
-        #     currentPage.maxIndex=3#data["totalPages"]
-
-        # for hit in data["hits"]["hits"]:
-        #     rowJSON=hit["_source"]["search_result_data"]
-        #     # product={
-        #     #     "productCategory":rowJSON["group_name"],
-        #     #     "productSubcategory":rowJSON["subcategory"],
-        #     # }
-        #     product=Product(rowJSON["name"],rowJSON["image"],self.dt_string,currentPage.category)
-        #     product.addPrice(Price(rowJSON["price"],"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
-        #     yield product
-
-        
-
-        
-        if currentPage.index>currentPage.maxIndex:
-            return #self.products
-        
-        #yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
+        return
+        yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
 
 
        
