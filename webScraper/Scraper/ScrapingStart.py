@@ -5,6 +5,7 @@ from scrapy.utils.project import get_project_settings
 from Scraper.spiders.gigatronScraper import GigatronscraperSpider
 from Scraper.spiders.pcPracticScraper import PcPracticSpider
 from Scraper.spiders.tehnomanijaScraper import TehnomanijaSpider
+from Scraper.spiders.gstoreScraper import GstoreSpider
 
 from Scraper.dataBase.Database import Database
 from Scraper.ProductMenager import ProductMenager
@@ -22,6 +23,8 @@ process = CrawlerProcess(settings)
 process.crawl(GigatronscraperSpider)
 process.crawl(PcPracticSpider)
 process.crawl(TehnomanijaSpider)
+process.crawl(GstoreSpider)
+
 
 process.start()  # the script will block here until all crawling jobs are finished
 
