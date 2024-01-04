@@ -50,27 +50,24 @@ class GstoreSpider(scrapy.Spider):
 
 
         productsElements=response.xpath('.//div[@class="shop-product-card relative"]')
-
-        if len(productsElements) ==0:
-            return
-        
         for productEl in productsElements:
             product=Product(
                 (productEl.xpath('.//h2[@class="product-name"]/a/text()').get()).strip(),
-                (productEl.xpath('.//div[@class="product-image-wrapper slick-slide slick-active"]/a/img/@src').get()).strip(),
+                (productEl.xpath('.//div[@class="product-image-wrapper relative"]/div/div//img/@src').get()).strip(),
                 self.dt_string,
                 currentPage.category
             )
             product.addPrice(Price(
                 ((productEl.xpath('.//div[@class="price-holder"]/text()').get()).strip()).split(",")[0],
                 "Tehnomanija",
-                (productEl.xpath('.//a[@class="product-item-link"]/div[@class="text-bold"]/span/following-sibling::text()[1]').get()).strip(),
+                (productEl.xpath('.//h2[@class="product-name"]/a/@href').get()).strip(),
                 "https://www.gstore.rs/images/gstore-final-logo-with%20background%20w%20or%20b-21.png"))
-            yield product
+            #yield product
+            print(product)
             
  
         
-        yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
+        #yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
 
 
        
