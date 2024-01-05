@@ -51,7 +51,7 @@ class GstoreSpider(scrapy.Spider):
 
         productsElements=response.xpath('.//div[@class="shop-product-card relative"]')
 
-        if len(productEl)==0:
+        if len(productsElements)==0:
             return
 
         for productEl in productsElements:
