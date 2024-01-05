@@ -96,6 +96,9 @@ class Product:
         
         if oldProduct.prices!= newProduct.prices:
             differences["prices"] = newProduct.prices
+        
+        if oldProduct.image=="":
+            differences["image"]=newProduct.image
 
         return differences
     

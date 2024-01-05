@@ -14,7 +14,7 @@ class GigatronscraperSpider(scrapy.Spider):
     pagesToScrape=[
         PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente?strana=",1,"RacunarskeKomponente"),
         PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/monitori?strana=",1,"Monitori"),
-        PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?strana=",1,"Slusalice")
+        #PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?strana=",1,"Slusalice")
     ]
     
     def parse(self, initialResponse):

@@ -15,7 +15,7 @@ class GstoreSpider(scrapy.Spider):
         PageInfo("https://www.gstore.rs/komponente-i-mrezna-oprema/komponente/procesori?page=",1,"RacunarskeKomponente"),
         PageInfo("https://www.gstore.rs/komponente-i-mrezna-oprema/komponente/maticne-ploce?page=",1,"RacunarskeKomponente"),
         PageInfo("https://www.gstore.rs/racunari--monitori--softver/monitori-i-oprema/monitori?page=",1,"Monitori"),
-        PageInfo("https://www.gstore.rs/audio-video-foto/slusalice?page=",1,"Slusalice")
+        #PageInfo("https://www.gstore.rs/audio-video-foto/slusalice?page=",1,"Slusalice")
     ]
     
     def parse(self, initialResponse):
@@ -50,10 +50,19 @@ class GstoreSpider(scrapy.Spider):
 
 
         productsElements=response.xpath('.//div[@class="shop-product-card relative"]')
+
+        if len(productEl)==0:
+            return
+
         for productEl in productsElements:
+            pictureURL=(productEl.xpath(".//div[@class='product-image-wrapper']/a/img/@src")).get()
+            if pictureURL is None:
+                pictureURL=""
+
+            name=(productEl.xpath('.//h2[@class="product-name"]/a/text()').get()).strip()
             product=Product(
-                (productEl.xpath('.//h2[@class="product-name"]/a/text()').get()).strip(),
-                (productEl.xpath('.//div[@class="product-image-wrapper relative"]/div/div//img/@src').get()).strip(),
+                name,
+                pictureURL,
                 self.dt_string,
                 currentPage.category
             )
@@ -62,12 +71,11 @@ class GstoreSpider(scrapy.Spider):
                 "Tehnomanija",
                 (productEl.xpath('.//h2[@class="product-name"]/a/@href').get()).strip(),
                 "https://www.gstore.rs/images/gstore-final-logo-with%20background%20w%20or%20b-21.png"))
-            #yield product
-            print(product)
+            yield product
             
  
         
-        #yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
+        yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
 
 
        
