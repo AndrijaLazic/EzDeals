@@ -70,9 +70,6 @@ class PcPracticSpider(scrapy.Spider):
             yield product
         
             
-
-
-        return
         yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
 
 
