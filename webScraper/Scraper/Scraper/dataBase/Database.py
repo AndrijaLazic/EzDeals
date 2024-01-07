@@ -93,6 +93,16 @@ class Database:
         """ 
         return self.db[collection_name].find_one({'_id':historyID})
     
+    def getCollection(self,collection_name:str):
+        """
+        used to get item history from selected collection
+
+        :param historyID: id of selected history
+        :param collection_name: name of collection 
+        :return: ProductHistory
+        """ 
+        return self.db[collection_name]
+    
 
     def updateProduct(self,filter:dict ,update:dict,collection_name:str):
         """
