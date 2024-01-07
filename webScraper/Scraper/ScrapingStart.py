@@ -19,14 +19,22 @@ from Scraper.spiders.gstoreScraper import GstoreSpider
 from Scraper.dataBase.Database import Database
 from Scraper.ProductMenager import ProductMenager
 
+# Record the start time
 
+dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
+load_dotenv(dotenv_path=dotenv_path)
                 
 
 def Scraping():
+
+    # Save the current stdout for later restoration
+    original_stdout = sys.stdout
+
     currentTime = datetime.now()
     dt_string = currentTime.strftime("%d.%m.%Y %H.%M")
-                
-    sys.stdout = open(os.getenv('ScrapingLogFolder')+dt_string+".txt", 'w')
+
+    LogFile=open(os.getenv('ScrapingLogFolder')+dt_string+".txt", 'w')
+    sys.stdout = LogFile
 
     start_time = time.time()
     database=Database()
@@ -61,18 +69,22 @@ def Scraping():
     # Print the elapsed time in seconds
     print(f"Elapsed Time: {elapsed_time} seconds")
 
+    # Restore the original stdout
+    sys.stdout = original_stdout
+
+    LogFile.close()
+def HistoryLog():
+    print()
+
 def run_process(job_func):
     process = multiprocessing.Process(target=job_func)
     process.start()
 
 
-if __name__ == "__main__":
-    # Record the start time
 
-    dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
-    load_dotenv(dotenv_path=dotenv_path)
-    schedule.every(5).minutes.do(run_process,Scraping)
+schedule.every(1).hours.do(run_process,Scraping)
+schedule.every().day.at("00:00").do(run_process,HistoryLog)
 
-    while 1:
-        schedule.run_pending()
-        time.sleep(10)
+while 1:
+    schedule.run_pending()
+    time.sleep(10)

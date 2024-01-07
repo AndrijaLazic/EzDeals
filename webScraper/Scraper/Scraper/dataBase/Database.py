@@ -104,14 +104,15 @@ class Database:
         :return: _id
         """ 
 
-        update={
-            "$set":update
-        }
+        
         if 'prices' in update:
             for price in update.get("prices"):
                 index_to_update = update['prices'].index(price)
                 update['prices'][index_to_update]=price.serialize_price()
 
+        update={
+            "$set":update
+        }
         return (self.db[collection_name].update_one(filter,update))
     
     def insertHistoryNode(self,filter:dict ,historyNode:ProductHistoryNode,collection_name:str=productHistoryCollectionName):
