@@ -60,8 +60,10 @@ class TehnomanijaSpider(scrapy.Spider):
                 self.dt_string,
                 currentPage.category
             )
+            price=(((productEl.xpath('.//span[@class="price"]/text()').get()).strip()).split(",")[0])
+            price=price.split(".")[0]+price.split(".")[1]
             product.addPrice(Price(
-                ((productEl.xpath('.//span[@class="price"]/text()').get()).strip()).split(",")[0],
+                price,
                 "Tehnomanija",
                 (productEl.xpath('.//a[@class="product-item-link"]/@href').get()).strip(),
                 "https://www.tehnomanija.rs/media/logo/stores/1/tehnomanija-logo-white.png"))

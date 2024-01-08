@@ -46,7 +46,7 @@ class GigatronscraperSpider(scrapy.Spider):
         data=response.json()
 
         if(currentPage.maxIndex==-1):
-            currentPage.maxIndex=3#data["totalPages"]
+            currentPage.maxIndex=data["totalPages"]
 
         for hit in data["hits"]["hits"]:
             rowJSON=hit["_source"]["search_result_data"]
@@ -54,8 +54,9 @@ class GigatronscraperSpider(scrapy.Spider):
             #     "productCategory":rowJSON["group_name"],
             #     "productSubcategory":rowJSON["subcategory"],
             # }
+            price=rowJSON["price"].split(".")[0]
             product=Product(rowJSON["name"],rowJSON["image"],self.dt_string,currentPage.category)
-            product.addPrice(Price(rowJSON["price"],"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
+            product.addPrice(Price(price,"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
             yield product
 
         

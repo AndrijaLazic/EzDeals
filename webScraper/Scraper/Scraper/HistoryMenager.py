@@ -10,20 +10,24 @@ class HistoryMenager:
         :currentDate: current date
         :return: None
         """ 
-        collection=Database().getCollection(collection_name)
+        database=Database()
+        collection=database.getCollection(collection_name)
+
+        if collection is None:
+            raise Exception("No collection with given name:"+collection_name)
 
         for product in collection.find():
             product=Product.from_dict(product)
             bestPrice="-1"
             for price in product.prices:
-                if price.value<bestPrice or bestPrice=="-1":
+                if int(price.value)<int(bestPrice) or bestPrice=="-1":
                     bestPrice=price.value
             
-            productHistory=ProductHistory.from_dict(Database().getHistoryOfProduct(product.historyID,"productHistory"))
+            productHistory=ProductHistory.from_dict(database.getHistoryOfProduct(product.historyID,"productHistory"))
             
             if productHistory.history[-1].value !=bestPrice:
-                Database().insertHistoryNode(
+                result=database.insertHistoryNode(
                     {'_id':ObjectId(productHistory._id)},
                     ProductHistoryNode(currentDate,bestPrice),
-                    collection_name
+                    "productHistory"
                     )

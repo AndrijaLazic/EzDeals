@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from scrapy import Item
 from itemadapter import ItemAdapter
 from pathlib import Path
+from bson import ObjectId
 
 from Scraper.dataTypes.Product import *
 
@@ -18,26 +19,24 @@ class Database:
 
     #__new__ is called whenever Python instantiates a new object of a class
     def __new__(cls):
-        #if instance already exists return it
-        if cls._instance is not None: 
-            return cls._instance
         
         #create new instance if it doesnt exist
         with cls._lock:
-            
-            # Another thread could have created the instance
-            # before we acquired the lock. So check that the
-            # instance is still nonexistent.
-            if not cls._instance:
-                instance=cls._instance = super().__new__(cls)
 
-                dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
-                load_dotenv(dotenv_path=dotenv_path)
-                
-                cls.client = MongoClient(os.getenv('MongoDBConnectionString'))
-                cls.db = cls.client[os.getenv('MongoDBName')]
-                
-                return instance
+            #if instance already exists return it
+            if cls._instance is not None: 
+                return cls._instance
+            
+            
+            instance=cls._instance = super().__new__(cls)
+
+            dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
+            load_dotenv(dotenv_path=dotenv_path)
+            
+            cls.client = MongoClient(os.getenv('MongoDBConnectionString'))
+            cls.db = cls.client[os.getenv('MongoDBName')]
+
+            return instance
             
         
 
@@ -91,7 +90,7 @@ class Database:
         :param collection_name: name of collection 
         :return: ProductHistory
         """ 
-        return self.db[collection_name].find_one({'_id':historyID})
+        return self.db[collection_name].find_one({'_id':ObjectId(historyID)})
     
     def getCollection(self,collection_name:str):
         """
@@ -99,9 +98,12 @@ class Database:
 
         :param historyID: id of selected history
         :param collection_name: name of collection 
-        :return: ProductHistory
+        :return: collection
         """ 
-        return self.db[collection_name]
+        if collection_name not in self.db.list_collection_names():
+            return None
+        collection=self.db[collection_name]
+        return collection
     
 
     def updateProduct(self,filter:dict ,update:dict,collection_name:str):
@@ -140,6 +142,7 @@ class Database:
                 }
             }
         }
+
         return (self.db[collection_name].update_one(filter,update))
 
 

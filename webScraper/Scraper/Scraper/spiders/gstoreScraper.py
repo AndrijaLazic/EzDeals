@@ -66,9 +66,20 @@ class GstoreSpider(scrapy.Spider):
                 self.dt_string,
                 currentPage.category
             )
+            
+            price=(productEl.xpath('.//div[@class="price-holder"]/div[@class="text-bold"]/span/following-sibling::text()[1]')).get()
+
+            #if product is on action
+            if price is None:
+                price=(productEl.xpath('.//div[@class="price-holder"]/span[@class="text-bold"]/span/following-sibling::text()[1]')).get()
+
+
+            price=price.strip().split(",")[0]
+            price=price.split(".")[0]+price.split(".")[1]
+
             product.addPrice(Price(
-                ((productEl.xpath('.//div[@class="price-holder"]/text()').get()).strip()).split(",")[0],
-                "Tehnomanija",
+                price,
+                "Gstore",
                 (productEl.xpath('.//h2[@class="product-name"]/a/@href').get()).strip(),
                 "https://www.gstore.rs/images/gstore-final-logo-with%20background%20w%20or%20b-21.png"))
             yield product

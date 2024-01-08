@@ -18,7 +18,7 @@ from Scraper.spiders.gstoreScraper import GstoreSpider
 
 from Scraper.dataBase.Database import Database
 from Scraper.ProductMenager import ProductMenager
-
+from Scraper.HistoryMenager import HistoryMenager
 # Record the start time
 
 dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
@@ -73,8 +73,25 @@ def Scraping():
     sys.stdout = original_stdout
 
     LogFile.close()
-def HistoryLog():
-    print()
+
+
+def HistoryLogging(collection_name:str,currentTime:str,):
+    try:
+        HistoryMenager.UpdateHistory(collection_name,currentTime)
+    except Exception as error:
+        print(error)
+
+    
+    
+
+def HistoryThreading():
+    currentTime = datetime.now()
+    print("started history log at:")
+    print(currentTime)
+    dt_string = currentTime.strftime("%d/%m/%Y %H:%M")
+    threading.Thread(target=HistoryLogging,args=("Monitori",dt_string)).start()
+    threading.Thread(target=HistoryLogging,args=("RacunarskeKomponente",dt_string)).start()
+    #threading.Thread(target=HistoryLogging,args=("Slusalice",dt_string)).start()
 
 def run_process(job_func):
     process = multiprocessing.Process(target=job_func)
@@ -82,9 +99,10 @@ def run_process(job_func):
 
 
 
-schedule.every(1).hours.do(run_process,Scraping)
-schedule.every().day.at("00:00").do(run_process,HistoryLog)
+schedule.every().hour.do(run_process,Scraping)
+schedule.every().day.at('00:00').do(HistoryThreading)
 
-while 1:
-    schedule.run_pending()
-    time.sleep(10)
+if __name__ == "__main__":
+    while 1:
+        schedule.run_pending()
+        time.sleep(60)
