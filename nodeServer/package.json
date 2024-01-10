@@ -2,10 +2,13 @@
   "name": "nodeserver",
   "version": "1.0.0",
   "description": "Node server for API calls in EzDeals project",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andrija Lazic",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.3.3"
+  }
 }
