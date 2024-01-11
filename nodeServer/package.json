@@ -4,7 +4,8 @@
   "description": "Node server for API calls in EzDeals project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r tsconfig-paths/register src/app.ts"
   },
   "author": "Andrija Lazic",
   "license": "ISC",
@@ -20,9 +21,12 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@types/compression": "^1.7.5",
     "@types/cookie-session": "^2.0.48",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/hpp": "^0.2.5"
+    "@types/hpp": "^0.2.5",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   }
 }
