@@ -1,21 +1,14 @@
 import express, {Express} from 'express'
-
-require('dotenv').config({ path: '.env' })
-require('dotenv').config({ path: process.env.GlobalEnvFilePath })
-
-const database = require('./setupDatabase');
-
+import {config} from './config'
 import {EzDealsServer} from './setupServer'
-
+const database = require('./setupDatabase');
 
 class Application{
     /**
      * initialize node js application
      */
     public initialize():void {
-        
-
-        
+        config.validateConfig()
         const app:Express=express();
         const server:EzDealsServer=new EzDealsServer(app);
         server.start();

@@ -7,15 +7,15 @@ import cookieSession from 'cookie-session';
 import HTTP_STATUS from 'http-status-codes'
 import 'express-async-errors'
 import commpression from 'compression'
+import {config} from './config'
 
-
-const SERVER_PORT = process.env.NodeServerPort;
 
 
 export class EzDealsServer{
     private app:Application;
-
+    private SERVER_PORT:string|undefined;
     constructor(app:Application){
+        this.SERVER_PORT= config.NodeServerPort;
         this.app=app;
     }
 
@@ -31,9 +31,9 @@ export class EzDealsServer{
         app.use(
             cookieSession({
                 name:"session",
-                keys:['test1','test2'],
+                keys:[config.SecretKeyOne!,config.SecretKeyTwo!],
                 maxAge:86400000,//1day
-                secure:false
+                secure:config.NODE_ENV !=="development"
             })
         )
 
@@ -45,7 +45,7 @@ export class EzDealsServer{
 
         app.use(
             cors({
-                origin:"*",
+                origin:config.CLIENT_URL,
                 credentials:true,
                 optionsSuccessStatus:200,
                 methods:['GET','POST','PUT','DELETE','OPTIONS']
@@ -87,8 +87,8 @@ export class EzDealsServer{
     }
 
     private startHttpServer(httpServer:http.Server):void{
-        httpServer.listen(SERVER_PORT,()=>{
-            console.log(`Server running on port ${SERVER_PORT}`);
+        httpServer.listen(this.SERVER_PORT,()=>{
+            console.log(`Server running on port ${this.SERVER_PORT}`);
         })
     }
 }
