@@ -8,7 +8,9 @@ import HTTP_STATUS from 'http-status-codes'
 import 'express-async-errors'
 import commpression from 'compression'
 
-const SERVER_PORT=5000;
+
+const SERVER_PORT = process.env.NodeServerPort;
+
 
 export class EzDealsServer{
     private app:Application;
