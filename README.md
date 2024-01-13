@@ -14,11 +14,16 @@ This project serves as the culmination of my academic endeavors, representing my
 2. Download following:
     -python 3.12.1
     -Node.js v20.10.0
+    -Redis https://redis.io/docs/install/install-redis/install-redis-on-windows/
 
-3. Download required libraries for python using pip in terminal
-
+3. Download required libraries:
+-for python using pip in terminal
 ```bash
-  example: npm install pymongo
+  example: pip install pymongo
+```
+-for node
+```bash
+  pip install 
 ```
 
 4. Before starting a project, you need to create a file named ".env" and insert required data. 

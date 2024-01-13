@@ -10,6 +10,7 @@ class Config{
     public SecretKeyTwo:string|undefined;
     public NODE_ENV:string|undefined;
     public CLIENT_URL:string|undefined;
+    public REDIS_HOST:string|undefined;
     
 
     constructor(){
@@ -21,6 +22,7 @@ class Config{
         this.SecretKeyTwo=process.env.SecretKeyTwo;
         this.NODE_ENV=process.env.NODE_ENV;
         this.CLIENT_URL=process.env.CLIENT_URL;
+        this.REDIS_HOST=process.env.REDIS_HOST;
     }
 
     public validateConfig():void{

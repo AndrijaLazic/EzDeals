@@ -22,3 +22,6 @@ application.initialize();
 
 //to start application use following command in console:
 //npm run dev
+
+//Redis command
+//sudo service redis-server start
