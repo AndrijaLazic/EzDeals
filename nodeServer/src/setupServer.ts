@@ -11,6 +11,12 @@ import {config} from './config'
 import {Server} from 'socket.io'
 import {createClient} from 'redis'
 import { createAdapter } from "@socket.io/redis-adapter";
+import applicationRoutes from './routes'
+
+import {CustomError, IErrorResponse} from './shared/globals/helpers/error-handler'
+import {Logger} from 'winston'
+
+const log:Logger=config.createLogger('setupServer');
 
 export class EzDealsServer{
     private app:Application;
@@ -66,11 +72,21 @@ export class EzDealsServer{
     }
 
     private routeMiddleware(app:Application):void{
-        
+        applicationRoutes(app)
     }
 
     private globalErrorHandler(app:Application):void{
-        
+        app.all('*',(request:Request,response:Response)=>{
+            response.status(HTTP_STATUS.NOT_FOUND).json({messgae:`${request.originalUrl} not found`})
+        })
+
+        app.use((error:IErrorResponse,request:Request,response:Response,next:NextFunction)=>{
+            log.error(error)
+            if(error instanceof CustomError){
+                return response.status(error.statusCode).json(error.serializeErrors())
+            }
+            next()
+        })
     }
 
     private async startServer(app:Application):Promise<void>{
@@ -81,7 +97,7 @@ export class EzDealsServer{
             this.socketIOConnections(socketIO);
         }
         catch (error){
-            console.log(error);
+            log.error(error);
         }
     }
 
@@ -103,9 +119,9 @@ export class EzDealsServer{
     }
 
     private startHttpServer(httpServer:http.Server):void{
-        console.log(`server has started with process ${process.pid}`)
+        log.info(`server has started with process ${process.pid}`)
         httpServer.listen(this.SERVER_PORT,()=>{
-            console.log(`Server running on port ${this.SERVER_PORT}`);
+            log.info(`Server running on port ${this.SERVER_PORT}`);
         })
     }
 

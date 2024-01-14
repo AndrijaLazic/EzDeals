@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
+import {Logger} from 'winston'
+import { config } from "./config";
 
+const log:Logger=config.createLogger('setupDatabase');
 
 class Database {
     constructor() {
@@ -10,25 +13,25 @@ class Database {
         const MongoDBConnectionString = process.env.MongoDBConnectionString;
         const MongoDBName = process.env.MongoDBName;
         if (!MongoDBConnectionString || !MongoDBName) {
-            console.error('MongoDB connection string is not provided.');
+            log.error('MongoDB connection string is not provided.');
             process.exit(1);
         }
         const connString=MongoDBConnectionString+"/"+MongoDBName
         mongoose.connect(connString)
             .then(() => {
-                console.log('Connected to MongoDB:'+connString);
+                log.info('Connected to MongoDB:'+connString);
             })
             .catch((error) => {
-                console.error('MongoDB connection error:', error.message);
+                log.error('MongoDB connection error:', error.message);
                 process.exit(1);
             });
 
         mongoose.connection.on('error', (err) => {
-            console.error('MongoDB error:', err);
+            log.error('MongoDB error:', err);
         });
 
         mongoose.connection.on('disconnected', () => {
-            console.log('MongoDB disconnected, trying to reconnect');
+            log.info('MongoDB disconnected, trying to reconnect');
             this._connect()
         });
     }
