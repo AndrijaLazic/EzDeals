@@ -1,7 +1,7 @@
 import { Application } from "express";
 
-export default (app:Application)=>{
-    const routes=()=>{
-    }
-    routes();
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default (app: Application) => {
+	const routes = () => {};
+	routes();
+};
