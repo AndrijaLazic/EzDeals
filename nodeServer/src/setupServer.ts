@@ -105,7 +105,9 @@ export class EzDealsServer {
 			) => {
 				log.error(error);
 				if (error instanceof CustomError) {
-					return response.status(error.statusCode).json(error.serializeErrors());
+					return response
+						.status(error.statusCode)
+						.json(error.serializeErrors());
 				}
 				next();
 			}

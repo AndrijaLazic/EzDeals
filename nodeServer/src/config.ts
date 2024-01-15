@@ -45,7 +45,8 @@ class Config {
 				}),
 				winston.format.align(),
 				winston.format.printf(
-					(info) => `${info.timestamp} ${info.level}:${name}${info.message}`
+					(info) =>
+						`${info.timestamp} ${info.level}:${name}${info.message}`
 				)
 			),
 			transports: [new winston.transports.Console(), transport]
