@@ -1,5 +1,5 @@
 @baseUrl=http://localhost:5000
-@urlPath=api/safe
+@urlPath=api
 ####
 POST {{baseUrl}}/{{urlPath}}/safe
 Content-Type: application/json

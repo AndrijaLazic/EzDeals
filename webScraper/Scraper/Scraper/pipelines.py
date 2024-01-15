@@ -9,6 +9,7 @@
 
 from dotenv import load_dotenv
 from itemadapter import ItemAdapter
+import scrapy
 from Scraper.dataBase.Database import Database
 from Scraper.dataTypes.Product import *
 from scrapy.exceptions import DropItem
@@ -31,7 +32,7 @@ class MongoDBpipeline:
 
         
 
-    def process_item(self, item:Product, spider):
+    def process_item(self, item:Product, spider:scrapy.Spider):
         match item.primaryCategory:
             case "Monitori":
                 self.monitoriMenager.addProduct(item)
