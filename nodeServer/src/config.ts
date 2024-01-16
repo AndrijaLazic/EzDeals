@@ -39,6 +39,7 @@ class Config {
 			level: this.NODE_LOG_LEVEL,
 
 			format: winston.format.combine(
+				winston.format.errors({ stack: true }),
 				winston.format.colorize(),
 				winston.format.timestamp({
 					format: "YYYY-MM-DD hh:mm:ss A"

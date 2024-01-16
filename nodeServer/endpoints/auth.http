@@ -1,0 +1,14 @@
+@baseUrl=http://localhost:5000
+@urlPath=api
+####
+POST {{baseUrl}}/{{urlPath}}/signup
+Content-Type: application/json
+Accept: :application/json
+withCredentials:true
+
+
+{
+	"username":"gundra",
+	"password":"sifra",
+	"email":"gundra@gmail.com"
+}
