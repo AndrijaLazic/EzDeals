@@ -24,9 +24,8 @@ const authSchema: Schema = new Schema(
 	}
 );
 
-
 //middleware that executes before saving acc
-authSchema.pre("save", async function(this: IAuthDocument, next: () => void) {
+authSchema.pre("save", async function (this: IAuthDocument, next: () => void) {
 	const hashedPassword: string = await hash(
 		this.password as string,
 		SALT_ROUND
@@ -35,14 +34,14 @@ authSchema.pre("save", async function(this: IAuthDocument, next: () => void) {
 	next();
 });
 
-authSchema.methods.comparePassword = async function(
+authSchema.methods.comparePassword = async function (
 	password: string
 ): Promise<boolean> {
 	const hashedPassword: string = (this as unknown as IAuthDocument).password!;
 	return compare(password, hashedPassword);
 };
 
-authSchema.methods.hashPassword = async function(
+authSchema.methods.hashPassword = async function (
 	password: string
 ): Promise<string> {
 	return hash(password, SALT_ROUND);

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Logger } from "winston";
 import { config } from "./config";
+import { redisConnection } from "./shared/services/redis/redis.connection";
 
 const log: Logger = config.createLogger("setupDatabase");
 
@@ -21,6 +22,7 @@ class Database {
 			.connect(connString)
 			.then(() => {
 				log.info("Connected to MongoDB:" + connString);
+				redisConnection.connect();
 			})
 			.catch((error) => {
 				log.error("MongoDB connection error:", error.message);

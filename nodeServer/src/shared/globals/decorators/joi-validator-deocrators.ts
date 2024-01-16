@@ -12,7 +12,7 @@ export function joiValidation(schema: ObjectSchema): IJoiDecorator {
 	return (_target: any, _key: string, descriptor: PropertyDescriptor) => {
 		const originalMethod = descriptor.value;
 
-		descriptor.value = async function(...args: any[]){
+		descriptor.value = async function (...args: any[]) {
 			const requset: Request = args[0];
 			const { error } = await Promise.resolve(schema.validate(requset.body));
 			if (error?.details) {

@@ -93,7 +93,7 @@ export class EzDealsServer {
 		app.all("*", (request: Request, response: Response) => {
 			response
 				.status(HTTP_STATUS.NOT_FOUND)
-				.json({ messgae: `${request.originalUrl} not found` });
+				.json({ message: `${request.originalUrl} not found` });
 		});
 
 		app.use(
@@ -103,6 +103,7 @@ export class EzDealsServer {
 				response: Response,
 				next: NextFunction
 			) => {
+				console.log(error);
 				log.error(error);
 				if (error instanceof CustomError) {
 					return response
@@ -120,8 +121,8 @@ export class EzDealsServer {
 			const socketIO: Server = await this.createSocketIO(httpServer);
 			this.startHttpServer(httpServer);
 			this.socketIOConnections(socketIO);
-		} catch (error) {
-			log.error(error);
+		} catch (error: any) {
+			log.error("startServer:" + error);
 		}
 	}
 
