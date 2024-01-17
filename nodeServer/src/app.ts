@@ -24,3 +24,5 @@ application.initialize();
 
 //Redis command
 //sudo service redis-server start
+//start redis commander(gui)
+//redis-commander

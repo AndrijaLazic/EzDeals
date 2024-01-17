@@ -2,17 +2,19 @@ import { Document } from "mongoose";
 import { ObjectId } from "mongodb";
 
 export interface IUserDocument extends Document {
-	_id: string | ObjectId;
-	authId: string | ObjectId;
-	username?: string;
-	email?: string;
-	password?: string;
+	_id?: string | ObjectId;
+	username: string;
+	email: string;
+	password: string;
 	createdAt?: Date;
-	honorValue: number;
+	honorValue?: number;
 	quote: string;
 	notifications: INotificationSettings;
 	passwordResetToken?: string;
 	passwordResetTokenExpires?: number | string;
+	profilePicture?:string;
+	comparePassword(password: string): Promise<boolean>;
+	hashPassword(password: string): Promise<string>;
 }
 
 export interface IResetPasswordParams {

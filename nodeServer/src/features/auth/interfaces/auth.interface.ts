@@ -24,16 +24,17 @@ export interface IAuthDocument extends Document {
 	createdAt: Date;
 	passwordResetToken?: string;
 	passwordResetExpires?: number | string;
-	avatarImage?: string;
+	profilePicture?: string;
 	comparePassword(password: string): Promise<boolean>;
 	hashPassword(password: string): Promise<string>;
 }
 
-export interface ISignUpData {
-	_id: ObjectId;
+export interface ISignUpPayload {
 	email: string;
 	username: string;
 	password: string;
+	profilePicture?:string;
+	quote:string;
 }
 
 export interface IAuthJob {
