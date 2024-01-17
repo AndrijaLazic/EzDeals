@@ -1,20 +1,20 @@
-import { IAuthDocument, ISignUpPayload } from "src/features/auth/interfaces/auth.interface";
-import { IUserDocument } from "src/features/user/interfaces/user.interfaces";
+import { ISignUpPayload, IUserDocument, IUserInfoDocument } from "src/features/user/interfaces/user.interfaces";
 import { UserModel } from "src/features/user/models/user.schema";
+import { BadRequestError } from "src/shared/globals/helpers/error-handler";
 
 
 class AuthService {
 	public async getUserByUsernameOrEmail(
 		username: string,
 		email: string
-	): Promise<IAuthDocument> {
+	): Promise<IUserInfoDocument> {
 		const query = {
 			$or: [{ username: username }, { email: email }]
 		};
 
-		const user: IAuthDocument = (await UserModel.findOne(
+		const user: IUserInfoDocument = (await UserModel.findOne(
 			query
-		).exec()) as IAuthDocument;
+		).exec()) as IUserInfoDocument;
 		return user;
 	}
 
@@ -30,6 +30,28 @@ class AuthService {
 		const newUser=new UserModel(userDocument);
 		return newUser.save() as unknown as IUserDocument;
 		
+	}
+
+	public async getUser(
+		usernameOrEmail: string,
+		password: string
+	):Promise<IUserDocument>{
+		const query = {
+			$or: [{ username: usernameOrEmail }, { email: usernameOrEmail }]
+		};
+
+		const user = (await UserModel.findOne(
+			query
+		).exec()) as unknown as IUserDocument;
+
+		if(!user)
+			throw new BadRequestError("User does not exist");
+		
+
+		//throws error if password is bad
+		user.comparePassword(password);
+
+		return user;
 	}
 }
 

@@ -17,6 +17,24 @@ export interface IUserDocument extends Document {
 	hashPassword(password: string): Promise<string>;
 }
 
+export interface IUserInfoDocument extends Document {
+	_id?: string | ObjectId;
+	username: string;
+	email: string;
+	createdAt: Date;
+	honorValue: number;
+	quote: string;
+	profilePicture?:string;
+}
+
+export interface ISignUpPayload{
+	username:string;
+	password:string;
+	email:string;
+	quote: string;
+	profilePicture?:string;
+}
+
 export interface IResetPasswordParams {
 	username: string;
 	email: string;

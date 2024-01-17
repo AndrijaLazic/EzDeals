@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { SignUp } from "../controllers/signup";
+import { AuthController } from "../controllers/authController";
 
 class AuthRoutes {
 	private router: Router;
@@ -9,7 +9,8 @@ class AuthRoutes {
 	}
 
 	public routes(): Router {
-		this.router.post("/signup", SignUp.prototype.createUser);
+		this.router.post("/signup", AuthController.prototype.createUser);
+		this.router.post("/login", AuthController.prototype.loginUser);
 		return this.router;
 	}
 }

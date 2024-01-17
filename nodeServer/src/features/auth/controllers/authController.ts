@@ -1,24 +1,25 @@
 import { Request, Response } from "express";
 import { joiValidation } from "src/shared/globals/decorators/joi-validator-deocrators";
 import { signupSchema } from "../schemes/signup";
-import { IAuthDocument, ISignUpPayload } from "../interfaces/auth.interface";
 import { authService } from "src/shared/services/database/auth.service";
 import { BadRequestError } from "src/shared/globals/helpers/error-handler";
 import HTTP_STATUS from "http-status-codes";
 import { UserCache } from "src/shared/services/redis/user.cache";
-import { IUserDocument } from "src/features/user/interfaces/user.interfaces";
+import { ISignUpPayload, IUserDocument, IUserInfoDocument } from "src/features/user/interfaces/user.interfaces";
 import { Helpers } from "src/shared/globals/helpers/helpers";
+import { loginSchema } from "../schemes/login";
+
 
 const userCache:UserCache=new UserCache();
 
-export class SignUp {
+export class AuthController {
 	@joiValidation(signupSchema)
 	public async createUser(
 		request: Request,
 		response: Response
 	): Promise<void> {
 		const { username, email} = request.body;
-		const checkIfUserExist: IAuthDocument =
+		const checkIfUserExist: IUserInfoDocument =
 			await authService.getUserByUsernameOrEmail(username, email);
 
 		if (checkIfUserExist) {
@@ -42,5 +43,22 @@ export class SignUp {
 		response
 			.status(HTTP_STATUS.CREATED)
 			.json({ message: "User created successfully", newUser });
+	}
+
+
+	@joiValidation(loginSchema)
+	public async loginUser(
+		request: Request,
+		response: Response
+	): Promise<void> {
+		const { usernameOrEmail,password} = request.body;
+	
+
+
+		const user=await authService.getUser(usernameOrEmail,password);
+
+		response
+			.status(HTTP_STATUS.CREATED)
+			.json({ message: "User created successfully", user });
 	}
 }

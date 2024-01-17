@@ -1,0 +1,13 @@
+@baseUrl=http://localhost:5000
+@urlPath=api
+####
+POST {{baseUrl}}/{{urlPath}}/login
+Content-Type: application/json
+Accept: :application/json
+withCredentials:true
+
+
+{
+	"usernameOrEmail":"gundra",
+	"password":"sifra"
+}
