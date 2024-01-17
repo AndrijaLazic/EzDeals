@@ -23,6 +23,7 @@ class Database {
 			.then(() => {
 				log.info("Connected to MongoDB:" + connString);
 				redisConnection.connect();
+				this.clearRedis();
 			})
 			.catch((error) => {
 				log.error("MongoDB connection error:", error.message);
@@ -37,6 +38,10 @@ class Database {
 			log.info("MongoDB disconnected, trying to reconnect");
 			this._connect();
 		});
+	}
+
+	clearRedis(){
+		redisConnection.clearCache();
 	}
 }
 

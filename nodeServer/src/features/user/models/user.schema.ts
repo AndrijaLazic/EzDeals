@@ -8,7 +8,7 @@ const userSchema: Schema = new Schema({
 		username: { type: String ,require:true},
 		email: { type: String ,require:true},
 		password: { type: String ,require:true},
-		createdAt: { type: Date, default: Date.now ,require:true},
+		createdAt: { type: Date, default: (new Date()).toLocaleDateString() ,require:true},
 		profilePicture: { type: String, default: "" },
 		honorValue: { type: Number, default: 0 },
 		passwordResetToken: { type: String, default: "" },

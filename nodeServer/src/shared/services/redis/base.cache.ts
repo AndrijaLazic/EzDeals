@@ -23,5 +23,16 @@ export abstract class BaseCache{
 			this.log.error(error);
 		});
 	}
+
+
+	/**
+ * Used to clear all data stored in cache
+ *
+ */
+	public clearCache():void{
+		if(!this.client)
+			return;
+		this.client.FLUSHALL();
+	}
 }
 
