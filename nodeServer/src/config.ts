@@ -17,6 +17,7 @@ class Config {
 	public NODE_LOG_LEVEL: string | undefined;
 	public JWT_SECRET_KEY: string | undefined;
 	public JWT_OPTIONS: JWT.SignOptions | undefined=undefined;
+	public PRODUCT_CATEGORIES: string[] | undefined;
 	
 	
 	constructor() {
@@ -31,6 +32,10 @@ class Config {
 		this.REDIS_HOST = process.env.REDIS_HOST;
 		this.NODE_LOG_LEVEL = process.env.NODE_LOG_LEVEL;
 		this.JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+		if(process.env.PRODUCT_CATEGORIES){
+			this.PRODUCT_CATEGORIES=process.env.PRODUCT_CATEGORIES.split(",");
+		}
 		if(process.env.JWT_OPTIONS){
 			const jsonObject = JSON.parse(process.env.JWT_OPTIONS) as JWT.SignOptions;
 			this.JWT_OPTIONS=jsonObject;

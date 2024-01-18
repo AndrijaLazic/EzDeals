@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:5000
-@urlPath=api/safe
+@urlPath=api/product
 ####
-POST {{baseUrl}}/{{urlPath}}/safe
+POST {{baseUrl}}/{{urlPath}}/Monitori
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
