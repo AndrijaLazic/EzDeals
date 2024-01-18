@@ -2,6 +2,7 @@ require("dotenv").config();
 require("dotenv").config({ path: process.env.GlobalEnvFilePath });
 import * as winston from "winston";
 import "winston-daily-rotate-file";
+import JWT from "jsonwebtoken";
 
 class Config {
 	public MongoDBConnectionString: string | undefined;
@@ -14,7 +15,10 @@ class Config {
 	public CLIENT_URL: string | undefined;
 	public REDIS_HOST: string | undefined;
 	public NODE_LOG_LEVEL: string | undefined;
-
+	public JWT_SECRET_KEY: string | undefined;
+	public JWT_OPTIONS: JWT.SignOptions | undefined=undefined;
+	
+	
 	constructor() {
 		this.MongoDBConnectionString = process.env.MongoDBConnectionString;
 		this.MongoDBName = process.env.MongoDBName;
@@ -26,6 +30,12 @@ class Config {
 		this.CLIENT_URL = process.env.CLIENT_URL;
 		this.REDIS_HOST = process.env.REDIS_HOST;
 		this.NODE_LOG_LEVEL = process.env.NODE_LOG_LEVEL;
+		this.JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+		if(process.env.JWT_OPTIONS){
+			const jsonObject = JSON.parse(process.env.JWT_OPTIONS) as JWT.SignOptions;
+			this.JWT_OPTIONS=jsonObject;
+		}
+			
 	}
 
 	public createLogger(name: string) {

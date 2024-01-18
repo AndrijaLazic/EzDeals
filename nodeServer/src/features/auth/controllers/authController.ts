@@ -8,7 +8,8 @@ import { UserCache } from "src/shared/services/redis/user.cache";
 import { ISignUpPayload, IUserDocument, IUserInfoDocument } from "src/features/user/interfaces/user.interfaces";
 import { Helpers } from "src/shared/globals/helpers/helpers";
 import { loginSchema } from "../schemes/login";
-
+import JWT from "jsonwebtoken";
+import { config } from "src/config";
 
 const userCache:UserCache=new UserCache();
 
@@ -56,9 +57,36 @@ export class AuthController {
 
 
 		const user=await authService.getUser(usernameOrEmail,password);
-
+		const userJWT=AuthController.prototype.loginToken(user);
+		
+		
 		response
-			.status(HTTP_STATUS.CREATED)
-			.json({ message: "User created successfully", user });
+			.status(HTTP_STATUS.OK)
+			.json({ message: "Succesfull login", token:userJWT });
+	}
+
+	private loginToken(data:IUserDocument):string{
+
+		return JWT.sign({
+				_id:data._id,
+				email:data.email,
+				username:data.username,
+				profilePicture:data.profilePicture,
+				createdAt:data.createdAt,
+				honorValue:data.honorValue,
+				quote:data.quote
+			},
+			config.JWT_SECRET_KEY!,
+			config.JWT_OPTIONS
+		);
+	}
+
+	public async safe(
+		request: Request,
+		response: Response
+	):Promise<void>{
+		response
+			.status(HTTP_STATUS.OK)
+			.json({ message: "Succesfull safe"});
 	}
 }

@@ -1,0 +1,13 @@
+@baseUrl=http://localhost:5000
+@urlPath=api/safe
+####
+POST {{baseUrl}}/{{urlPath}}/safe
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+Authorization: Bearer aaeyJhasdbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWExYjhiZjkyMmQwY2U0ZDI4Mjk0ODkiLCJlbWFpbCI6Imd1bmRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Imd1bmRyYSIsInByb2ZpbGVQaWN0dXJlIjoiIiwiY3JlYXRlZEF0IjoiMjAyNC0wMS0xMVQyMzowMDowMC4wMDBaIiwiaG9ub3JWYWx1ZSI6MCwicXVvdGUiOiIiLCJpYXQiOjE3MDUxMDc3NjQsImV4cCI6MTcwNTExMTM2NH0.92mSbWlVXexCpbIfaWZsSiCbPsbBjQ9gE5843st-2BA
+
+{
+	"usernameOrEmail": "gundra",
+	"password": "sifra"
+}
