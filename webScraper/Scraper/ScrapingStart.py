@@ -46,9 +46,9 @@ def Scraping():
     settings = get_project_settings()
     process = CrawlerProcess(settings)
     process.crawl(GigatronscraperSpider)
-    # process.crawl(PcPracticSpider)
-    # process.crawl(TehnomanijaSpider)
-    # process.crawl(GstoreSpider)
+    process.crawl(PcPracticSpider)
+    process.crawl(TehnomanijaSpider)
+    process.crawl(GstoreSpider)
 
 
     process.start()  # the script will block here until all crawling jobs are finished

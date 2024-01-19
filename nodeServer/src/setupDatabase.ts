@@ -40,7 +40,7 @@ class Database {
 		});
 	}
 
-	clearRedis(){
+	clearRedis() {
 		redisConnection.clearCache();
 	}
 }

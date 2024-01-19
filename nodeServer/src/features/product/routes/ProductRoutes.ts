@@ -2,7 +2,6 @@ import express, { Router } from "express";
 
 import { ProductControler } from "../controllers/productControler";
 
-
 class ProductRoutes {
 	private router: Router;
 
@@ -11,11 +10,16 @@ class ProductRoutes {
 	}
 
 	public routes(): Router {
-		this.router.post("/product/:productCategory", ProductControler.prototype.getProducts);
+		this.router.get(
+			"/product/:productCategory",
+			ProductControler.prototype.getProducts
+		);
+		this.router.get(
+			"/product/:productCategory/:productId",
+			ProductControler.prototype.getSingleProduct
+		);
 		return this.router;
 	}
-
 }
-
 
 export const productRoutes: ProductRoutes = new ProductRoutes();

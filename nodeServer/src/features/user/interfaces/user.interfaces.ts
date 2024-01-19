@@ -12,7 +12,7 @@ export interface IUserDocument extends Document {
 	notifications: INotificationSettings;
 	passwordResetToken?: string;
 	passwordResetTokenExpires?: number | string;
-	profilePicture?:string;
+	profilePicture?: string;
 	comparePassword(password: string): Promise<boolean>;
 	hashPassword(password: string): Promise<string>;
 }
@@ -24,15 +24,15 @@ export interface IUserInfoDocument extends Document {
 	createdAt: Date;
 	honorValue: number;
 	quote: string;
-	profilePicture?:string;
+	profilePicture?: string;
 }
 
-export interface ISignUpPayload{
-	username:string;
-	password:string;
-	email:string;
+export interface ISignUpPayload {
+	username: string;
+	password: string;
+	email: string;
 	quote: string;
-	profilePicture?:string;
+	profilePicture?: string;
 }
 
 export interface IResetPasswordParams {

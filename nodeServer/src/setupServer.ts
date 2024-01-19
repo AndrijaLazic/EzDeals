@@ -103,7 +103,6 @@ export class EzDealsServer {
 				response: Response,
 				next: NextFunction
 			) => {
-				console.log(error);
 				log.error(error);
 				if (error instanceof CustomError) {
 					return response

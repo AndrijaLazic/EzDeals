@@ -1,7 +1,10 @@
-import { ISignUpPayload, IUserDocument, IUserInfoDocument } from "src/features/user/interfaces/user.interfaces";
+import {
+	ISignUpPayload,
+	IUserDocument,
+	IUserInfoDocument
+} from "src/features/user/interfaces/user.interfaces";
 import { UserModel } from "src/features/user/models/user.schema";
 import { BadRequestError } from "src/shared/globals/helpers/error-handler";
-
 
 class AuthService {
 	public async getUserByUsernameOrEmail(
@@ -18,24 +21,23 @@ class AuthService {
 		return user;
 	}
 
-	public async addNewUser(userData:ISignUpPayload):Promise<IUserDocument>{
-		const {username, email, password, profilePicture,quote} = userData;
-		const userDocument={
+	public async addNewUser(userData: ISignUpPayload): Promise<IUserDocument> {
+		const { username, email, password, profilePicture, quote } = userData;
+		const userDocument = {
 			username,
 			email,
 			password,
 			profilePicture,
 			quote
 		};
-		const newUser=new UserModel(userDocument);
+		const newUser = new UserModel(userDocument);
 		return newUser.save() as unknown as IUserDocument;
-		
 	}
 
 	public async getUser(
 		usernameOrEmail: string,
 		password: string
-	):Promise<IUserDocument>{
+	): Promise<IUserDocument> {
 		const query = {
 			$or: [{ username: usernameOrEmail }, { email: usernameOrEmail }]
 		};
@@ -44,9 +46,7 @@ class AuthService {
 			query
 		).exec()) as unknown as IUserDocument;
 
-		if(!user)
-			throw new BadRequestError("User does not exist");
-		
+		if (!user) throw new BadRequestError("User does not exist");
 
 		//throws error if password is bad
 		user.comparePassword(password);

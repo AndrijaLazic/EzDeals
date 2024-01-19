@@ -11,7 +11,3 @@ export default (app: Application) => {
 	};
 	routes();
 };
-
-
-
-

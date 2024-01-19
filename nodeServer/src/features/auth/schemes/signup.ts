@@ -17,11 +17,10 @@ const signupSchema: ObjectSchema = Joi.object().keys({
 		"string.base": "Email must be of type string",
 		"string.email": "Email must be valid",
 		"string.empty": "Email is a required field"
-	})
-	,
+	}),
 	quote: Joi.string().max(50).messages({
 		"string.base": "Quote must be of type string",
-		"string.max": "Max quote length is 50",
+		"string.max": "Max quote length is 50"
 	})
 });
 
