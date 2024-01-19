@@ -8,6 +8,8 @@ class ProductService {
 		numberOfProductsPerPage:number
 	): Promise<IProductDocument[]> {
 
+
+
 		const products:IProductDocument[]=await ProductCategories.getCategory(category)
 			.find()
 			.skip((page-1)*numberOfProductsPerPage)
@@ -18,7 +20,22 @@ class ProductService {
 	}
 
 
-	
+
+	/**
+  * Get number of products in chosen category
+  * !!! This function is expensive and should not be used often !!!
+  * @param category chosen category of products
+  * @returns number
+  */
+	public async getNumberOfProducts(
+		category: string
+	): Promise<number> {
+		
+		const numberofProducts:number=await ProductCategories.getCategory(category)
+		.countDocuments({});
+
+		return numberofProducts;
+	}
 }
 
 export const productService: ProductService = new ProductService();

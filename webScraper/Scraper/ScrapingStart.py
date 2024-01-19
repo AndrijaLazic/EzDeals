@@ -1,3 +1,4 @@
+import asyncio
 import multiprocessing
 import os
 import threading
@@ -45,14 +46,16 @@ def Scraping():
     settings = get_project_settings()
     process = CrawlerProcess(settings)
     process.crawl(GigatronscraperSpider)
-    process.crawl(PcPracticSpider)
-    process.crawl(TehnomanijaSpider)
-    process.crawl(GstoreSpider)
+    # process.crawl(PcPracticSpider)
+    # process.crawl(TehnomanijaSpider)
+    # process.crawl(GstoreSpider)
 
 
     process.start()  # the script will block here until all crawling jobs are finished
 
-
+    print("\n\n\n\n")
+    print("Scaping finished")
+    print("\n\n\n\n")
     #Upload all products to a database
     monitoriMenager.uploadProductsToDatabase()
     racunarskeKomponenteMenager.uploadProductsToDatabase()
@@ -101,6 +104,8 @@ def run_process(job_func):
 
 schedule.every().hour.do(run_process,Scraping)
 schedule.every().day.at('00:00').do(HistoryThreading)
+
+Scraping()
 
 if __name__ == "__main__":
     while 1:

@@ -11,12 +11,22 @@ export class ProductControler {
 		request: Request,
 		response: Response
 	): Promise<void> {
-		const category = request.params.productCategory;
-		const products:IProductDocument[] = await productService.getProducts(category, 1, 24);
 
+		const category = request.params.productCategory;
+		const page:number = parseInt(request.query.page as unknown as string,10) || 1;
+		const numberOfProductsPerPage:number = parseInt(request.query.numberOfProductsPerPage as unknown as string,10) || 24;
+
+		const numberofProductsInCategory:number=await productService.getNumberOfProducts(category);
+		const maxPages=Math.ceil(numberofProductsInCategory / numberOfProductsPerPage);
+
+
+
+		const products:IProductDocument[] = await productService.getProducts(category, page, numberOfProductsPerPage);
+
+		
 
 		response
 			.status(HTTP_STATUS.OK)
-			.json({ message: "Products", products: products });
+			.json({ message: "Products", products: products ,maxPages:maxPages});
 	}
 }

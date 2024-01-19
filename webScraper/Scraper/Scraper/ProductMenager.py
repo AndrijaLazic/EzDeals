@@ -1,5 +1,6 @@
 from collections import defaultdict
 import threading
+import traceback
 
 from Scraper.dataTypes.Product import Product,Price,ProductHistory,ProductHistoryNode
 from Scraper.dataBase.Database import Database
@@ -55,9 +56,8 @@ class ProductMenager:
                 self.productsMap[product.name]=product
                 return
             
-
             productOld.addPrice(product.prices[0])
-
+            self.productsMap[product.name]=productOld
     def giveProduct(self,name:str):
         """
         Return product with given name from the map
@@ -92,25 +92,34 @@ class ProductMenager:
         Uploads all products to the selected category
         :return: None
         """
+
         category=self.getCurrentInstanceCategory()
+
+        print("\n\n\n\n")
+        print("Started uploading products from category:")
+        print(category)
+        print("\n\n\n\n")
+
         database=Database()
 
         #Iterating trough all items and checking if they already exist in database
         for key, val in self.productsMap.items():
             oldProduct=database.getOneProduct({'name':key},category)
-
+            lowestPrice=(min(val.prices, key=lambda x: x.value)).value
+            
             if oldProduct is None:
-                lowestPrice=(min(val.prices, key=lambda x: x.value)).value
+                
                 productHistory=ProductHistory()
                 productHistory.history.append(ProductHistoryNode(val.lastScraped,lowestPrice))
                 
                 historyID=database.insertHistory(productHistory)
                 val.historyID=historyID
+                val.currentBestPrice=lowestPrice
 
                 database.insertProduct(val,category)
                 continue
 
-
+            val.currentBestPrice=lowestPrice
             changes=Product.returnProductChanges(oldProduct,val)
             database.updateProduct({'_id':ObjectId(oldProduct._id)},changes,category)
             

@@ -13,13 +13,10 @@ class AuthRoutes {
 	public routes(): Router {
 		this.router.post("/signup", AuthController.prototype.createUser);
 		this.router.post("/login", AuthController.prototype.loginUser);
-		return this.router;
-	}
-
-	public safeRoutes():Router{
 		this.router.post("/safe",AuthMiddleware.authenticateToken, AuthController.prototype.safe);
 		return this.router;
 	}
+
 
 	
 }

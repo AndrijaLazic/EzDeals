@@ -39,6 +39,7 @@ class Product:
     name: str
     image: str
     prices: List[Price]
+    currentBestPrice:str
     historyID:str
     dateAdded:str
     lastScraped:str
@@ -56,11 +57,14 @@ class Product:
         _primaryCategory = str(obj.get("primaryCategory"))
         _prices = [Price.from_dict(y) for y in obj.get("prices")]
         _id=str(obj.get("_id"))
+        _currentBestPrice=str(obj.get("currentBestPrice"))
         product=Product(_name, _image,_dateAdded,_primaryCategory)
         product.prices=_prices
         product.historyID=_historyID
         product.lastScraped=_lastScraped
         product._id=_id
+        product.currentBestPrice=_currentBestPrice
+        
 
         return product
     
@@ -71,6 +75,7 @@ class Product:
         self.historyID=""
         self.dateAdded=dateAdded
         self.primaryCategory=primaryCategory
+        self.currentBestPrice=""
         if lastScraped is None:
             lastScraped=dateAdded
         self.lastScraped=lastScraped
@@ -94,11 +99,13 @@ class Product:
         if oldProduct.lastScraped!= newProduct.lastScraped:
             differences["lastScraped"] = newProduct.lastScraped
         
-        if oldProduct.prices!= newProduct.prices:
-            differences["prices"] = newProduct.prices
+        differences["prices"] = newProduct.prices
         
         if oldProduct.image=="":
             differences["image"]=newProduct.image
+        
+        if oldProduct.currentBestPrice!= newProduct.currentBestPrice:
+            differences["currentBestPrice"]=newProduct.currentBestPrice
 
         return differences
     

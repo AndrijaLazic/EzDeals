@@ -3,8 +3,8 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from scrapy import signals
-
+from scrapy import Request, signals
+from urllib.parse import urlparse
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 from Scraper.AgentMenager import AgentMenager
@@ -111,5 +111,6 @@ class ShowRequestHeadersMiddleware:
         print("\n\n\n")
 
 class RotateUserAgentMiddleware:
-    def process_request(self, request, spider):
+    def process_request(self, request:Request, spider):
         request.headers["User-Agent"]=AgentMenager().giveAgent()
+
