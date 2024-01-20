@@ -27,3 +27,13 @@ export interface IShortProductDocument extends Document {
 	image: string;
 	currentBestPrice: string;
 }
+
+export interface IProductHistoryDocument extends Document {
+	_id?: string | ObjectId;
+	history: HistoryNode[];
+}
+
+export interface HistoryNode {
+	date: string;
+	value: string;
+}

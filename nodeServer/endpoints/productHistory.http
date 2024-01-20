@@ -1,0 +1,14 @@
+@baseUrl=http://localhost:5000
+@urlPath=api/product
+####
+GET {{baseUrl}}/{{urlPath}}/history/65a54807f49650979b0f8915
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWExYjhiZjkyMmQwY2U0ZDI4Mjk0ODkiLCJlbWFpbCI6Imd1bmRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Imd1bmRyYSIsInByb2ZpbGVQaWN0dXJlIjoiIiwiY3JlYXRlZEF0IjoiMjAyNC0wMS0xMVQyMzowMDowMC4wMDBaIiwiaG9ub3JWYWx1ZSI6MCwicXVvdGUiOiIiLCJpYXQiOjE3MDUxMTA0NTgsImV4cCI6MTcwNTExNDA1OH0.bUENwisQvB9CE9Lsk3J_en6FvlAqDx0IMPz-3sdYd5o
+
+{
+	"numberOfProductsPerPage": "3",
+	"password": "sifra"
+}
+

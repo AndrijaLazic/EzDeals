@@ -15,9 +15,14 @@ class ProductRoutes {
 			ProductControler.prototype.getProducts
 		);
 		this.router.get(
+			"/product/history/:historyId",
+			ProductControler.prototype.getProductHistory
+		);
+		this.router.get(
 			"/product/:productCategory/:productId",
 			ProductControler.prototype.getSingleProduct
 		);
+
 		return this.router;
 	}
 }

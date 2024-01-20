@@ -4,6 +4,7 @@ import HTTP_STATUS from "http-status-codes";
 import { productService } from "src/shared/services/database/product.service";
 import {
 	IProductDocument,
+	IProductHistoryDocument,
 	IShortProductDocument
 } from "../interfaces/product.interfaces";
 
@@ -59,5 +60,24 @@ export class ProductControler {
 		response
 			.status(HTTP_STATUS.OK)
 			.json({ message: "Product found", product: product });
+	}
+
+	public async getProductHistory(
+		request: Request,
+		response: Response
+	): Promise<void> {
+		const historyId = request.params.historyId;
+
+		const history: IProductHistoryDocument | null =
+			await productService.getHistory(
+				{
+					_id: historyId
+				},
+				true
+			);
+
+		response
+			.status(HTTP_STATUS.OK)
+			.json({ message: "History found", history: history });
 	}
 }
