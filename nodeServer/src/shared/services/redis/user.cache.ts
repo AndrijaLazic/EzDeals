@@ -1,9 +1,6 @@
 import { IUserDocument } from "src/features/user/interfaces/user.interfaces";
 import { BaseCache, RedisClient } from "./base.cache";
-import { config } from "src/config";
-import { Logger } from "winston";
 import { ServerError } from "src/shared/globals/helpers/error-handler";
-const log: Logger = config.createLogger("userCache");
 
 export class UserCache extends BaseCache {
 	constructor(client: RedisClient) {
@@ -66,7 +63,7 @@ export class UserCache extends BaseCache {
 			});
 			await this.client.HSET(`users:${key}`, dataToSave);
 		} catch (error) {
-			log.error(error);
+			this.log.error(error);
 			throw new ServerError("Server error try again");
 		}
 	}

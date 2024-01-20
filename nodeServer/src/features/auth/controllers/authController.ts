@@ -19,9 +19,9 @@ import {
 	RedisFactory
 } from "src/shared/services/redis/RedisFactory";
 
-const userCache: UserCache = RedisFactory.getCache(
+const userCache: UserCache = RedisFactory.getCache<UserCache>(
 	CacheTypes.UserCache
-) as unknown as UserCache;
+);
 
 export class AuthController {
 	@joiValidation(signupSchema)

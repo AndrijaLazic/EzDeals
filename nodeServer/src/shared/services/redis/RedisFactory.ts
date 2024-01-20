@@ -3,11 +3,13 @@ import { Logger } from "winston";
 import { BaseCache, RedisClient } from "./base.cache";
 import { createClient } from "redis";
 import { UserCache } from "./user.cache";
+import { ProductCache } from "./product.cache";
 
 const log: Logger = config.createLogger("redisConnection");
 
 export enum CacheTypes {
-	UserCache
+	UserCache,
+	ProductCache
 }
 
 class redisFactory {
@@ -41,22 +43,32 @@ class redisFactory {
 		}
 	}
 
-	getCache(cachetype: CacheTypes): BaseCache {
+	/**
+	 * Get cache of selected type
+	 * @param T return type
+	 * @param cachetype type of cache you want
+	 */
+	getCache<T extends BaseCache>(cachetype: CacheTypes):T{
 		let cache = redisFactory.cacheMap.get(cachetype);
 		if (cache) {
-			return cache;
+			return cache as T;
 		}
 		switch (cachetype) {
 			case CacheTypes.UserCache:
 				cache = new UserCache(redisFactory.client);
 				redisFactory.cacheMap.set(cachetype, cache);
 				break;
+			case CacheTypes.ProductCache:
+				cache = new ProductCache(redisFactory.client);
+				redisFactory.cacheMap.set(cachetype, cache);
+				break;
+
 			default:
 				throw new Error(
 					"Selected cache:" + CacheTypes[cachetype] + " does not exist"
 				);
 		}
-		return cache;
+		return cache as T;
 	}
 
 	/**
