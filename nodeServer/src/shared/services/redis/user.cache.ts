@@ -1,16 +1,16 @@
 import { IUserDocument } from "src/features/user/interfaces/user.interfaces";
-import { BaseCache } from "./base.cache";
+import { BaseCache, RedisClient } from "./base.cache";
 import { config } from "src/config";
 import { Logger } from "winston";
 import { ServerError } from "src/shared/globals/helpers/error-handler";
 const log: Logger = config.createLogger("userCache");
 
 export class UserCache extends BaseCache {
-	constructor() {
-		super("UserCache");
+	constructor(client: RedisClient) {
+		super("UserCache", client);
 	}
 
-	public async saveUserToCache(
+	public async saveDataToCache(
 		key: string,
 		uId: string,
 		createdUser: IUserDocument

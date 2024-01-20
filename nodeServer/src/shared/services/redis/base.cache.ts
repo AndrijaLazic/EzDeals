@@ -9,11 +9,9 @@ export abstract class BaseCache {
 	client: RedisClient;
 	log: Logger;
 
-	constructor(cacheName: string) {
-		this.client = createClient({
-			url: config.REDIS_HOST
-		});
+	constructor(cacheName: string, client: RedisClient) {
 		this.log = config.createLogger(cacheName);
+		this.client = client;
 		this.cacheError();
 	}
 
@@ -23,12 +21,5 @@ export abstract class BaseCache {
 		});
 	}
 
-	/**
-	 * Used to clear all data stored in cache
-	 *
-	 */
-	public clearCache(): void {
-		if (!this.client) return;
-		this.client.FLUSHALL();
-	}
+	abstract saveDataToCache(...args: any[]): Promise<void>;
 }

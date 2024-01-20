@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Logger } from "winston";
 import { config } from "./config";
-import { redisConnection } from "./shared/services/redis/redis.connection";
+import { RedisFactory } from "./shared/services/redis/RedisFactory";
 
 const log: Logger = config.createLogger("setupDatabase");
 
@@ -22,8 +22,7 @@ class Database {
 			.connect(connString)
 			.then(() => {
 				log.info("Connected to MongoDB:" + connString);
-				redisConnection.connect();
-				this.clearRedis();
+				RedisFactory.connect();
 			})
 			.catch((error) => {
 				log.error("MongoDB connection error:", error.message);
@@ -38,10 +37,6 @@ class Database {
 			log.info("MongoDB disconnected, trying to reconnect");
 			this._connect();
 		});
-	}
-
-	clearRedis() {
-		redisConnection.clearCache();
 	}
 }
 

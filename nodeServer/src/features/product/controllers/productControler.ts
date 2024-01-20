@@ -7,8 +7,15 @@ import {
 	IProductHistoryDocument,
 	IShortProductDocument
 } from "../interfaces/product.interfaces";
+import {
+	CacheTypes,
+	RedisFactory
+} from "src/shared/services/redis/RedisFactory";
+import { UserCache } from "src/shared/services/redis/user.cache";
 
-//const userCache:UserCache=new UserCache();
+const userCache: UserCache = RedisFactory.getCache(
+	CacheTypes.UserCache
+) as unknown as UserCache;
 
 export class ProductControler {
 	public async getProducts(

@@ -14,8 +14,14 @@ import { Helpers } from "src/shared/globals/helpers/helpers";
 import { loginSchema } from "../schemes/login";
 import JWT from "jsonwebtoken";
 import { config } from "src/config";
+import {
+	CacheTypes,
+	RedisFactory
+} from "src/shared/services/redis/RedisFactory";
 
-const userCache: UserCache = new UserCache();
+const userCache: UserCache = RedisFactory.getCache(
+	CacheTypes.UserCache
+) as unknown as UserCache;
 
 export class AuthController {
 	@joiValidation(signupSchema)
@@ -43,7 +49,7 @@ export class AuthController {
 		const uId = `${Helpers.generateRandomIntegers(12)}`;
 
 		//Add user to redis cache
-		await userCache.saveUserToCache(`${newUser._id}`, uId, newUser);
+		await userCache!.saveDataToCache(`${newUser._id}`, uId, newUser);
 
 		response
 			.status(HTTP_STATUS.CREATED)
