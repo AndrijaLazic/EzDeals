@@ -9,7 +9,6 @@ const productSchema: Schema = new Schema({
 	name: { type: String, require: true },
 	image: { type: String, require: true },
 	dateAdded: { type: String, require: true },
-	profilePicture: { type: String, default: "" },
 	lastScraped: { type: String, default: "" },
 	primaryCategory: { type: String, default: "" },
 	prices: { type: [] },

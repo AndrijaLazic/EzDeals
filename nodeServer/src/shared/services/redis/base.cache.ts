@@ -21,5 +21,5 @@ export abstract class BaseCache {
 		});
 	}
 
-	abstract saveDataToCache(...args: any[]): Promise<void>;
+	//abstract saveDataToCache(...args: any[]): Promise<void>;
 }

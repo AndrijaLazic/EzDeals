@@ -11,11 +11,11 @@ import {
 	CacheTypes,
 	RedisFactory
 } from "src/shared/services/redis/RedisFactory";
-import { UserCache } from "src/shared/services/redis/user.cache";
+import { ProductCache } from "src/shared/services/redis/product.cache";
 
-const userCache: UserCache = RedisFactory.getCache(
-	CacheTypes.UserCache
-) as unknown as UserCache;
+const productCache: ProductCache = RedisFactory.getCache<ProductCache>(
+	CacheTypes.ProductCache
+);
 
 export class ProductControler {
 	public async getProducts(
@@ -53,16 +53,23 @@ export class ProductControler {
 		request: Request,
 		response: Response
 	): Promise<void> {
+
 		const category = request.params.productCategory;
 		const productId = request.params.productId;
 
-		const product: IProductDocument | null = await productService.getProduct(
-			category,
-			{
-				_id: productId
-			},
-			true
-		);
+		let product: IProductDocument | null=await productCache.getProductFromCache(productId);
+
+		if(!product){
+			product = await productService.getProduct(
+				category,
+				{
+					_id: productId
+				},
+				true
+			);
+			if(product)
+				productCache.saveProductToCache(product);
+		}
 
 		response
 			.status(HTTP_STATUS.OK)
