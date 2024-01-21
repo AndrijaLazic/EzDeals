@@ -1,6 +1,6 @@
 import { ServerError } from "src/shared/globals/helpers/error-handler";
 import { BaseCache, RedisClient } from "./base.cache";
-import { IProductDocument, IProductHistoryDocument } from "src/features/product/interfaces/product.interfaces";
+import { IProductDocument, IProductHistoryDocument, IShortProductDocument, SearchInfo } from "src/features/product/interfaces/product.interfaces";
 
 
 export class ProductCache extends BaseCache {
@@ -92,5 +92,49 @@ export class ProductCache extends BaseCache {
 			throw new ServerError("Server error try again");
 		}
 		return productHistory;
+	}
+
+	/**
+	* Save product history to cache
+	* @param products products you want to save.
+	* @param searchInfo info about searched products.
+	*/
+	public async saveShortProductsToCache(
+		products: IShortProductDocument[],
+		searchInfo:SearchInfo
+	): Promise<void> {
+
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
+			await this.client.set(`shortProducts:${searchInfo.productCategory}:${searchInfo.sortOrder}:${searchInfo.pageNum}`,JSON.stringify(products));
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+	}
+
+	/**
+	* Get short products from cache
+	* @param searchInfo information about the search
+	*/
+	public async getShortProductsFromCache(
+		searchInfo:SearchInfo
+	): Promise<IShortProductDocument[] | null> {
+		let products: IShortProductDocument[] | null=null;
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
+			const result=await this.client.get(`shortProducts:${searchInfo.productCategory}:${searchInfo.sortOrder}:${searchInfo.pageNum}`);
+			if(result){
+				products=JSON.parse(result);
+			}
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+		return products;
 	}
 }

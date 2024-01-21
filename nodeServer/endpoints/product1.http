@@ -8,7 +8,9 @@ withCredentials: true
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWExYjhiZjkyMmQwY2U0ZDI4Mjk0ODkiLCJlbWFpbCI6Imd1bmRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Imd1bmRyYSIsInByb2ZpbGVQaWN0dXJlIjoiIiwiY3JlYXRlZEF0IjoiMjAyNC0wMS0xMVQyMzowMDowMC4wMDBaIiwiaG9ub3JWYWx1ZSI6MCwicXVvdGUiOiIiLCJpYXQiOjE3MDUxMTA0NTgsImV4cCI6MTcwNTExNDA1OH0.bUENwisQvB9CE9Lsk3J_en6FvlAqDx0IMPz-3sdYd5o
 
 {
-	"numberOfProductsPerPage": "3",
-	"password": "sifra"
+	"numberOfProducts": "24",
+	"sortOrder": "ByPriceAcending",
+	"searchString":"",
+	"pageNum":"1"
 }
 

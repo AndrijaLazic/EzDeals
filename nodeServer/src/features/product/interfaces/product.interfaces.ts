@@ -37,3 +37,18 @@ export interface HistoryNode {
 	date: string;
 	value: string;
 }
+
+export interface SearchInfo{
+	pageNum:number,
+	sortOrder:SortType,
+	productCategory:string,
+	numberOfProducts:number,
+	searchString:string
+}
+
+export enum SortType {
+	ByPriceAcending="ByPriceAcending", 
+	ByPriceDecending="ByPriceDecending", 
+	ByDateNewerFirst="ByDateNewerFirst",
+	ByDateOlderFirst="ByDateOlderFirst"    
+}
