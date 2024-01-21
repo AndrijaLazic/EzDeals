@@ -67,8 +67,7 @@ export class ProductControler {
 				},
 				true
 			);
-			if(product)
-				productCache.saveProductToCache(product);
+			productCache.saveProductToCache(product!);
 		}
 
 		response
@@ -82,13 +81,19 @@ export class ProductControler {
 	): Promise<void> {
 		const historyId = request.params.historyId;
 
-		const history: IProductHistoryDocument | null =
-			await productService.getHistory(
-				{
-					_id: historyId
-				},
-				true
-			);
+		let history: IProductHistoryDocument | null=await productCache.getProductHistoryFromCache(historyId);
+		console.log(history);
+		if(!history){
+			history =
+				await productService.getHistory(
+					{
+						_id: historyId
+					},
+					true
+				);
+			productCache.saveProductHistoryToCache(history!);
+		}
+		console.log(history);
 
 		response
 			.status(HTTP_STATUS.OK)

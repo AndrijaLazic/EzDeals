@@ -1,6 +1,6 @@
 import { ServerError } from "src/shared/globals/helpers/error-handler";
 import { BaseCache, RedisClient } from "./base.cache";
-import { IProductDocument } from "src/features/product/interfaces/product.interfaces";
+import { IProductDocument, IProductHistoryDocument } from "src/features/product/interfaces/product.interfaces";
 
 
 export class ProductCache extends BaseCache {
@@ -51,4 +51,46 @@ export class ProductCache extends BaseCache {
 	}
 
 
+
+	/**
+	* Save product history to cache
+	* @param productHistory product history you want to save.
+	*/
+	public async saveProductHistoryToCache(
+		productHistory: IProductHistoryDocument
+	): Promise<void> {
+
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
+			await this.client.set(`productsHistory:${productHistory._id}`,JSON.stringify(productHistory));
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+	}
+
+	/**
+	* Get product history from cache
+	* @param historyId Id of product you want to get
+	*/
+	public async getProductHistoryFromCache(
+		historyId: string
+	): Promise<IProductHistoryDocument | null> {
+		let productHistory:IProductHistoryDocument | null=null;
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
+			const result=await this.client.get(`productsHistory:${historyId}`);
+			if(result){
+				productHistory=JSON.parse(result);
+			}
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+		return productHistory;
+	}
 }
