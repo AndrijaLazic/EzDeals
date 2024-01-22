@@ -39,6 +39,10 @@ class productCategories {
 		return selectedCategory;
 	}
 
+	public getAllCategories():Model<IProductDocument>[]{
+		return Array.from(this.instances.values());
+	}
+
 	// Add other methods or properties as needed
 }
 

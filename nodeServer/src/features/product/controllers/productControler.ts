@@ -133,4 +133,51 @@ export class ProductControler {
 			.status(HTTP_STATUS.OK)
 			.json({ message: "History found", history: history });
 	}
+
+	public async getProductsBySearch(
+		request: Request,
+		response: Response
+	): Promise<void> {
+
+		const searchInfo: SearchInfo = request.body;
+
+		if(request.query.page)
+			searchInfo.pageNum=parseInt(request.query.page as unknown as string, 10);
+
+		
+
+		//Check if sort order is valid
+		const sortOrderString = request.query.sortOrder as unknown as SortType;
+		if (sortOrderString) {
+			if (Object.values(SortType).includes(sortOrderString)) {
+				searchInfo.sortOrder = sortOrderString;
+			}
+		}
+
+		
+		let products: IShortProductDocument[] | null =
+			await productCache.getSearchProductsFromCache(searchInfo);
+		let maxPages = 1;
+
+		if (!products) {
+
+			products = await productService.getProductsForSearch(searchInfo);
+
+			let numberofProductsInSearch: number =products.length;
+				
+			if(numberofProductsInSearch==0)
+				numberofProductsInSearch=1;
+			maxPages = Math.ceil(
+				numberofProductsInSearch / searchInfo.numberOfProducts
+			);
+
+			if (products) {
+				productCache.saveSearchProductsToCache(products, searchInfo);
+			}
+		}
+
+		response
+			.status(HTTP_STATUS.OK)
+			.json({ message: "Products", products: products, maxPages: maxPages });
+	}
 }

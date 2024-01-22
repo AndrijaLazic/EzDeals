@@ -11,17 +11,25 @@ class ProductRoutes {
 
 	public routes(): Router {
 		this.router.get(
-			"/product/:productCategory",
-			ProductControler.prototype.getProductsByCategory
-		);
-		this.router.get(
 			"/product/history/:historyId",
 			ProductControler.prototype.getProductHistory
 		);
+
+		this.router.get(
+			"/product/search",
+			ProductControler.prototype.getProductsBySearch
+		);
+
+		this.router.get(
+			"/product/:productCategory",
+			ProductControler.prototype.getProductsByCategory
+		);
+		
 		this.router.get(
 			"/product/:productCategory/:productId",
 			ProductControler.prototype.getSingleProduct
 		);
+		
 
 		return this.router;
 	}

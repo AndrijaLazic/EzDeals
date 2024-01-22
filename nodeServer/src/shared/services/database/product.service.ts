@@ -14,15 +14,14 @@ const log: Logger = config.createLogger("productService");
 
 class ProductService {
 	/**
-	 * Get products in JSON format
-	 * @param category chosen category of products
-	 * @param page chosen page of products. If it exceeds the maximum page, it will default to the max page. The default value is 1.
-	 * @param numberOfProductsPerPage number of products on single page
-	 * @returns number
+	 * Get products from category
+	 * @param searchInfo info used in a search
+	 * @param jsonFormat if false return products in Document format
+	 * @returns Promise<IShortProductDocument[]> 
 	 */
 	public async getProductsForCategory(
 		searchInfo: SearchInfo,
-		jsonFormat: boolean = false
+		jsonFormat: boolean = true
 	): Promise<IShortProductDocument[]> {
 		let products: IShortProductDocument[];
 
@@ -126,6 +125,68 @@ class ProductService {
 
 		return history;
 	}
+
+
+	/**
+	 * Get products from search
+	 * @param searchInfo info used in a search
+	 * @param jsonFormat if false return products in Document format
+	 * @returns Promise<IShortProductDocument[]> 
+	 */
+	public async getProductsForSearch(
+		searchInfo: SearchInfo,
+		jsonFormat: boolean = true
+	): Promise<IShortProductDocument[]> {
+		let products: IShortProductDocument[]=[];
+
+		const allCategories= await ProductCategories.getAllCategories();
+		let resultProducts: IShortProductDocument[] =[];
+		const numOfCategories=allCategories.length;
+
+		const keywordsToSearch:string[]=searchInfo.searchString.trim().split(" ");
+
+		const keywordsToSearchLength=keywordsToSearch.length;
+		let searchString:string="";
+		for(let i=0;i<keywordsToSearchLength;i++){
+			searchString=searchString+"(?=.*"+keywordsToSearch[i]+")";
+		}
+		const regexExpression=new RegExp(searchString,"i");
+
+
+		if (jsonFormat) {
+
+			for(let i=0;i<numOfCategories;i++){
+				resultProducts=await allCategories[i]
+					.find({
+						name:{
+							$regex:regexExpression
+						}
+					}, ["name", "image", "currentBestPrice"])
+					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
+					.limit(searchInfo.numberOfProducts)
+					.lean() //
+					.exec();
+				products=products.concat(resultProducts);
+				
+			}
+			return products;
+		}
+
+		for(let i=0;i<numOfCategories;i++){
+			resultProducts=await allCategories[i]
+				.find({
+					name:{
+						$regex:regexExpression
+					}
+				}, ["name", "image", "currentBestPrice"])
+				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
+				.limit(searchInfo.numberOfProducts)
+				.exec();
+			products=products.concat(resultProducts);
+		}
+		return products;
+	}
+
 }
 
 export const productService: ProductService = new ProductService();
