@@ -38,17 +38,17 @@ export interface HistoryNode {
 	value: string;
 }
 
-export interface SearchInfo{
-	pageNum:number,
-	sortOrder:SortType,
-	productCategory:string,
-	numberOfProducts:number,
-	searchString:string
+export interface SearchInfo {
+	pageNum: number;
+	sortOrder: SortType;
+	productCategory: string;
+	numberOfProducts: number;
+	searchString: string;
 }
 
 export enum SortType {
-	ByPriceAcending="ByPriceAcending", 
-	ByPriceDecending="ByPriceDecending", 
-	ByDateNewerFirst="ByDateNewerFirst",
-	ByDateOlderFirst="ByDateOlderFirst"    
+	ByPriceAcending = "ByPriceAcending",
+	ByPriceDecending = "ByPriceDecending",
+	ByDateNewerFirst = "ByDateNewerFirst",
+	ByDateOlderFirst = "ByDateOlderFirst"
 }

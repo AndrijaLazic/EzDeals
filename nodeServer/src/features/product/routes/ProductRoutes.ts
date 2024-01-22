@@ -12,7 +12,7 @@ class ProductRoutes {
 	public routes(): Router {
 		this.router.get(
 			"/product/:productCategory",
-			ProductControler.prototype.getProducts
+			ProductControler.prototype.getProductsByCategory
 		);
 		this.router.get(
 			"/product/history/:historyId",

@@ -48,7 +48,7 @@ class redisFactory {
 	 * @param T return type
 	 * @param cachetype type of cache you want
 	 */
-	getCache<T extends BaseCache>(cachetype: CacheTypes):T{
+	getCache<T extends BaseCache>(cachetype: CacheTypes): T {
 		let cache = redisFactory.cacheMap.get(cachetype);
 		if (cache) {
 			return cache as T;

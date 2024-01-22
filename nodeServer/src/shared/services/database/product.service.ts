@@ -2,7 +2,8 @@ import { config } from "src/config";
 import {
 	IProductDocument,
 	IProductHistoryDocument,
-	IShortProductDocument
+	IShortProductDocument,
+	SearchInfo
 } from "src/features/product/interfaces/product.interfaces";
 import { ProductCategories } from "src/features/product/models/product.schema";
 import { ProductHistoryModel } from "src/features/product/models/productHistory.schema";
@@ -19,19 +20,29 @@ class ProductService {
 	 * @param numberOfProductsPerPage number of products on single page
 	 * @returns number
 	 */
-	public async getProductsForSearch(
-		category: string,
-		page: number,
-		numberOfProductsPerPage: number
+	public async getProductsForCategory(
+		searchInfo: SearchInfo,
+		jsonFormat: boolean = false
 	): Promise<IShortProductDocument[]> {
-		const products: IShortProductDocument[] =
-			await ProductCategories.getCategory(category)
+		let products: IShortProductDocument[];
+
+		if (jsonFormat) {
+			products = await ProductCategories.getCategory(
+				searchInfo.productCategory
+			)
 				.find({}, ["name", "image", "currentBestPrice"])
-				.skip((page - 1) * numberOfProductsPerPage)
-				.limit(numberOfProductsPerPage)
+				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
+				.limit(searchInfo.numberOfProducts)
 				.lean() //
 				.exec();
+			return products;
+		}
 
+		products = await ProductCategories.getCategory(searchInfo.productCategory)
+			.find({}, ["name", "image", "currentBestPrice"])
+			.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
+			.limit(searchInfo.numberOfProducts)
+			.exec();
 		return products;
 	}
 
@@ -41,7 +52,9 @@ class ProductService {
 	 * @param category chosen category of products
 	 * @returns number
 	 */
-	public async getNumberOfProducts(category: string): Promise<number> {
+	public async getNumberOfProductsForCategory(
+		category: string
+	): Promise<number> {
 		const numberofProducts: number = await ProductCategories.getCategory(
 			category
 		).countDocuments({});
