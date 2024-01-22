@@ -99,7 +99,7 @@ export class ProductCache extends BaseCache {
 	}
 
 	/**
-	 * Save product history to cache
+	 * Save short products to cache
 	 * @param products products you want to save.
 	 * @param searchInfo info about searched products.
 	 */
@@ -145,4 +145,53 @@ export class ProductCache extends BaseCache {
 		}
 		return products;
 	}
+
+	/**
+	 * Save search products  to cache
+	 * @param products products you want to save.
+	 * @param searchInfo info about searched products.
+	 */
+	public async saveSearchProductsToCache(
+		products: IShortProductDocument[],
+		searchInfo: SearchInfo
+	): Promise<void> {
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
+			await this.client.set(
+				`shortProducts:${searchInfo.searchString}:${searchInfo.sortOrder}:${searchInfo.pageNum}`,
+				JSON.stringify(products)
+			);
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+	}
+
+	/**
+	 * Get short products from cache
+	 * @param searchInfo information about the search
+	 */
+	public async getSearchProductsFromCache(
+		searchInfo: SearchInfo
+	): Promise<IShortProductDocument[] | null> {
+		let products: IShortProductDocument[] | null = null;
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
+			const result = await this.client.get(
+				`shortProducts:${searchInfo.searchString}:${searchInfo.sortOrder}:${searchInfo.pageNum}`
+			);
+			if (result) {
+				products = JSON.parse(result);
+			}
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+		return products;
+	}
+
 }
