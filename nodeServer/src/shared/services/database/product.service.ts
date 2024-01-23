@@ -25,20 +25,26 @@ class ProductService {
 	): Promise<IShortProductDocument[]> {
 		let products: IShortProductDocument[];
 
+		const sortParameter=ProductCategories.getSortParameter(searchInfo.sortOrder);
+
+		console.log(sortParameter);
+
 		if (jsonFormat) {
 			products = await ProductCategories.getCategory(
 				searchInfo.productCategory
 			)
 				.find({}, ["name", "image", "currentBestPrice"])
+				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
-				.lean() //
+				.lean()
 				.exec();
 			return products;
 		}
 
 		products = await ProductCategories.getCategory(searchInfo.productCategory)
 			.find({}, ["name", "image", "currentBestPrice"])
+			.sort(sortParameter)
 			.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 			.limit(searchInfo.numberOfProducts)
 			.exec();
@@ -152,6 +158,8 @@ class ProductService {
 		}
 		const regexExpression=new RegExp(searchString,"i");
 
+		const sortParameter=ProductCategories.getSortParameter(searchInfo.sortOrder);
+
 
 		if (jsonFormat) {
 
@@ -162,6 +170,7 @@ class ProductService {
 							$regex:regexExpression
 						}
 					}, ["name", "image", "currentBestPrice"])
+					.sort(sortParameter)
 					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 					.limit(searchInfo.numberOfProducts)
 					.lean() //
@@ -179,6 +188,7 @@ class ProductService {
 						$regex:regexExpression
 					}
 				}, ["name", "image", "currentBestPrice"])
+				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
 				.exec();

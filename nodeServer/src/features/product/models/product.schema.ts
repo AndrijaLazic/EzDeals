@@ -1,6 +1,6 @@
 import { model, Model, Schema } from "mongoose";
 
-import { IProductDocument } from "../interfaces/product.interfaces";
+import { IProductDocument, SortType } from "../interfaces/product.interfaces";
 import { ObjectId } from "mongodb";
 import { config } from "src/config";
 import { BadRequestError } from "src/shared/globals/helpers/error-handler";
@@ -41,6 +41,36 @@ class productCategories {
 
 	public getAllCategories():Model<IProductDocument>[]{
 		return Array.from(this.instances.values());
+	}
+
+	public getSortParameter(sort:SortType):any{
+		switch(sort) { 
+			case SortType.ByPriceAcending: { 
+				return {
+					currentBestPrice:1
+				};
+			} 
+			case SortType.ByPriceDecending: { 
+				return {
+					currentBestPrice:-1
+				};
+			}
+			case SortType.ByDateNewerFirst: { 
+				return {
+					dateAdded:1
+				};
+			} 
+			case SortType.ByDateOlderFirst: { 
+				return {
+					dateAdded:-1
+				};
+			} 
+			default: { 
+				return {
+					currentBestPrice:1
+				};
+			} 
+		} 
 	}
 
 	// Add other methods or properties as needed

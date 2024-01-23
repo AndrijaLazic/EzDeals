@@ -26,37 +26,30 @@ export class ProductControler {
 		request: Request,
 		response: Response
 	): Promise<void> {
+		const searchInfo: SearchInfo=request.body;
+
 		const category = request.params.productCategory;
 
 		if (!config.PRODUCT_CATEGORIES?.includes(category))
 			throw new NotFoundError("Category:" + category + " does not exist");
 
-		const page: number =
-			parseInt(request.query.page as unknown as string, 10) || 1;
+		searchInfo.productCategory=category;
 
-		const numberOfProductsPerPage: number =
-			parseInt(
-				request.query.numberOfProductsPerPage as unknown as string,
-				10
-			) || 24;
+		if(request.query.page)
+			searchInfo.pageNum=parseInt(request.query.page as unknown as string, 10) || 1;
 
-		let sortOrder: SortType = SortType.ByPriceAcending;
+		searchInfo.numberOfProducts=searchInfo.numberOfProducts || 24;
+
+
 
 		//Check if sort order is valid
 		const sortOrderString = request.query.sortOrder as unknown as SortType;
 		if (sortOrderString) {
 			if (Object.values(SortType).includes(sortOrderString)) {
-				sortOrder = sortOrderString;
+				searchInfo.sortOrder = sortOrderString;
+				console.log(sortOrderString);
 			}
 		}
-
-		const searchInfo: SearchInfo = {
-			productCategory: category,
-			pageNum: page,
-			numberOfProducts: numberOfProductsPerPage,
-			searchString: "",
-			sortOrder: sortOrder
-		};
 
 		let products: IShortProductDocument[] | null =
 			await productCache.getShortProductsFromCache(searchInfo);
@@ -68,7 +61,7 @@ export class ProductControler {
 					searchInfo.productCategory
 				);
 			maxPages = Math.ceil(
-				numberofProductsInCategory / numberOfProductsPerPage
+				numberofProductsInCategory / searchInfo.numberOfProducts
 			);
 
 			products = await productService.getProductsForCategory(searchInfo);
