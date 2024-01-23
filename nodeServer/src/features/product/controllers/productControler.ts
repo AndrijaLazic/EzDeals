@@ -14,46 +14,27 @@ import {
 	RedisFactory
 } from "src/shared/services/redis/RedisFactory";
 import { ProductCache } from "src/shared/services/redis/product.cache";
-import { config } from "src/config";
-import { NotFoundError } from "src/shared/globals/helpers/error-handler";
+import { productSearchValidation } from "src/shared/globals/decorators/joi-validator-deocrators";
+import { searchInfoSchema } from "../schemes/search";
 
 const productCache: ProductCache = RedisFactory.getCache<ProductCache>(
 	CacheTypes.ProductCache
 );
 
 export class ProductControler {
+	@productSearchValidation(searchInfoSchema)
 	public async getProductsByCategory(
 		request: Request,
 		response: Response
 	): Promise<void> {
 		const searchInfo: SearchInfo=request.body;
-
-		const category = request.params.productCategory;
-
-		if (!config.PRODUCT_CATEGORIES?.includes(category))
-			throw new NotFoundError("Category:" + category + " does not exist");
-
-		searchInfo.productCategory=category;
-
-		if(request.query.page)
-			searchInfo.pageNum=parseInt(request.query.page as unknown as string, 10) || 1;
-
-		searchInfo.numberOfProducts=searchInfo.numberOfProducts || 24;
-
-
-
-		//Check if sort order is valid
-		const sortOrderString = request.query.sortOrder as unknown as SortType;
-		if (sortOrderString) {
-			if (Object.values(SortType).includes(sortOrderString)) {
-				searchInfo.sortOrder = sortOrderString;
-				console.log(sortOrderString);
-			}
-		}
+		console.log(searchInfo)
 
 		let products: IShortProductDocument[] | null =
 			await productCache.getShortProductsFromCache(searchInfo);
 		let maxPages = 1;
+
+		console.log(searchInfo)
 
 		if (!products) {
 			const numberofProductsInCategory: number =

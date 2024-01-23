@@ -27,8 +27,6 @@ class ProductService {
 
 		const sortParameter=ProductCategories.getSortParameter(searchInfo.sortOrder);
 
-		console.log(sortParameter);
-
 		if (jsonFormat) {
 			products = await ProductCategories.getCategory(
 				searchInfo.productCategory

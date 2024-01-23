@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:5000
 @urlPath=api/product
 ####
-GET {{baseUrl}}/{{urlPath}}/Monitori?page=1
+GET {{baseUrl}}/{{urlPath}}/Monitori?page=-12
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
@@ -9,8 +9,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWExYjhiZ
 
 {
 	"numberOfProducts": "24",
-	"sortOrder": "ByPriceDecending",
-	"searchString":"",
-	"pageNum":"1"
+	"sortOrder": "ByPriceAcending",
+	"searchString":"name"
 }
 
