@@ -6,8 +6,7 @@ import {
 	IProductDocument,
 	IProductHistoryDocument,
 	IShortProductDocument,
-	SearchInfo,
-	SortType
+	SearchInfo
 } from "../interfaces/product.interfaces";
 import {
 	CacheTypes,
@@ -28,13 +27,10 @@ export class ProductControler {
 		response: Response
 	): Promise<void> {
 		const searchInfo: SearchInfo=request.body;
-		console.log(searchInfo)
 
 		let products: IShortProductDocument[] | null =
 			await productCache.getShortProductsFromCache(searchInfo);
 		let maxPages = 1;
-
-		console.log(searchInfo)
 
 		if (!products) {
 			const numberofProductsInCategory: number =
@@ -108,6 +104,7 @@ export class ProductControler {
 			.json({ message: "History found", history: history });
 	}
 
+	@productSearchValidation(searchInfoSchema)
 	public async getProductsBySearch(
 		request: Request,
 		response: Response
@@ -115,22 +112,9 @@ export class ProductControler {
 
 		const searchInfo: SearchInfo = request.body;
 
-		if(request.query.page)
-			searchInfo.pageNum=parseInt(request.query.page as unknown as string, 10);
-
-		
-
-		//Check if sort order is valid
-		const sortOrderString = request.query.sortOrder as unknown as SortType;
-		if (sortOrderString) {
-			if (Object.values(SortType).includes(sortOrderString)) {
-				searchInfo.sortOrder = sortOrderString;
-			}
-		}
-
-		
 		let products: IShortProductDocument[] | null =
 			await productCache.getSearchProductsFromCache(searchInfo);
+
 		let maxPages = 1;
 
 		if (!products) {
