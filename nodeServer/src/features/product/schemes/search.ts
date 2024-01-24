@@ -27,7 +27,7 @@ const searchInfoSchema: ObjectSchema = Joi.object().keys({
 
 	productCategory: Joi.string().allow('').optional()
 		.custom((value,helper)=>{
-			if (!config.PRODUCT_CATEGORIES?.includes(value))
+			if(!config.checkIfCategoryExists(value))
 				helper.error(`Category: ${value} does not exist`);
 			return value;
 		})

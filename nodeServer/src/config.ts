@@ -76,6 +76,12 @@ class Config {
 			}
 		}
 	}
+	
+	public checkIfCategoryExists(category:string):boolean{
+		if (config.PRODUCT_CATEGORIES?.includes(category))
+			return true;
+		return false;
+	}
 }
 
 export const config: Config = new Config();

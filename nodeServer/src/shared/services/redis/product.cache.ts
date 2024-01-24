@@ -18,9 +18,6 @@ export class ProductCache extends BaseCache {
 	 */
 	public async saveProductToCache(product: IProductDocument): Promise<void> {
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			await this.client.set(
 				`products:${product._id}`,
 				JSON.stringify(product)
@@ -40,9 +37,6 @@ export class ProductCache extends BaseCache {
 	): Promise<IProductDocument | null> {
 		let product: IProductDocument | null = null;
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			const result = await this.client.get(`products:${productId}`);
 			if (result) {
 				product = JSON.parse(result);
@@ -62,9 +56,6 @@ export class ProductCache extends BaseCache {
 		productHistory: IProductHistoryDocument
 	): Promise<void> {
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			await this.client.set(
 				`productsHistory:${productHistory._id}`,
 				JSON.stringify(productHistory)
@@ -84,9 +75,6 @@ export class ProductCache extends BaseCache {
 	): Promise<IProductHistoryDocument | null> {
 		let productHistory: IProductHistoryDocument | null = null;
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			const result = await this.client.get(`productsHistory:${historyId}`);
 			if (result) {
 				productHistory = JSON.parse(result);
@@ -108,9 +96,6 @@ export class ProductCache extends BaseCache {
 		searchInfo: SearchInfo
 	): Promise<void> {
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			await this.client.set(
 				`shortProducts:${searchInfo.productCategory}:${searchInfo.sortOrder}:${searchInfo.pageNum}`,
 				JSON.stringify(products)
@@ -130,9 +115,6 @@ export class ProductCache extends BaseCache {
 	): Promise<IShortProductDocument[] | null> {
 		let products: IShortProductDocument[] | null = null;
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			const result = await this.client.get(
 				`shortProducts:${searchInfo.productCategory}:${searchInfo.sortOrder}:${searchInfo.pageNum}`
 			);
@@ -156,9 +138,6 @@ export class ProductCache extends BaseCache {
 		searchInfo: SearchInfo
 	): Promise<void> {
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			await this.client.set(
 				`shortProducts:${searchInfo.searchString}:${searchInfo.sortOrder}:${searchInfo.pageNum}`,
 				JSON.stringify(products)
@@ -178,9 +157,6 @@ export class ProductCache extends BaseCache {
 	): Promise<IShortProductDocument[] | null> {
 		let products: IShortProductDocument[] | null = null;
 		try {
-			if (!this.client.isOpen) {
-				await this.client.connect();
-			}
 			const result = await this.client.get(
 				`shortProducts:${searchInfo.searchString}:${searchInfo.sortOrder}:${searchInfo.pageNum}`
 			);
@@ -192,6 +168,46 @@ export class ProductCache extends BaseCache {
 			throw new ServerError("Server error try again");
 		}
 		return products;
+	}
+
+	/**
+	 * Save number of products in selected category to cache
+	 * @param category category you want to save
+	 * @param numberOfProducts number of products you want to save
+	 */
+	public async saveCategoryNumberOfProducts(
+		category:string,
+		numberOfProducts:number
+	): Promise<void> {
+		try {
+			await this.client.set(
+				`${category}:numberOfProducts`,
+				numberOfProducts
+			);
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+	}
+
+	/**
+	 * Get number of products in selected category from cache
+	 * @param category category you want to save
+	 */
+	public async getCategoryNumberOfProducts(
+		category:string,
+	): Promise<number | null> {
+		let numberOfProducts: number | null = null;
+		try {
+			const result = await this.client.get(`${category}:numberOfProducts`);
+			if (result) {
+				numberOfProducts = parseInt(result, 10);
+			}
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+		return numberOfProducts;
 	}
 
 }

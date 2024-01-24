@@ -33,10 +33,16 @@ export class ProductControler {
 		let maxPages = 1;
 
 		if (!products) {
-			const numberofProductsInCategory: number =
-				await productService.getNumberOfProductsForCategory(
+			let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts(searchInfo.productCategory);
+
+			if(!numberofProductsInCategory){
+				numberofProductsInCategory=await productService.getNumberOfProductsForCategory(
 					searchInfo.productCategory
 				);
+				console.log(numberofProductsInCategory)
+				productCache.saveCategoryNumberOfProducts(searchInfo.productCategory,numberofProductsInCategory);
+			}
+				
 			maxPages = Math.ceil(
 				numberofProductsInCategory / searchInfo.numberOfProducts
 			);
