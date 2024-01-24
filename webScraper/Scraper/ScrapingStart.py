@@ -77,6 +77,9 @@ def Scraping():
 
     LogFile.close()
 
+    #Remove for production
+    HistoryThreading()
+    
 
 def HistoryLogging(collection_name:str,currentTime:str,):
     try:
@@ -92,9 +95,21 @@ def HistoryThreading():
     print("started history log at:")
     print(currentTime)
     dt_string = currentTime.strftime("%d/%m/%Y %H:%M")
-    threading.Thread(target=HistoryLogging,args=("Monitori",dt_string)).start()
-    threading.Thread(target=HistoryLogging,args=("RacunarskeKomponente",dt_string)).start()
-    #threading.Thread(target=HistoryLogging,args=("Slusalice",dt_string)).start()
+    t1=threading.Thread(target=HistoryLogging,args=("Monitori",dt_string))
+    t2=threading.Thread(target=HistoryLogging,args=("RacunarskeKomponente",dt_string))
+    t3=threading.Thread(target=HistoryLogging,args=("Slusalice",dt_string))
+
+    t1.start()
+    t2.start()
+    t3.start()
+
+    t1.join()
+    t2.join()
+    t3.join()
+
+    currentTime = datetime.now()
+    print("ended history log at:")
+    print(currentTime)
 
 def run_process(job_func):
     process = multiprocessing.Process(target=job_func)
@@ -103,7 +118,7 @@ def run_process(job_func):
 
 
 schedule.every().hour.do(run_process,Scraping)
-schedule.every().day.at('00:00').do(HistoryThreading)
+schedule.every().day.at('00:00').do(run_process,HistoryThreading)
 
 Scraping()
 

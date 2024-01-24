@@ -18,16 +18,12 @@ class HistoryMenager:
 
         for product in collection.find():
             product=Product.from_dict(product)
-            bestPrice="-1"
-            for price in product.prices:
-                if int(price.value)<int(bestPrice) or bestPrice=="-1":
-                    bestPrice=price.value
             
             productHistory=ProductHistory.from_dict(database.getHistoryOfProduct(product.historyID,"productHistory"))
             
-            if productHistory.history[-1].value !=bestPrice:
+            if productHistory.history[-1].value !=product.currentBestPrice:
                 result=database.insertHistoryNode(
                     {'_id':ObjectId(productHistory._id)},
-                    ProductHistoryNode(currentDate,bestPrice),
+                    ProductHistoryNode(currentDate,product.currentBestPrice),
                     "productHistory"
                     )

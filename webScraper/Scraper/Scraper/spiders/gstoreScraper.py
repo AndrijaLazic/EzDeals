@@ -15,7 +15,7 @@ class GstoreSpider(scrapy.Spider):
         PageInfo("https://www.gstore.rs/komponente-i-mrezna-oprema/komponente/procesori?page=",1,"RacunarskeKomponente"),
         PageInfo("https://www.gstore.rs/komponente-i-mrezna-oprema/komponente/maticne-ploce?page=",1,"RacunarskeKomponente"),
         PageInfo("https://www.gstore.rs/racunari--monitori--softver/monitori-i-oprema/monitori?page=",1,"Monitori"),
-        #PageInfo("https://www.gstore.rs/audio-video-foto/slusalice?page=",1,"Slusalice")
+        PageInfo("https://www.gstore.rs/audio-video-foto/slusalice?page=",1,"Slusalice")
     ]
     
     def parse(self, initialResponse):

@@ -102,6 +102,8 @@ class ProductMenager:
 
         database=Database()
 
+        database.createIndex(1,"name",category)
+
         #Iterating trough all items and checking if they already exist in database
         for key, val in self.productsMap.items():
             oldProduct=database.getOneProduct({'name':key},category)

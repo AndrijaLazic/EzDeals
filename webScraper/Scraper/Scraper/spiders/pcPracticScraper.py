@@ -15,7 +15,7 @@ class PcPracticSpider(scrapy.Spider):
         PageInfo("https://pcpractic.rs/racunari-monitori-komponente/komponente/procesori.html?p=",1,"RacunarskeKomponente"),
         PageInfo("https://pcpractic.rs/racunari-monitori-komponente/komponente/maticne-ploce.html?p=",1,"RacunarskeKomponente"),
         PageInfo("https://pcpractic.rs/racunari-monitori-komponente/monitori.html?p=",1,"Monitori"),
-        # PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?strana=",1,"Slusalice")
+        PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?strana=",1,"Slusalice")
         
     ]
     

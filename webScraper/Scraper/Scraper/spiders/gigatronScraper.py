@@ -15,7 +15,7 @@ class GigatronscraperSpider(scrapy.Spider):
         PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente/procesori?poredak=opadajuci&strana=",1,"RacunarskeKomponente"),
         PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/komponente/maticne-ploce?poredak=opadajuci&strana=",1,"RacunarskeKomponente"),  
         PageInfo("https://search.gigatron.rs/v1/catalog/get/racunari-i-komponente/monitori?poredak=opadajuci&strana=",1,"Monitori"),
-        #PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?poredak=opadajuci&strana=",1,"Slusalice")
+        PageInfo("https://search.gigatron.rs/v1/catalog/get/tv-audio-video/slusalice?poredak=opadajuci&strana=",1,"Slusalice")
     ]
     
     def parse(self, initialResponse):

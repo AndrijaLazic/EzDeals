@@ -22,7 +22,6 @@ class Database:
         
         #create new instance if it doesnt exist
         with cls._lock:
-
             #if instance already exists return it
             if cls._instance is not None: 
                 return cls._instance
@@ -35,7 +34,6 @@ class Database:
             
             cls.client = MongoClient(os.getenv('MongoDBConnectionString'))
             cls.db = cls.client[os.getenv('MongoDBName')]
-
             return instance
             
         
@@ -47,6 +45,7 @@ class Database:
     def close_db(self):
         if self is not None:
             self.client.close()
+            Database._instance=None
 
     
     def insertProduct(self,item:Product,collection_name:str):
@@ -144,6 +143,19 @@ class Database:
         }
 
         return (self.db[collection_name].update_one(filter,update))
+    
+    def createIndex(self,sort:int,field:str,collection:str):
+        """
+        used to create index on selected field
+
+        :param sort: 1 for acending -1 for decending
+        :param field: field you want to set index to
+        :param collection: collection you want to set index to
+        :return: void
+        """ 
+        self.db.get_collection(collection).create_index([
+            (field,1)
+            ])
 
 
 

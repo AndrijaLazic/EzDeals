@@ -39,7 +39,6 @@ export class ProductControler {
 				numberofProductsInCategory=await productService.getNumberOfProductsForCategory(
 					searchInfo.productCategory
 				);
-				console.log(numberofProductsInCategory)
 				productCache.saveCategoryNumberOfProducts(searchInfo.productCategory,numberofProductsInCategory);
 			}
 				
