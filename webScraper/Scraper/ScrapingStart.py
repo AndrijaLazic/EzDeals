@@ -20,6 +20,8 @@ from Scraper.spiders.gstoreScraper import GstoreSpider
 from Scraper.dataBase.Database import Database
 from Scraper.ProductMenager import ProductMenager
 from Scraper.HistoryMenager import HistoryMenager
+
+from RedisMenager import RedisDatabase
 # Record the start time
 
 dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
@@ -46,9 +48,9 @@ def Scraping():
     settings = get_project_settings()
     process = CrawlerProcess(settings)
     process.crawl(GigatronscraperSpider)
-    process.crawl(PcPracticSpider)
-    process.crawl(TehnomanijaSpider)
-    process.crawl(GstoreSpider)
+    # process.crawl(PcPracticSpider)
+    # process.crawl(TehnomanijaSpider)
+    # process.crawl(GstoreSpider)
 
 
     process.start()  # the script will block here until all crawling jobs are finished
@@ -79,6 +81,9 @@ def Scraping():
 
     #Remove for production
     HistoryThreading()
+
+    RedisDatabase().clearDatabase()
+    print("finnished clearing redis")
     
 
 def HistoryLogging(collection_name:str,currentTime:str,):
