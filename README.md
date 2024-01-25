@@ -19,11 +19,12 @@ This project serves as the culmination of my academic endeavors, representing my
 3. Download required libraries:
 -for python using pip in terminal
 ```bash
+  pip install -r requirements.txt 
   example: pip install pymongo
 ```
 -for node
 ```bash
-  pip install 
+  npm install 
 ```
 
 4. Before starting a project, you need to create a file named ".env" and insert required data. 
