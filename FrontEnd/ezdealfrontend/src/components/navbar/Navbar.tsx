@@ -7,7 +7,7 @@ import { BiSearchAlt } from "react-icons/bi";
 
 export default function Navbar() {
 	return (
-		<nav id="siteNavbar" className="navbar navbar-expand-lg navbar-light">
+		<nav id="siteNavbar" className="navbar navbar-expand-md navbar-light">
 			<a className="navbar-brand" href="#">
 				<div className="mx-auto Logo"></div>
 			</a>

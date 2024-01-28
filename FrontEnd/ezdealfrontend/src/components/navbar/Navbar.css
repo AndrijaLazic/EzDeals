@@ -5,8 +5,10 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	height: 80%;
+	min-width: 50px;
 	
 }
+
 
 .navbar{
 	width: 100vw;
@@ -15,6 +17,10 @@
 	padding-right: 10%;
 	background-color: var(--background-color-1);
 	
+}
+
+#siteNavbar a.navbar-brand{
+	padding: 0px;
 }
 
 #siteNavbar a{
