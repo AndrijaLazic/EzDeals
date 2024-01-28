@@ -1,0 +1,21 @@
+.Logo{
+	aspect-ratio: 1 / 1;
+	background-image: url(./src/assets/pictures/EzDealLogo.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 80%;
+	
+}
+
+.navbar{
+	width: 100vw;
+	max-width: 100%;
+	padding-left: 10%;
+	padding-right: 10%;
+	background-color: red;
+}
+
+.input-group{
+	margin: auto;
+}
