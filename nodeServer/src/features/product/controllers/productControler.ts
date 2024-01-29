@@ -6,7 +6,8 @@ import {
 	IProductDocument,
 	IProductHistoryDocument,
 	IShortProductDocument,
-	SearchInfo
+	SearchInfo,
+	SortType
 } from "../interfaces/product.interfaces";
 import {
 	CacheTypes,
@@ -136,6 +137,43 @@ export class ProductControler {
 
 			if (products) {
 				productCache.saveSearchProductsToCache(products, searchInfo);
+			}
+		}
+
+		response
+			.status(HTTP_STATUS.OK)
+			.json({ message: "Products", products: products, maxPages: maxPages });
+	}
+
+	@productSearchValidation(searchInfoSchema)
+	public async getNewProducts(
+		request: Request,
+		response: Response
+	): Promise<void> {
+		const searchInfo: SearchInfo=request.body;
+
+		searchInfo.sortOrder=SortType.ByDateNewerFirst;
+
+		let products: IShortProductDocument[] | null =
+			await productCache.getNewProductsFromCache();
+		let maxPages = 1;
+
+		if (!products) {
+			let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts("newProducts");
+
+			if(!numberofProductsInCategory){
+				numberofProductsInCategory=await productService.getNumberOfNewProducts(searchInfo);
+				productCache.saveCategoryNumberOfProducts("newProducts",numberofProductsInCategory);
+			}
+				
+			maxPages = Math.ceil(
+				numberofProductsInCategory / searchInfo.numberOfProducts
+			);
+
+			products = await productService.getProductsForSearch(searchInfo);
+
+			if (products) {
+				productCache.saveShortProductsToCache(products, searchInfo);
 			}
 		}
 

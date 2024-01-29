@@ -210,4 +210,43 @@ export class ProductCache extends BaseCache {
 		return numberOfProducts;
 	}
 
+	/**
+	 * Save newProductsToCache(products that were added in last 24h)
+	 * @param products products you want to save.
+	 */
+	public async saveNewProductsToCache(
+		products: IShortProductDocument[]
+	): Promise<void> {
+		try {
+			await this.client.set(
+				`newProducts`,
+				JSON.stringify(products)
+			);
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+	}
+
+	/**
+	 * Get new products from cache (products that were added in last 24h)
+	 * @param searchInfo information about the search
+	 */
+	public async getNewProductsFromCache(
+	): Promise<IShortProductDocument[] | null> {
+		let products: IShortProductDocument[] | null = null;
+		try {
+			const result = await this.client.get(
+				`newProducts`
+			);
+			if (result) {
+				products = JSON.parse(result);
+			}
+		} catch (error) {
+			this.log.error(error);
+			throw new ServerError("Server error try again");
+		}
+		return products;
+	}
+
 }

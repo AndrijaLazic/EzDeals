@@ -170,7 +170,7 @@ class ProductService {
 					}, ["name", "image", "currentBestPrice"])
 					.sort(sortParameter)
 					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
-					.limit(searchInfo.numberOfProducts)
+					.limit(searchInfo.numberOfProducts*3)
 					.lean() //
 					.exec();
 				products=products.concat(resultProducts);
@@ -188,11 +188,46 @@ class ProductService {
 				}, ["name", "image", "currentBestPrice"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
-				.limit(searchInfo.numberOfProducts)
+				.limit(searchInfo.numberOfProducts*3)
 				.exec();
 			products=products.concat(resultProducts);
 		}
 		return products;
+	}
+
+
+	/**
+	 * Get number of new products 
+	 * !!! This function is expensive and should not be used often !!!
+	 * @param searchInfo info used in a search
+	 * @returns number
+	 */
+	public async getNumberOfNewProducts(
+		searchInfo: SearchInfo
+	): Promise<number> {
+		let numOfNewProducts=0;
+
+		const allCategories= await ProductCategories.getAllCategories();
+		let resultProducts=0;
+		const numOfCategories=allCategories.length;
+
+		const currentTime=new Date(Date.now() - 24*60*60 * 1000);
+		const sortParameter=ProductCategories.getSortParameter(searchInfo.sortOrder);
+
+		for(let i=0;i<numOfCategories;i++){
+			resultProducts=await allCategories[i]
+				.find(
+					{"dateAdded":{$gt:currentTime}}, 
+					["name", "image", "currentBestPrice"]
+				)
+				.sort(sortParameter)
+				.lean() //
+				.countDocuments({})
+				.exec();
+			numOfNewProducts=numOfNewProducts+resultProducts;
+			
+		}
+		return numOfNewProducts;
 	}
 
 }
