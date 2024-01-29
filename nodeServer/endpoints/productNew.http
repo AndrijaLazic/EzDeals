@@ -1,5 +1,5 @@
 @baseUrl=http://localhost:5000
-@urlPath=api/product/search
+@urlPath=api/product/newProducts
 ####
 GET {{baseUrl}}/{{urlPath}}?page=1
 Content-Type: application/json
@@ -10,6 +10,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWExYjhiZ
 {
 	"numberOfProducts": "24",
 	"sortOrder": "ByPriceAcending",
-	"searchString":"as"
+	"searchString":""
 }
 

@@ -1,6 +1,6 @@
 import { model, Model, Schema } from "mongoose";
 
-import { IProductDocument, SortType } from "../interfaces/product.interfaces";
+import { IProductDocument, IShortProductDocument, SortType } from "../interfaces/product.interfaces";
 import { ObjectId } from "mongodb";
 import { config } from "src/config";
 import { BadRequestError } from "src/shared/globals/helpers/error-handler";
@@ -57,18 +57,60 @@ class productCategories {
 			}
 			case SortType.ByDateNewerFirst: { 
 				return {
-					dateAdded:1
+					dateAdded:-1
 				};
 			} 
 			case SortType.ByDateOlderFirst: { 
 				return {
-					dateAdded:-1
+					dateAdded:1
 				};
 			} 
 			default: { 
 				return {
 					currentBestPrice:1
 				};
+			} 
+		} 
+	}
+
+	public sortProducts(arr:IShortProductDocument[],sort:SortType){
+		const arrayLength=arr.length;
+
+		switch(sort) { 
+			case SortType.ByPriceAcending: { 
+				arr.sort(function(a, b){
+					return a.currentBestPrice - b.currentBestPrice;
+				});
+				return arr;
+			} 
+			case SortType.ByPriceDecending: { 
+				arr.sort(function(a, b){
+					return b.currentBestPrice - a.currentBestPrice;
+				});
+				return arr;
+			}
+			case SortType.ByDateOlderFirst: { 
+				for (let index = 0; index < arrayLength; index++) {
+					arr[index].dateAdded=new Date(arr[index].dateAdded);
+				}
+				arr.sort(function(a, b){
+					return (a.dateAdded as Date).getTime() - (b.dateAdded as Date).getTime();
+				});
+
+				return arr;
+			} 
+			case SortType.ByDateNewerFirst: {
+				for (let index = 0; index < arrayLength; index++) {
+					arr[index].dateAdded=new Date(arr[index].dateAdded);
+				}
+				arr.sort(function(a, b){
+					return ((b.dateAdded as Date).getTime() - (a.dateAdded as Date).getTime());
+				});
+
+				return arr;
+			} 
+			default: { 
+				return arr;
 			} 
 		} 
 	}

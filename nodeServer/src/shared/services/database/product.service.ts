@@ -158,24 +158,28 @@ class ProductService {
 
 		const sortParameter=ProductCategories.getSortParameter(searchInfo.sortOrder);
 
+		let nameFilter={};
+		if(searchString){
+			nameFilter={
+				name:{
+					$regex:regexExpression
+				}
+			};
+		}
 
 		if (jsonFormat) {
 
 			for(let i=0;i<numOfCategories;i++){
 				resultProducts=await allCategories[i]
-					.find({
-						name:{
-							$regex:regexExpression
-						}
-					}, ["name", "image", "currentBestPrice"])
+					.find(nameFilter, ["name", "image", "currentBestPrice","dateAdded"])
 					.sort(sortParameter)
 					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
-					.limit(searchInfo.numberOfProducts*3)
+					.limit(searchInfo.numberOfProducts)
 					.lean() //
 					.exec();
 				products=products.concat(resultProducts);
-				
 			}
+			products=ProductCategories.sortProducts(products,searchInfo.sortOrder);
 			return products;
 		}
 
@@ -185,13 +189,14 @@ class ProductService {
 					name:{
 						$regex:regexExpression
 					}
-				}, ["name", "image", "currentBestPrice"])
+				}, ["name", "image", "currentBestPrice","dateAdded"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
-				.limit(searchInfo.numberOfProducts*3)
+				.limit(searchInfo.numberOfProducts)
 				.exec();
 			products=products.concat(resultProducts);
 		}
+		products=ProductCategories.sortProducts(products,searchInfo.sortOrder);
 		return products;
 	}
 

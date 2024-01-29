@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 import threading
 import traceback
 
@@ -104,6 +105,9 @@ class ProductMenager:
 
         database.createIndex(1,"name",category)
 
+        currentTime = datetime.now()
+       
+
         #Iterating trough all items and checking if they already exist in database
         for key, val in self.productsMap.items():
             oldProduct=database.getOneProduct({'name':key},category)
@@ -111,13 +115,14 @@ class ProductMenager:
             
             if oldProduct is None:
                 
+                val.currentBestPrice=lowestPrice
+                val.dateAdded=currentTime
+                val.lastScraped=currentTime
                 productHistory=ProductHistory()
                 productHistory.history.append(ProductHistoryNode(val.lastScraped,lowestPrice))
                 
                 historyID=database.insertHistory(productHistory)
                 val.historyID=historyID
-                val.currentBestPrice=lowestPrice
-
                 database.insertProduct(val,category)
                 continue
 

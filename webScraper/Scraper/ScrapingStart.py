@@ -34,7 +34,7 @@ def Scraping():
     original_stdout = sys.stdout
 
     currentTime = datetime.now()
-    dt_string = currentTime.strftime("%d.%m.%Y %H.%M")
+    dt_string = currentTime.strftime("%Y.%m.%d %H.%M")
 
     LogFile=open(os.getenv('ScrapingLogFolder')+dt_string+".txt", 'w')
     sys.stdout = LogFile
@@ -48,9 +48,9 @@ def Scraping():
     settings = get_project_settings()
     process = CrawlerProcess(settings)
     process.crawl(GigatronscraperSpider)
-    # process.crawl(PcPracticSpider)
-    # process.crawl(TehnomanijaSpider)
-    # process.crawl(GstoreSpider)
+    process.crawl(PcPracticSpider)
+    process.crawl(TehnomanijaSpider)
+    process.crawl(GstoreSpider)
 
 
     process.start()  # the script will block here until all crawling jobs are finished

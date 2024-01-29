@@ -173,12 +173,12 @@ export class ProductControler {
 			products = await productService.getProductsForSearch(searchInfo);
 
 			if (products) {
-				productCache.saveShortProductsToCache(products, searchInfo);
+				productCache.saveNewProductsToCache(products.slice(0,searchInfo.numberOfProducts));
 			}
 		}
 
 		response
 			.status(HTTP_STATUS.OK)
-			.json({ message: "Products", products: products, maxPages: maxPages });
+			.json({ message: "Products", products: products.slice(0,searchInfo.numberOfProducts), maxPages: maxPages });
 	}
 }

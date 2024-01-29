@@ -25,7 +25,8 @@ export interface IShortProductDocument extends Document {
 	_id?: string | ObjectId;
 	name: string;
 	image: string;
-	currentBestPrice: string;
+	currentBestPrice: number;
+	dateAdded: Date | string;
 }
 
 export interface IProductHistoryDocument extends Document {
