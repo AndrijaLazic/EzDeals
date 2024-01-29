@@ -13,10 +13,13 @@
 .navbar{
 	width: 100vw;
 	max-width: 100%;
-	padding-left: 10%;
-	padding-right: 10%;
+	padding-left: var(--padingLeft);
+	padding-right: var(--padingRight);
 	background-color: var(--background-color-1);
-	
+}
+
+#siteNavbar{
+	font-size: 20px;
 }
 
 #siteNavbar a.navbar-brand{
@@ -40,3 +43,11 @@
 .input-group{
 	margin: auto;
 }
+
+
+@media only screen and (max-width: 768px) {
+	.navbar{
+		padding-left: var(--BreakpointPadingLeft);
+		padding-right: var(--BreakpointPadingRight);
+	}
+ }

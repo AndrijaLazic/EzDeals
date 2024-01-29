@@ -1,7 +1,5 @@
 import React from 'react';
 import "./Navbar.css";
-import logo from "../../assets/pictures/EzDealLogo.png";
-import { BiSearchAlt } from "react-icons/bi";
 
 
 
@@ -18,10 +16,10 @@ export default function Navbar() {
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul className="navbar-nav mr-auto">
 					<li className="nav-item">
-						<a className="nav-link" href="#">Proizvodi</a>
+						<a className="nav-link" href="/kategorije">Proizvodi</a>
 					</li>
 					<li className="nav-item">
-						<a className="nav-link" href="#">Najnovije</a>
+						<a className="nav-link" href="/noviProizvodi">Najnovije</a>
 					</li>
 				</ul>
 				<form className="form-inline my-2 my-lg-0">
