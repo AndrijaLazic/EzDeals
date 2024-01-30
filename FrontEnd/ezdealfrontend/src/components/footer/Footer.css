@@ -1,16 +1,5 @@
-.Logo{
-	aspect-ratio: 1 / 1;
-	background-image: url(./src/assets/pictures/EzDealLogo.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-	height: 80%;
-	min-width: 50px;
-	
-}
 
-
-.container{
+.containerFooter{
 	width: 100vw;
 	max-width: 100%;
 	padding-left: var(--padingLeft);
@@ -20,7 +9,10 @@
 	color: var(--NavbarFooterTextColor);
 }
 
-div.container #footer{
+
+
+
+div.containerFooter #footer{
 	padding-top: 0px;
 	padding-bottom: 0px;
 	border: 0px;
@@ -55,6 +47,10 @@ div.container #footer{
 
 @media only screen and (max-width: 768px) {
 	.navbar{
+		padding-left: var(--BreakpointPadingLeft);
+		padding-right: var(--BreakpointPadingRight);
+	}
+	.containerFooter{
 		padding-left: var(--BreakpointPadingLeft);
 		padding-right: var(--BreakpointPadingRight);
 	}

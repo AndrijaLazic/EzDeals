@@ -9,17 +9,12 @@
 	
 }
 
-
-.navbar{
-	width: 100vw;
+#siteNavbar{
+	font-size: 20px;
 	max-width: 100%;
 	padding-left: var(--padingLeft);
 	padding-right: var(--padingRight);
 	background-color: var(--background-color-1);
-}
-
-#siteNavbar{
-	font-size: 20px;
 }
 
 #siteNavbar a.navbar-brand{
