@@ -5,4 +5,12 @@
 	--secondary-color: #D6E4F0;
 	--navbar-text-color: #f9f9f9;
 	--navbar-icon-color: #f9f9f9;
+
+	--padingLeft: 15%;
+	--padingRight: 15%;
+	--BreakpointPadingLeft: 5%;
+	--BreakpointPadingRight: 5%;
+
+	--NavbarFooterTextColor:#f9f9f9;
+	--NavbarFooterIconColor:#f9f9f9;
 }

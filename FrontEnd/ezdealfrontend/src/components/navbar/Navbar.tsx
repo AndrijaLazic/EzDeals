@@ -27,7 +27,7 @@ export default function Navbar() {
 						<input type="text" className="form-control" placeholder="Pretrazi" aria-label="Recipient's username" aria-describedby="button-addon2"/>
 							<div className="input-group-append">
 								<button className="btn btn-outline-secondary" type="button" id="button-addon2">
-									<i className="bi bi-search" style = {{color:"var(--navbar-icon-color)"}}></i>
+									<i className="bi bi-search" style = {{color:"var(--NavbarFooterIconColor)"}}></i>
 								</button>
 							</div>
 					</div>

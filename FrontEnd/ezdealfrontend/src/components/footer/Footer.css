@@ -10,12 +10,20 @@
 }
 
 
-.navbar{
+.container{
 	width: 100vw;
 	max-width: 100%;
 	padding-left: var(--padingLeft);
 	padding-right: var(--padingRight);
+	border: 0px;
 	background-color: var(--background-color-1);
+	color: var(--NavbarFooterTextColor);
+}
+
+div.container #footer{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border: 0px;
 }
 
 #siteNavbar{
@@ -27,7 +35,7 @@
 }
 
 #siteNavbar a{
-	color: var(--NavbarFooterTextColor);
+	color: var(--navbar-text-color);
 }
 #siteNavbar div .input-group-append button{
 	border-color: var(--background-color-2)!important;

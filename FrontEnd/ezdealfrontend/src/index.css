@@ -14,10 +14,6 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	--padingLeft: 15%;
-	--padingRight: 15%;
-	--BreakpointPadingLeft: 5%;
-	--BreakpointPadingRight: 5%;
 }
 
 a {
