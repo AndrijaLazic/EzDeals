@@ -1,9 +1,10 @@
 import React from 'react';
+import PostsList from '../components/ListOfProducts/ProductsList';
 
 const NewestProducts = () => {
-  return (
-	 <div>NewestProducts</div>
-  );
+	return (
+		<PostsList/>
+	);
 };
 
 export default NewestProducts;
