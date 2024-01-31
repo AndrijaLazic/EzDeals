@@ -9,7 +9,6 @@ const headers = {
 class ProductService {
 	async getNewProducts() {
 
-		console.log(BASE_URL+"product/newProducts")
 		const response = await fetch(BASE_URL+"product/newProducts", {
 			method: "GET",
 			headers: headers

@@ -28,13 +28,15 @@ function PostsList(props: any) {
 	let row=[];
 	for (let index = 0; index < products.length; index++) {
 		row.push(<ShortProduct key={products[index]._id} product={products[index]}/>);
-		if(index%4==0 && index !=0){
+		if(index%6==0 && index !=0){
 			allRows.push(
 				<div className="row g-2">
 					{row[0]}
 					{row[1]}
 					{row[2]}
 					{row[3]}
+					{row[4]}
+					{row[5]}
 				</div>
 			);
 			row=[];
@@ -46,6 +48,8 @@ function PostsList(props: any) {
 			{row[1]}
 			{row[2]}
 			{row[3]}
+			{row[4]}
+			{row[5]}
 		</div>
 	);
 

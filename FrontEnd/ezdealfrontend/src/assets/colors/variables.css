@@ -6,11 +6,13 @@
 	--navbar-text-color: #f9f9f9;
 	--navbar-icon-color: #f9f9f9;
 
-	--padingLeft: 15%;
-	--padingRight: 15%;
+	--padingLeft: 20%;
+	--padingRight: 20%;
 	--BreakpointPadingLeft: 5%;
 	--BreakpointPadingRight: 5%;
 
 	--NavbarFooterTextColor:#f9f9f9;
 	--NavbarFooterIconColor:#f9f9f9;
+
+	--ProductTextColor1:#000000
 }

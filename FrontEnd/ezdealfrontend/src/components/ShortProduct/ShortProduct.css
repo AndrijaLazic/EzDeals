@@ -9,6 +9,7 @@
 	font-weight: bold;
 	word-wrap: break-word;
 	height: 30%;
+	color: var(--ProductTextColor1);
 }
 
 .productData .productName{
@@ -23,7 +24,7 @@
 	height: fit-content;
 	overflow: hidden;
 	max-height: 100%;
-	
+	color: var(--ProductTextColor1);
 }
 
 
@@ -41,14 +42,24 @@ div.productData div.row p{
 	height: 100%;
 	max-width: 100%;
 	object-fit: contain;
-
+	margin-top: 5px;
 }
 
 .shortItem{
 	background-color: white;
-	/* aspect-ratio: 1 / 1.5; */
+	aspect-ratio: 1 / 1.5;
 	margin: 10px;
 	width: 100%;
 	height: 100%;
 }
 
+.shortItem:hover{
+	transform: scale(1.2);
+	box-shadow: 2px 2px 2px 2px;
+	z-index:10;
+	position:absolute;
+}
+
+.shortItem a:hover{
+	text-decoration: none;
+}
