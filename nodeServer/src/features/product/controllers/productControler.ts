@@ -154,6 +154,8 @@ export class ProductControler {
 
 		searchInfo.sortOrder=SortType.ByDateNewerFirst;
 
+		searchInfo.searchString="";
+
 		let products: IShortProductDocument[] | null =
 			await productCache.getNewProductsFromCache();
 		let maxPages = 1;

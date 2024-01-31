@@ -35,3 +35,21 @@ Inside .env.example you can find template for your .env file
 ```bash
    python -m ScrapingStart
 ```
+
+6. Nodejs server is started by navigating to nodeServer/ folder and entering following command into terminal
+
+```bash
+   npm run dev
+```
+
+7. Fronted is started by navigating to FrontEnd/ezdealfrontend and entering following command into terminal
+
+```bash
+   npm run dev
+```
+
+8. Redis is started entering following command into terminal
+
+```bash
+   sudo service redis-server start
+```

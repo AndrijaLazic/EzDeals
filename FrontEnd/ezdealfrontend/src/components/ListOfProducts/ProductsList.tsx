@@ -17,9 +17,7 @@ function PostsList(props: any) {
 				return console.log(response.error);
 			}
 
-			console.log(response)
-
-			setProducts(response as IShortProduct[]);
+			setProducts(response.products as IShortProduct[]);
 
 		};
 
@@ -30,7 +28,7 @@ function PostsList(props: any) {
 		<ul>
 			{
 				products.map((product)=>{
-					return <ShortProduct product={product}/>;
+					return <ShortProduct key={product._id} product={product}/>;
 				})
 			}
 		</ul>
