@@ -2,12 +2,12 @@
 	--text-color-1: #F6F6F6;
 	--background-color-1:#1E56A0;
 	--background-color-2:#163172;
-	--secondary-color: #D6E4F0;
+	--background-color-3: #f2f2f2;
 	--navbar-text-color: #f9f9f9;
 	--navbar-icon-color: #f9f9f9;
 
-	--padingLeft: 20%;
-	--padingRight: 20%;
+	--padingLeft: 15%;
+	--padingRight: 15%;
 	--BreakpointPadingLeft: 5%;
 	--BreakpointPadingRight: 5%;
 

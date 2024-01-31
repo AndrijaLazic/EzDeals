@@ -4,7 +4,9 @@ import { SortType } from '../dataModels/product';
 
 const NewestProducts = () => {
 	return (
-		<PostsList page={1} sort={SortType.ByDateNewerFirst}/>
+		<div className='container'>
+			<PostsList page={1} sort={SortType.ByDateNewerFirst}/>
+		</div>
 	);
 };
 

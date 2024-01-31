@@ -1,0 +1,54 @@
+.productData{
+	height: 50%;
+	display: flex;
+   flex-direction: column;
+	
+}
+
+.productData div.productPrice{
+	font-weight: bold;
+	word-wrap: break-word;
+	height: 30%;
+}
+
+.productData .productName{
+	height: 70%;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+	
+}
+
+.productData .productName h5{
+	height: fit-content;
+	overflow: hidden;
+	max-height: 100%;
+	
+}
+
+
+div.productData div.row p{
+	margin-bottom: 8px;
+}
+
+.productImage{
+	height: 50%;
+	margin-top: 7px;
+}
+
+.productImage img{
+	width: auto;
+	height: 100%;
+	max-width: 100%;
+	object-fit: contain;
+
+}
+
+.shortItem{
+	background-color: white;
+	/* aspect-ratio: 1 / 1.5; */
+	margin: 10px;
+	width: 100%;
+	height: 100%;
+}
+

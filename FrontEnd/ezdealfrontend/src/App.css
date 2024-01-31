@@ -1,6 +1,5 @@
 #root {
   /* max-width: 1780px; */
-  margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
 
@@ -67,4 +66,7 @@
 	padding-left: var(--padingLeft);
 	padding-right: var(--padingRight);
 	max-width: 100%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: var(--background-color-3);
 }

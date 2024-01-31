@@ -24,14 +24,33 @@ function PostsList(props: any) {
 		getProducts();
 	}, []);
 
+	const allRows=[];
+	let row=[];
+	for (let index = 0; index < products.length; index++) {
+		row.push(<ShortProduct key={products[index]._id} product={products[index]}/>);
+		if(index%4==0 && index !=0){
+			allRows.push(
+				<div className="row g-2">
+					{row[0]}
+					{row[1]}
+					{row[2]}
+					{row[3]}
+				</div>
+			);
+			row=[];
+		}
+	}
+	allRows.push(
+		<div className="row g-2">
+			{row[0]}
+			{row[1]}
+			{row[2]}
+			{row[3]}
+		</div>
+	);
+
 	return (
-		<ul>
-			{
-				products.map((product)=>{
-					return <ShortProduct key={product._id} product={product}/>;
-				})
-			}
-		</ul>
+		allRows
 	);
 
 }
