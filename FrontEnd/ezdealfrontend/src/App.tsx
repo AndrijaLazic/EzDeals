@@ -19,7 +19,10 @@ function App() {
 				<Route path="/" element={<NewestProducts/>}/>
 				<Route path="/kategorije">
 					<Route index element={<CategoriesSelection/>}/>
-					<Route path=":category" element={<CategoryProducts/>}/>
+					<Route path=":category">
+						<Route index element={<CategoryProducts/>}/>
+						<Route path=":productId" element={<ProductPage/>}/>
+					</Route>
 
 				</Route>
 				<Route path="/noviProizvodi" element={<NewestProducts/>}/>

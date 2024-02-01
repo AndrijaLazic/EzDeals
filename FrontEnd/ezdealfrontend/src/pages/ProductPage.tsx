@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const ProductPage = () => {
-	const {productId} = useParams();
+const ProductPage = (props:any) => {
+	const {category,productId} = useParams();
 	return (
-		<div>{productId}</div>
+		<div>{productId}{category}</div>
 	);
 };
 

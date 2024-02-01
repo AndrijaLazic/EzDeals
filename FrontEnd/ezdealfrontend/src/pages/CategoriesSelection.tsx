@@ -10,12 +10,12 @@ const CategoriesSelection = () => {
 		{
 			name:"Monitori",
 			imagePath:"./src/assets/pictures/CategoryMonitori.png",
-			url:"/kategorije/Monitori"
+			url:"/kategorije/Monitori?page=1"
 		},
 		{
 			name:"RacunarskeKomponente",
 			imagePath:"./src/assets/pictures/CategoryRacunarskeKomponente.png",
-			url:"/kategorije/RacunarskeKomponente"
+			url:"/kategorije/RacunarskeKomponente?page=1"
 		},
 	];
 
@@ -27,8 +27,11 @@ const CategoriesSelection = () => {
 	}
 
 	return (
-		<div className="row justify-content-center g-2">
-			{categoriesArray}
+		<div>
+			<h4>Izabrane kategorije</h4>
+			<div className="row justify-content-center g-2">
+				{categoriesArray}
+			</div>
 		</div>
 	);
 };

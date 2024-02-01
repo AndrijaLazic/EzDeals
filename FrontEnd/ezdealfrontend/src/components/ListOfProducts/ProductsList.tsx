@@ -3,15 +3,24 @@ import { productService } from "../../services/product.service";
 import ShortProduct from "../ShortProduct/ShortProduct";
 import "./ProductsList.css";
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function PostsList(props: any) {
+function ProductsList(props: any) {
 	const [products, setProducts] = useState<IShortProduct[]>([]);
 
 	useEffect(() => {
 		const getProducts = async() => {
 
-			const response = await productService.getNewProducts();
+			let response;
+			
+			switch (props.category) {
+				case "newProducts":
+					response = await productService.getNewProducts();
+					break;
+				default:
+					response = await productService.getProductsFromCategory(props.category,props.page);
+					break;
+			}
 
 			if (response.error) {
 				return console.log(response.error);
@@ -59,4 +68,4 @@ function PostsList(props: any) {
 
 }
 
-export default PostsList;
+export default ProductsList;
