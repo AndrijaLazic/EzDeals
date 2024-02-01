@@ -1,0 +1,18 @@
+.categoryCard{
+	background-color: white;
+}
+
+.categoryCard .categoryName{
+	color: var(--ProductTextColor1);
+}
+
+.categoryCard:hover{
+	transform: scale(1.2);
+	box-shadow: 2px 2px 2px 2px;
+	z-index:10;
+	position:absolute;
+}
+
+.categoryCard a:hover{
+	text-decoration: none;
+}

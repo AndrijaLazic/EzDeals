@@ -1,6 +1,5 @@
 import "./ShortProduct.css";
 import { IShortProduct } from '../../dataModels/product';
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const ShortProduct = (props:any) => {
@@ -24,6 +23,7 @@ const ShortProduct = (props:any) => {
 						
 					</div>
 				
+
 				</span></Link>
 			</div>
 		</div>

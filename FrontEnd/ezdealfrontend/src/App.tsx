@@ -4,9 +4,10 @@ import React from 'react';
 import Navbar from './components/navbar/Navbar';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import NewestProducts from "./pages/NewestProducts";
-import Categories from "./pages/Categories";
+import CategoriesSelection from "./pages/CategoriesSelection";
 import ProductPage from "./pages/ProductPage";
 import Footer from "./components/footer/Footer";
+import CategoryProducts from "./pages/CategoryProducts";
 
 function App() {
   return (
@@ -16,9 +17,13 @@ function App() {
 		<div id="routesBody">
 			<Routes >
 				<Route path="/" element={<NewestProducts/>}/>
-				<Route path="/kategorije" element={<Categories/>}/>
+				<Route path="/kategorije">
+					<Route index element={<CategoriesSelection/>}/>
+					<Route path=":category" element={<CategoryProducts/>}/>
+
+				</Route>
 				<Route path="/noviProizvodi" element={<NewestProducts/>}/>
-				<Route path="/proizvod" element={<ProductPage/>}>
+				<Route path="/proizvod">
 					<Route path=":productId" element={<ProductPage/>}/>
 				</Route>
 			</Routes>
