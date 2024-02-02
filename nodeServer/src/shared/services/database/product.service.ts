@@ -31,7 +31,7 @@ class ProductService {
 			products = await ProductCategories.getCategory(
 				searchInfo.productCategory
 			)
-				.find({}, ["name", "image", "currentBestPrice"])
+				.find({}, ["name", "image", "currentBestPrice","primaryCategory"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
@@ -41,7 +41,7 @@ class ProductService {
 		}
 
 		products = await ProductCategories.getCategory(searchInfo.productCategory)
-			.find({}, ["name", "image", "currentBestPrice"])
+			.find({}, ["name", "image", "currentBestPrice","primaryCategory"])
 			.sort(sortParameter)
 			.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 			.limit(searchInfo.numberOfProducts)
@@ -171,7 +171,7 @@ class ProductService {
 
 			for(let i=0;i<numOfCategories;i++){
 				resultProducts=await allCategories[i]
-					.find(nameFilter, ["name", "image", "currentBestPrice","dateAdded"])
+					.find(nameFilter, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
 					.sort(sortParameter)
 					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 					.limit(searchInfo.numberOfProducts)
@@ -189,7 +189,7 @@ class ProductService {
 					name:{
 						$regex:regexExpression
 					}
-				}, ["name", "image", "currentBestPrice","dateAdded"])
+				}, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
@@ -223,7 +223,7 @@ class ProductService {
 			resultProducts=await allCategories[i]
 				.find(
 					{"dateAdded":{$gt:currentTime}}, 
-					["name", "image", "currentBestPrice"]
+					["name", "image", "currentBestPrice","primaryCategory"]
 				)
 				.sort(sortParameter)
 				.lean() //

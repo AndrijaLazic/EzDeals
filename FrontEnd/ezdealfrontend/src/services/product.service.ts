@@ -57,8 +57,8 @@ class ProductService {
 		return data;
 	}
 
-	async getSingleProduct(productId:string) {
-		const response = await fetch(BASE_URL+"product/newProducts", {
+	async getSingleProduct(productId:string,category:string) {
+		const response = await fetch(BASE_URL+"product/"+category+"/"+productId, {
 			method: "GET",
 			headers: headers
 		});

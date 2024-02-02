@@ -5,7 +5,6 @@ export interface IProduct extends IShortProduct {
 	historyID: string ;
 	dateAdded: string;
 	lastScraped: string;
-	primaryCategory: string;
 }
 
 export interface Price {
@@ -25,6 +24,7 @@ export interface IShortProduct {
 	image: string;
 	currentBestPrice: number;
 	dateAdded: Date | string;
+	primaryCategory: string;
 }
 
 export interface IProductHistoryDocument{

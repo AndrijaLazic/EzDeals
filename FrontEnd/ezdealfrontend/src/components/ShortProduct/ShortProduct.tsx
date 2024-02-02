@@ -3,10 +3,9 @@ import { IShortProduct } from '../../dataModels/product';
 import { Link } from "react-router-dom";
 
 const ShortProduct = (props:any) => {
-
-	const productLink="/proizvod/"+props.product._id;
-
 	const product:IShortProduct=props.product as IShortProduct;
+	const productLink="/kategorije/"+product.primaryCategory+"/"+product._id;
+
 	return (
 		<div className='col-12 col-lg-4 col-xxl-2 pt-2 '>
 			<div className='shortItem'>

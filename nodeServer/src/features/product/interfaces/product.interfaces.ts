@@ -7,7 +7,6 @@ export interface IProductDocument extends IShortProductDocument {
 	historyID: string | ObjectId;
 	dateAdded: string;
 	lastScraped: string;
-	primaryCategory: string;
 }
 
 export interface Price {
@@ -27,6 +26,7 @@ export interface IShortProductDocument extends Document {
 	image: string;
 	currentBestPrice: number;
 	dateAdded: Date | string;
+	primaryCategory: string;
 }
 
 export interface IProductHistoryDocument extends Document {

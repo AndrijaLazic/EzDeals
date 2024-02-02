@@ -26,9 +26,6 @@ function App() {
 
 				</Route>
 				<Route path="/noviProizvodi" element={<NewestProducts/>}/>
-				<Route path="/proizvod">
-					<Route path=":productId" element={<ProductPage/>}/>
-				</Route>
 			</Routes>
 		</div>
 		<Footer/>
