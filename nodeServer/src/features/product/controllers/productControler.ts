@@ -33,20 +33,20 @@ export class ProductControler {
 			await productCache.getShortProductsFromCache(searchInfo);
 		let maxPages = 1;
 
-		if (!products) {
-			let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts(searchInfo.productCategory);
+		let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts(searchInfo.productCategory);
 
-			if(!numberofProductsInCategory){
-				numberofProductsInCategory=await productService.getNumberOfProductsForCategory(
-					searchInfo.productCategory
-				);
-				productCache.saveCategoryNumberOfProducts(searchInfo.productCategory,numberofProductsInCategory);
-			}
-				
-			maxPages = Math.ceil(
-				numberofProductsInCategory / searchInfo.numberOfProducts
+		if(!numberofProductsInCategory){
+			numberofProductsInCategory=await productService.getNumberOfProductsForCategory(
+				searchInfo.productCategory
 			);
+			productCache.saveCategoryNumberOfProducts(searchInfo.productCategory,numberofProductsInCategory);
+		}
 
+		maxPages = Math.ceil(
+			numberofProductsInCategory / searchInfo.numberOfProducts
+		);
+
+		if (!products) {
 			products = await productService.getProductsForCategory(searchInfo);
 
 			if (products) {

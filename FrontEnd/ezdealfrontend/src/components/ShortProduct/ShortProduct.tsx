@@ -9,7 +9,7 @@ const ShortProduct = (props:any) => {
 	return (
 		<div className='col-12 col-lg-4 col-xxl-2 pt-2 '>
 			<div className='shortItem'>
-				<Link to={productLink}><span>
+				<Link to={productLink}>
 				
 					<div className="col-sm productImage">
 						<img className='card-img-top' src={product.image}/>
@@ -23,7 +23,7 @@ const ShortProduct = (props:any) => {
 					</div>
 				
 
-				</span></Link>
+				</Link>
 			</div>
 		</div>
 	);

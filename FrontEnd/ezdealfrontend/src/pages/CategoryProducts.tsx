@@ -13,7 +13,7 @@ const CategoryProducts = () => {
 	const[maxPages,setMaxPages]=useState(1);
 
 	return (
-		<div>
+		<div className='container'>
 			<ProductsList page={page} sort={SortType.ByPriceAcending} category={category} setMaxPages={setMaxPages}/>
 			<Pagination maxPages={maxPages} baseUrl={"/kategorije/"+category+"?page="}/>
 		</div>

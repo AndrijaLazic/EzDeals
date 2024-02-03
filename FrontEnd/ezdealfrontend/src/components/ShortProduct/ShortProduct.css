@@ -34,7 +34,6 @@ div.productData div.row p{
 
 .productImage{
 	height: 50%;
-	margin-top: 7px;
 }
 
 .productImage img{
@@ -42,13 +41,11 @@ div.productData div.row p{
 	height: 100%;
 	max-width: 100%;
 	object-fit: contain;
-	margin-top: 5px;
 }
 
 .shortItem{
 	background-color: white;
 	aspect-ratio: 1 / 1.5;
-	margin: 10px;
 	width: 100%;
 	height: 100%;
 }

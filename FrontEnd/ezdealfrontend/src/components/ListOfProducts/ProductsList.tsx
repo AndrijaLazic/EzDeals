@@ -27,7 +27,7 @@ function ProductsList(props: any) {
 			}
 
 			setProducts(response.products as IShortProduct[]);
-			console.log(response.maxPages)
+
 			props.setMaxPages(
 				response.maxPages
 			);
