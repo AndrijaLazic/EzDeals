@@ -4,17 +4,17 @@ import CategoryCard from '../components/categoryCard/CategoryCard';
 import { ICategory } from '../dataModels/category';
 
 const CategoriesSelection = () => {
-	// ./src/assets/pictures/EzDealLogo.png
+
 
 	const categories:ICategory[]=[
 		{
 			name:"Monitori",
-			imagePath:"./src/assets/pictures/CategoryMonitori.png",
+			imagePath:"../../../public/pictures/CategoryMonitori.png",
 			url:"/kategorije/Monitori?page=1"
 		},
 		{
 			name:"RacunarskeKomponente",
-			imagePath:"./src/assets/pictures/CategoryRacunarskeKomponente.png",
+			imagePath:"../../../public/pictures/CategoryRacunarskeKomponente.png",
 			url:"/kategorije/RacunarskeKomponente?page=1"
 		},
 	];

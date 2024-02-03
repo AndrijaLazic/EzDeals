@@ -1,6 +1,6 @@
 .Logo{
 	aspect-ratio: 1 / 1;
-	background-image: url(./src/assets/pictures/EzDealLogo.png);
+	background-image: url(../../../public/pictures/EzDealLogo.png);
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
