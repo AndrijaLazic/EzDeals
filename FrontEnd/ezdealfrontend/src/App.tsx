@@ -1,8 +1,7 @@
 import "bootstrap/dist/css/bootstrap-grid.min.css";
 import './App.css';
-import React from 'react';
 import Navbar from './components/navbar/Navbar';
-import {BrowserRouter,Routes,Route} from "react-router-dom";
+import {Routes,Route} from "react-router-dom";
 import NewestProducts from "./pages/NewestProducts";
 import CategoriesSelection from "./pages/CategoriesSelection";
 import ProductPage from "./pages/ProductPage";
