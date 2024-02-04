@@ -1,5 +1,6 @@
 export interface ICategory {
 	name:string,
 	url:string,
-	imagePath:string
+	imagePath:string,
+	urlParam:string
 }

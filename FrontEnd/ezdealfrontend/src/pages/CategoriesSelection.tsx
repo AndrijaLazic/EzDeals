@@ -2,22 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CategoryCard from '../components/categoryCard/CategoryCard';
 import { ICategory } from '../dataModels/category';
+import { AppConfig } from '../AppConfig';
+
+
 
 const CategoriesSelection = () => {
 
 
-	const categories:ICategory[]=[
-		{
-			name:"Monitori",
-			imagePath:"../../../public/pictures/CategoryMonitori.png",
-			url:"/kategorije/Monitori?page=1"
-		},
-		{
-			name:"RacunarskeKomponente",
-			imagePath:"../../../public/pictures/CategoryRacunarskeKomponente.png",
-			url:"/kategorije/RacunarskeKomponente?page=1"
-		},
-	];
+	const categories:ICategory[]=AppConfig.getCategories();
 
 	const categoriesArray=[];
 	for (let index = 0; index < categories.length; index++){

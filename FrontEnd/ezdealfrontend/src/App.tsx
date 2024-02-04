@@ -12,7 +12,6 @@ import CategoryProducts from "./pages/CategoryProducts";
 function App() {
   return (
 	<div id="mainContainer">
-		<BrowserRouter>
 		<Navbar/>
 		<div id="routesBody">
 			<Routes >
@@ -29,9 +28,7 @@ function App() {
 			</Routes>
 		</div>
 		<Footer/>
-		</BrowserRouter>
 	</div>
-	
   );
 }
 
