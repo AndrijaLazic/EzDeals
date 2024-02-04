@@ -160,19 +160,37 @@ export class ProductControler {
 			await productCache.getNewProductsFromCache();
 		let maxPages = 1;
 
-		if (!products) {
-			let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts("newProducts");
+		let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts("newProducts");
 
-			if(!numberofProductsInCategory){
-				numberofProductsInCategory=await productService.getNumberOfNewProducts(searchInfo);
-				productCache.saveCategoryNumberOfProducts("newProducts",numberofProductsInCategory);
-			}
-				
-			maxPages = Math.ceil(
-				numberofProductsInCategory / searchInfo.numberOfProducts
-			);
+		if(!numberofProductsInCategory){
+			numberofProductsInCategory=await productService.getNumberOfNewProducts(searchInfo);
+			productCache.saveCategoryNumberOfProducts("newProducts",numberofProductsInCategory);
+		}
+			
+		maxPages = Math.ceil(
+			numberofProductsInCategory / searchInfo.numberOfProducts
+		);
+
+		if (!products) {
 
 			products = await productService.getProductsForSearch(searchInfo);
+			const newProducts=[];
+			const currentTime=Date.now();
+			const productsLen=products.length;
+			for (let index = 0; index < searchInfo.numberOfProducts && index<productsLen ; index++) {
+				// Calculate the difference between the current date and the provided date
+				const timeDifference = currentTime - (products[index].dateAdded as Date).getTime();
+				
+				// Calculate the difference in days
+				const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+				
+				
+				if(daysDifference>=1)
+					break;
+				newProducts.push(products[index]);
+				
+			}
+			products=newProducts;
 
 			if (products) {
 				productCache.saveNewProductsToCache(products.slice(0,searchInfo.numberOfProducts));
