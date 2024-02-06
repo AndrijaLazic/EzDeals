@@ -40,10 +40,13 @@ function ProductsList(props: any) {
 
 	const allRows=[];
 	let row=[];
+	let numbOfProdInRow=0;
 	const productsLength=products.length;
 	for (let index = 0; index <productsLength; index++) {
 		row.push(<ShortProduct key={products[index]._id} product={products[index]}/>);
-		if(index%6==0 && index !=0){
+		numbOfProdInRow++;
+		if(numbOfProdInRow==6){
+			numbOfProdInRow=0;
 			allRows.push(
 				<div className="row g-2" key={allRows.length}>
 					{row[0]}
