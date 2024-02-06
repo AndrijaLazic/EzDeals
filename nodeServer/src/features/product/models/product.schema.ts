@@ -8,8 +8,8 @@ import { BadRequestError } from "src/shared/globals/helpers/error-handler";
 const productSchema: Schema = new Schema({
 	name: { type: String, require: true },
 	image: { type: String, require: true },
-	dateAdded: { type: String, require: true },
-	lastScraped: { type: String, default: "" },
+	dateAdded: { type: Date, require: true },
+	lastScraped: { type: Date, default: "" },
 	primaryCategory: { type: String, default: "" },
 	prices: { type: [] },
 	historyID: { type: ObjectId }

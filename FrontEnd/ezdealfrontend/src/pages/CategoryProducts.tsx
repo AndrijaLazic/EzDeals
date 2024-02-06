@@ -5,6 +5,7 @@ import ProductsList from '../components/ListOfProducts/ProductsList';
 import Pagination from '../components/Pagination/Pagination';
 import { AppConfig } from '../AppConfig';
 import { ICategory } from '../dataModels/category';
+import NoProductsFound from '../components/errors/NoProductsFound';
 
 const CategoryProducts = () => {
 
@@ -21,8 +22,17 @@ const CategoryProducts = () => {
 	return (
 		<div className='container'>
 			<div className="row g-2"><h2>{categoryInfo.name}</h2></div>
-			<ProductsList page={page} sort={SortType.ByPriceAcending} category={category} setMaxPages={setMaxPages}/>
-			<Pagination maxPages={maxPages} baseUrl={"/kategorije/"+category+"?page="}/>
+			
+
+			{maxPages!=0 ? 
+				<>
+					<ProductsList page={page} sort={SortType.ByPriceAcending} category={category} setMaxPages={setMaxPages}/>
+					<Pagination maxPages={maxPages} baseUrl={"/kategorije/"+category+"?page="}/>
+				</>:
+				<div className="row g-2 justify-content-center">
+					<NoProductsFound message="Nije pronadjen nijedan proizvod :("/>
+				</div>
+			}
 		</div>
 	);
 };

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { config } from "src/config";
 import {
 	IProductDocument,
@@ -216,21 +217,19 @@ class ProductService {
 		let resultProducts=0;
 		const numOfCategories=allCategories.length;
 
-		const currentTime=new Date(Date.now() - 24*60*60 * 1000);
-		const sortParameter=ProductCategories.getSortParameter(searchInfo.sortOrder);
+		const currentTime=(new Date(Date.now() - 23*60*60 * 1000));
 
+
+		
 		for(let i=0;i<numOfCategories;i++){
-			resultProducts=await allCategories[i]
-				.find(
-					{"dateAdded":{$gt:currentTime}}, 
-					["name", "image", "currentBestPrice","primaryCategory"]
-				)
-				.sort(sortParameter)
-				.lean() //
-				.countDocuments({})
+			try {
+				resultProducts=await allCategories[i]
+				.countDocuments({dateAdded:{$gte:new Date(currentTime.toISOString())}})
 				.exec();
+			} catch (error) {
+				log.error(error);
+			}
 			numOfNewProducts=numOfNewProducts+resultProducts;
-			
 		}
 		return numOfNewProducts;
 	}

@@ -1,4 +1,3 @@
-import { SearchInfo } from "../dataModels/product";
 
 const BASE_URL = `${import.meta.env.VITE_APP_BASE_ENDPOINT}/api/`;
 const headers = {

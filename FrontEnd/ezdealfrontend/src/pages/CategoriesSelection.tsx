@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CategoryCard from '../components/categoryCard/CategoryCard';
 import { ICategory } from '../dataModels/category';
 import { AppConfig } from '../AppConfig';

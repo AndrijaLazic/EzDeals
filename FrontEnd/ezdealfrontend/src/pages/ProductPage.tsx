@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IProduct, IShortProduct } from '../dataModels/product';
+import { IProduct } from '../dataModels/product';
 import { productService } from '../services/product.service';
 import ShopCard from '../components/shopCard/ShopCard';
+import NoProductsFound from '../components/errors/NoProductsFound';
 
-const ProductPage = (props: any) => {
+const ProductPage = () => {
 	const { category, productId } = useParams();
 	const [product, setProduct] = useState<IProduct>();
 
 	useEffect(() => {
-		const getProducts = async () => {
+		const getProducts = async() => {
 
 			const response = await productService.getSingleProduct(productId!, category!);
 
 			if (response.error) {
-				return console.log(response.error);
+				return console.log(response);
 			}
 
 			setProduct(response.product as IProduct);
@@ -25,9 +26,9 @@ const ProductPage = (props: any) => {
 	}, []);
 
 	if (!product) {
-		return (
-			<div className='container px-4 px-lg-5 my-5'>
-				<h4>Dati proizvod ne postoji</h4>
+		return(
+			<div className="row g-2 justify-content-center">
+				<NoProductsFound message="Dati proizvod ne postoji :("/>
 			</div>
 		);
 	}

@@ -21,9 +21,11 @@ function ProductsList(props: any) {
 					response = await productService.getProductsFromCategory(props.category,props.page);
 					break;
 			}
-
 			if (response.error) {
-				return console.log(response.error);
+				props.setMaxPages(
+					0
+				);
+				return console.log(response);
 			}
 
 			setProducts(response.products as IShortProduct[]);
@@ -38,11 +40,12 @@ function ProductsList(props: any) {
 
 	const allRows=[];
 	let row=[];
-	for (let index = 0; index < products.length; index++) {
+	const productsLength=products.length;
+	for (let index = 0; index <productsLength; index++) {
 		row.push(<ShortProduct key={products[index]._id} product={products[index]}/>);
 		if(index%6==0 && index !=0){
 			allRows.push(
-				<div className="row g-2">
+				<div className="row g-2" key={allRows.length}>
 					{row[0]}
 					{row[1]}
 					{row[2]}
@@ -55,7 +58,7 @@ function ProductsList(props: any) {
 		}
 	}
 	allRows.push(
-		<div className="row g-2">
+		<div className="row g-2" key={allRows.length}>
 			{row[0]}
 			{row[1]}
 			{row[2]}
