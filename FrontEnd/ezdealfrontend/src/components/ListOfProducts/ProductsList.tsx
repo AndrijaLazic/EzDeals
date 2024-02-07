@@ -8,6 +8,14 @@ import { useEffect, useState } from 'react';
 function ProductsList(props: any) {
 	const [products, setProducts] = useState<IShortProduct[]>([]);
 
+	if(props.products){
+		return (
+			productsToHtml(props.products as IShortProduct[])
+		);
+	}
+
+
+	
 	useEffect(() => {
 		const getProducts = async() => {
 
@@ -38,6 +46,16 @@ function ProductsList(props: any) {
 		getProducts();
 	}, []);
 
+	
+	
+
+	return (
+		productsToHtml(products)
+	);
+
+}
+
+function productsToHtml(products:IShortProduct[]){
 	const allRows=[];
 	let row=[];
 	let numbOfProdInRow=0;
@@ -71,10 +89,7 @@ function ProductsList(props: any) {
 		</div>
 	);
 
-	return (
-		allRows
-	);
-
+	return allRows;
 }
 
 export default ProductsList;

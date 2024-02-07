@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import ProductsList from '../components/ListOfProducts/ProductsList';
 import { SortType } from '../dataModels/product';
-import { useParams } from 'react-router-dom';
 import Pagination from '../components/Pagination/Pagination';
 import NoProductsFound from '../components/errors/NoProductsFound';
 
 const NewestProducts = () => {
-	const {category}=useParams();
 	const[maxPages,setMaxPages]=useState(1);
 
 	return (

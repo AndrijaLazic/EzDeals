@@ -7,6 +7,7 @@ import CategoriesSelection from "./pages/CategoriesSelection";
 import ProductPage from "./pages/ProductPage";
 import Footer from "./components/footer/Footer";
 import CategoryProducts from "./pages/CategoryProducts";
+import ProductSeach from "./pages/ProductSeach";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
 
 				</Route>
 				<Route path="/noviProizvodi" element={<NewestProducts/>}/>
+				<Route path="/pretraga" element={<ProductSeach/>}/>
 			</Routes>
 		</div>
 		<Footer/>
