@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:5000
 @urlPath=api/product/search
 ####
-GET {{baseUrl}}/{{urlPath}}?page=1
+POST {{baseUrl}}/{{urlPath}}?page=1
 Content-Type: application/json
 Accept: application/json
 withCredentials: true

@@ -142,7 +142,7 @@ export class ProductControler {
 
 		response
 			.status(HTTP_STATUS.OK)
-			.json({ message: "Products", products: products, maxPages: maxPages });
+			.json({ message: "Products", products: products.slice(0,searchInfo.numberOfProducts), maxPages: maxPages });
 	}
 
 	@productSearchValidation(searchInfoSchema)

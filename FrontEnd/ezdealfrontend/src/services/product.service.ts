@@ -1,3 +1,4 @@
+import { SearchInfo } from "../dataModels/product";
 
 const BASE_URL = `${import.meta.env.VITE_APP_BASE_ENDPOINT}/api/`;
 const headers = {
@@ -80,12 +81,30 @@ class ProductService {
 		return data;
 	}
 
-	// async getProductsFromCategory(category: string, page: string) {
-	// 	const response = await axios.get(
-	// 		"product/" + category + "/?page=" + page
-	// 	);
-	// 	return response;
-	// }
+	async getProductsFromSearch(body: SearchInfo) {
+		const response = await fetch(BASE_URL+"product/search?page=" + body.pageNum, {
+			method: "POST",
+			headers: headers,
+			body:JSON.stringify(body)
+		});
+		
+		const data = await response.json();
+		// data is returned as a json message with a status code
+
+		if (!response.ok) {
+			let message;
+
+			if (data?.message) {
+				message = data.message; // other server messages that we dont have control of
+			} else {
+				message = data; // our custom messages
+			}
+
+			return { error: true, message };
+		}
+
+		return data;
+	}
 }
 
 export const productService = new ProductService();

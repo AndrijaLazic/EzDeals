@@ -20,7 +20,7 @@ class ProductRoutes {
 			ProductControler.prototype.getProductHistory
 		);
 
-		this.router.get(
+		this.router.post(
 			"/product/search",
 			ProductControler.prototype.getProductsBySearch
 		);
