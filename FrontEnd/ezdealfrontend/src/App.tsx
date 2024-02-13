@@ -22,7 +22,6 @@ function App() {
 						<Route index element={<CategoryProducts/>}/>
 						<Route path=":productId" element={<ProductPage/>}/>
 					</Route>
-
 				</Route>
 				<Route path="/noviProizvodi" element={<NewestProducts/>}/>
 				<Route path="/pretraga" element={<ProductSeach/>}/>

@@ -11,7 +11,7 @@ export default function Navbar() {
 	
 	if(searchParams.get('searchString')){
 		//setsearchString();
-		console.log(searchParams.get('searchString'))
+		console.log(searchParams.get('searchString'));
 	}
 
 	async function startSearch(){
