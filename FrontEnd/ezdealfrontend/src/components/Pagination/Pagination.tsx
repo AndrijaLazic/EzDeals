@@ -52,22 +52,22 @@ function fitPagination(pageItems:any[],currentPage:number,maxPages:number){
 	if(currentPage<5){
 		newArray=pageItems.slice(0, 5);
 		newArray.push(
-			<li className="page-item"><a className="page-link">...</a></li>
+			<li className="page-item" key={"moreRightKey"}><a className="page-link">...</a></li>
 		);
 	}
 	else if(currentPage>maxPages-3){
 		newArray=pageItems.slice(maxPages-4,maxPages);
 		newArray.unshift(
-			<li className="page-item"><a className="page-link">...</a></li>
+			<li className="page-item" key={"moreLeftKey"}><a className="page-link">...</a></li>
 		);
 	}
 	else{
 		newArray=pageItems.slice(currentPage-3,currentPage+2);
 		newArray.unshift(
-			<li className="page-item"><a className="page-link">...</a></li>
+			<li className="page-item" key={"moreRightKey"}><a className="page-link">...</a></li>
 		);
 		newArray.push(
-			<li className="page-item"><a className="page-link">...</a></li>
+			<li className="page-item" key={"moreLeftKey"}><a className="page-link">...</a></li>
 		);
 	}
 
