@@ -44,6 +44,7 @@ class Product:
     dateAdded:str
     lastScraped:str
     primaryCategory:str
+    visibility:bool
     _id:str
 
         
@@ -58,13 +59,14 @@ class Product:
         _prices = [Price.from_dict(y) for y in obj.get("prices")]
         _id=str(obj.get("_id"))
         _currentBestPrice=str(obj.get("currentBestPrice"))
+        _visibility=bool(obj.get("visibility"))
         product=Product(_name, _image,_dateAdded,_primaryCategory)
         product.prices=_prices
         product.historyID=_historyID
         product.lastScraped=_lastScraped
         product._id=_id
         product.currentBestPrice=_currentBestPrice
-        
+        product.visibility=_visibility
 
         return product
     
@@ -79,6 +81,7 @@ class Product:
         if lastScraped is None:
             lastScraped=dateAdded
         self.lastScraped=lastScraped
+        self.visibility=True
     
     def addPrice(self,price):
         # Append the new price to the list
@@ -95,6 +98,7 @@ class Product:
         """
         differences = {}
         
+        differences["visibility"]=True
         
         if oldProduct.lastScraped!= newProduct.lastScraped:
             differences["lastScraped"] = newProduct.lastScraped

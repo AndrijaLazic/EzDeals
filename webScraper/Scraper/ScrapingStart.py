@@ -41,9 +41,16 @@ def Scraping():
 
     start_time = time.time()
     database=Database()
+
+    
+
     monitoriMenager:ProductMenager=ProductMenager("Monitori")
     racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
     slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
+
+    visibilityThread=threading.Thread(setAllProductsVisibility([monitoriMenager,racunarskeKomponenteMenager,slusaliceMenager]))
+    visibilityThread.start()
+    
 
     settings = get_project_settings()
     process = CrawlerProcess(settings)
@@ -85,14 +92,30 @@ def Scraping():
     RedisDatabase().clearDatabase()
     print("finnished clearing redis")
     
+def setAllProductsVisibility(menagerArray:list[ProductMenager]):
 
-def HistoryLogging(collection_name:str,currentTime:str,):
+    threadArray=[]
+
+    print(menagerArray)
+
+    for menager in menagerArray:
+        threadArray.append(threading.Thread(target=menager.setVisibilityAll(False)))
+
+    for thread in threadArray:
+        thread.start()
+
+    for thread in threadArray:
+        thread.join()
+
+    return
+
+def HistoryLogging(collection_name:str,currentTime:str):
     try:
         HistoryMenager.UpdateHistory(collection_name,currentTime)
     except Exception as error:
         print(error)
 
-    
+ 
     
 
 def HistoryThreading():

@@ -130,6 +130,23 @@ class ProductMenager:
             changes=Product.returnProductChanges(oldProduct,val)
             database.updateProduct({'_id':ObjectId(oldProduct._id)},changes,category)
             
+    def setVisibilityAll(self,value:bool):
+        """
+        Sets visibility of all products to give boolean value
+        :return: None
+        """
+
+        category=self.getCurrentInstanceCategory()
+
+        print("\n\n\n\n")
+        print("Setting visibility of all products in category:")
+        print(category)
+        print("\n\n\n\n")
+
+        database=Database()
+       
+        database.setVisibilityAll(category,value)
+                    
             
 
 

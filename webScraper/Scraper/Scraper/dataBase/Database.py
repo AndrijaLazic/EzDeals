@@ -157,6 +157,15 @@ class Database:
             (field,1)
             ])
 
+    def setVisibilityAll(self,collection:str,value:bool):
+        """
+        Sets visibility of all products to give boolean value
+        :return: None
+        """
 
+        self.db.get_collection(collection).update_many({},
+        { "$set": { 
+            "visibility": value
+        }})
 
     
