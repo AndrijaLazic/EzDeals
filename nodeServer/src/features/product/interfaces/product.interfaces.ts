@@ -27,6 +27,7 @@ export interface IShortProductDocument extends Document {
 	currentBestPrice: number;
 	dateAdded: Date | string;
 	primaryCategory: string;
+	visibility:boolean;
 }
 
 export interface IProductHistoryDocument extends Document {

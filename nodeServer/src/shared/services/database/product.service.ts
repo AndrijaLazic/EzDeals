@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { config } from "src/config";
 import {
 	IProductDocument,
@@ -12,6 +11,17 @@ import { DatabaseError } from "src/shared/globals/helpers/error-handler";
 import { Logger } from "winston";
 
 const log: Logger = config.createLogger("productService");
+
+const defaultFilter:{
+	$and:any[]
+}={
+	$and:[
+		{
+			visibility:true
+		}
+	]
+};
+
 
 class ProductService {
 	/**
@@ -32,7 +42,7 @@ class ProductService {
 			products = await ProductCategories.getCategory(
 				searchInfo.productCategory
 			)
-				.find({}, ["name", "image", "currentBestPrice","primaryCategory"])
+				.find(defaultFilter, ["name", "image", "currentBestPrice","primaryCategory"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
@@ -42,7 +52,7 @@ class ProductService {
 		}
 
 		products = await ProductCategories.getCategory(searchInfo.productCategory)
-			.find({}, ["name", "image", "currentBestPrice","primaryCategory"])
+			.find(defaultFilter, ["name", "image", "currentBestPrice","primaryCategory"])
 			.sort(sortParameter)
 			.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 			.limit(searchInfo.numberOfProducts)
@@ -61,7 +71,7 @@ class ProductService {
 	): Promise<number> {
 		const numberofProducts: number = await ProductCategories.getCategory(
 			category
-		).countDocuments({});
+		).countDocuments(defaultFilter);
 
 		return numberofProducts;
 	}
@@ -80,16 +90,19 @@ class ProductService {
 	): Promise<IProductDocument | null> {
 		let product: IProductDocument | null = null;
 
+		const newFilter={...defaultFilter};
+		newFilter.$and.push(filter);
+
 		try {
 			if (jsonFormat) {
 				product = await ProductCategories.getCategory(category)
-					.findOne(filter)
+					.findOne(newFilter)
 					.lean() //
 					.exec();
 			}
 
 			product = await ProductCategories.getCategory(category)
-				.findOne(filter)
+				.findOne(newFilter)
 				.exec();
 		} catch (error) {
 			log.error(error);
@@ -167,12 +180,14 @@ class ProductService {
 				}
 			};
 		}
+		const newFilter={...defaultFilter};
+		newFilter.$and.push(nameFilter);
 
 		if (jsonFormat) {
 
 			for(let i=0;i<numOfCategories;i++){
 				resultProducts=await allCategories[i]
-					.find(nameFilter, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
+					.find(newFilter, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
 					.sort(sortParameter)
 					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 					.limit(searchInfo.numberOfProducts)
@@ -186,11 +201,9 @@ class ProductService {
 
 		for(let i=0;i<numOfCategories;i++){
 			resultProducts=await allCategories[i]
-				.find({
-					name:{
-						$regex:regexExpression
-					}
-				}, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
+				.find(
+					newFilter
+					, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
