@@ -1,7 +1,6 @@
-import React from 'react';
 import CategoryCard from '../components/categoryCard/CategoryCard';
 import { ICategory } from '../dataModels/category';
-import { AppConfig } from '../AppConfig';
+import { AppConfig } from '../appConfig';
 
 
 
