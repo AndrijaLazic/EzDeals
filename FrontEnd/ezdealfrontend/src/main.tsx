@@ -15,30 +15,31 @@ import ProductPage from "./pages/ProductPage.tsx";
 
 const router = createBrowserRouter([
 	{
-	  element:<App />,
+	  element:<App/>,
+	  path: "/",
 	  children:[
 		{
 			path: "",
 			element:<NewestProducts />,
 		},
 		{
-			path: "/noviProizvodi",
+			path: "noviProizvodi",
 			element:<NewestProducts />,
 		},
 		{
-			path: "/pretraga",
+			path: "pretraga",
 			element:<ProductSeach />,
 		},
 		{
-			path: "/kategorije",
+			path: "kategorije",
 			element:<CategoriesSelection />,
 		},
 		{
-			path: "/kategorije/:category",
+			path: "kategorije/:category",
 			element:<CategoryProducts />,
 		},
 		{
-			path: "/kategorije/:category/:productId",
+			path: "kategorije/:category/:productId",
 			element:<ProductPage />,
 		}
 	  ]

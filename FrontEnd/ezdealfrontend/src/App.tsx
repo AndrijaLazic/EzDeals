@@ -10,7 +10,9 @@ function App() {
 	<div id="mainContainer">
 		<Navbar/>
 		<div id="routesBody">
-			<Outlet />
+			<main>
+				<Outlet/>
+			</main>
 		</div>
 		<Footer/>
 	</div>

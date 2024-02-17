@@ -12,16 +12,19 @@ import { Logger } from "winston";
 
 const log: Logger = config.createLogger("productService");
 
-const defaultFilter:{
+interface defaultFilter{
 	$and:any[]
-}={
-	$and:[
-		{
-			visibility:true
-		}
-	]
 };
 
+function getDefaultFilter(){
+	return {
+		$and:[
+			{
+				visibility:true
+			}
+		]
+	} as defaultFilter;
+}
 
 class ProductService {
 	/**
@@ -42,7 +45,7 @@ class ProductService {
 			products = await ProductCategories.getCategory(
 				searchInfo.productCategory
 			)
-				.find(defaultFilter, ["name", "image", "currentBestPrice","primaryCategory"])
+				.find(getDefaultFilter(), ["name", "image", "currentBestPrice","primaryCategory"])
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
@@ -52,7 +55,7 @@ class ProductService {
 		}
 
 		products = await ProductCategories.getCategory(searchInfo.productCategory)
-			.find(defaultFilter, ["name", "image", "currentBestPrice","primaryCategory"])
+			.find(getDefaultFilter(), ["name", "image", "currentBestPrice","primaryCategory"])
 			.sort(sortParameter)
 			.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 			.limit(searchInfo.numberOfProducts)
@@ -71,7 +74,7 @@ class ProductService {
 	): Promise<number> {
 		const numberofProducts: number = await ProductCategories.getCategory(
 			category
-		).countDocuments(defaultFilter);
+		).countDocuments(getDefaultFilter());
 
 		return numberofProducts;
 	}
@@ -90,7 +93,7 @@ class ProductService {
 	): Promise<IProductDocument | null> {
 		let product: IProductDocument | null = null;
 
-		const newFilter={...defaultFilter};
+		const newFilter=getDefaultFilter();
 		newFilter.$and.push(filter);
 
 		try {
@@ -180,7 +183,7 @@ class ProductService {
 				}
 			};
 		}
-		const newFilter={...defaultFilter};
+		const newFilter=getDefaultFilter();
 		newFilter.$and.push(nameFilter);
 
 		if (jsonFormat) {

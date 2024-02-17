@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:5000
 @urlPath=api/product
 ####
-GET {{baseUrl}}/{{urlPath}}/Monitori/65b18dddc5bba2249d0d0ea2
+GET {{baseUrl}}/{{urlPath}}/Monitori/65cd0b73d0b20496cc20687b
 Content-Type: application/json
 Accept: application/json
 withCredentials: true

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IProduct } from '../dataModels/product';
 import { productService } from '../services/product.service';
@@ -8,6 +8,7 @@ import NoProductsFound from '../components/errors/NoProductsFound';
 const ProductPage = () => {
 	const { category, productId } = useParams();
 	const [product, setProduct] = useState<IProduct>();
+	const [errorStatus, seterrorStatus] = useState(false);
 
 	useEffect(() => {
 		const getProducts = async() => {
@@ -15,7 +16,9 @@ const ProductPage = () => {
 			const response = await productService.getSingleProduct(productId!, category!);
 
 			if (response.error) {
-				return console.log(response);
+				console.log(response);
+				seterrorStatus(true);
+				return;
 			}
 
 			setProduct(response.product as IProduct);
@@ -25,10 +28,17 @@ const ProductPage = () => {
 		getProducts();
 	}, []);
 
-	if (!product) {
+	if(errorStatus){
 		return(
 			<div className="row g-2 justify-content-center">
 				<NoProductsFound message="Dati proizvod ne postoji :("/>
+			</div>
+		);
+	}
+
+	if (!product) {
+		return(
+			<div className="row g-2 justify-content-center">
 			</div>
 		);
 	}

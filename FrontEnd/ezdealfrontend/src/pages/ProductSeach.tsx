@@ -14,27 +14,33 @@ const CategoryProducts = () => {
 	const[maxPages,setMaxPages]=useState(1);
 	const [products, setProducts] = useState<IShortProduct[]>([]);
 
-	useEffect(() => {
-		async function startSearch(){
-			const body:SearchInfo={
-				pageNum: 1,
-				sortOrder: SortType.ByPriceAcending,
-				productCategory: "",
-				numberOfProducts: 24,
-				searchString: searchString
-			};
-	
-			const response = await productService.getProductsFromSearch(body);
-	
-			if (response.error) {
-				return console.log(response);
-			}
-			setProducts(response.products);
-	
-			setMaxPages(response.maxPages);
+	async function startSearch(){
+		const body:SearchInfo={
+			pageNum: 1,
+			sortOrder: SortType.ByPriceAcending,
+			productCategory: "",
+			numberOfProducts: 24,
+			searchString: searchString
+		};
+
+		const response = await productService.getProductsFromSearch(body);
+
+		if (response.error) {
+			return console.log(response);
 		}
+		setProducts(response.products);
+
+		setMaxPages(response.maxPages);
+	}
+
+
+	useEffect(() => {
 		startSearch();
 	}, []);
+
+	useEffect(() => {
+		startSearch();
+	}, [searchParams]);
 
 	
 

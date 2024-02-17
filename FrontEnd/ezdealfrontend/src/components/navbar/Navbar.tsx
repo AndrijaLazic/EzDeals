@@ -10,8 +10,10 @@ export default function Navbar() {
 
 	const navigate = useNavigate();
 
+	console.log("rebuild");
+
 	async function startSearch(){
-		navigate("/pretraga?searchString="+searchString.current+"&page=1", { replace: true });
+		navigate("/pretraga?searchString="+searchString.current+"&page=1");
 	}
 
 	const handleKeyDown=(event:any)=>{
@@ -21,7 +23,6 @@ export default function Navbar() {
 
 	function onInput(value:string){
 		searchString.current=value;
-		console.log(searchString.current);
 	}
 
 

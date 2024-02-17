@@ -1,5 +1,5 @@
+import { getImageUrl } from "../../assets/pictures.util";
 import "./NoProductsFound.css";
-import { Link } from "react-router-dom";
 
 const NoProductsFound = (props:any) => {
 
@@ -8,7 +8,7 @@ const NoProductsFound = (props:any) => {
 			<div className='errorCard'>
 
 				<div className="col-sm productImage">
-					<img className='card-img-top' src="/pictures/productNotFoundErr.jpg"/>
+					<img className='card-img-top' src={getImageUrl("./pictures/productNotFoundErr.jpg")}/>
 				</div>
 		
 				<h4>
