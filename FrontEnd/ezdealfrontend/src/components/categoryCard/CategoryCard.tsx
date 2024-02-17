@@ -1,6 +1,7 @@
 import { ICategory } from "../../dataModels/category";
 import "./CategoryCard.css";
 import { Link } from "react-router-dom";
+import {getImageUrl} from "../../assets/pictures.util";
 
 const CategoryCard = (props:any) => {
 
@@ -12,7 +13,7 @@ const CategoryCard = (props:any) => {
 				<Link to={category.url}>
 				
 					<div className="col-sm productImage">
-						<img className='card-img-top' src={category.imagePath}/>
+						<img className='card-img-top' src={getImageUrl(category.imagePath)}/>
 					</div>
 			
 					<h4 className="categoryName">

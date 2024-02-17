@@ -9,7 +9,7 @@
 	font-weight: bold;
 	word-wrap: break-word;
 	height: 30%;
-	color: var(--ProductTextColor1);
+	color: var(--ProductPriceColor1);
 }
 
 .productData .productName{
@@ -50,12 +50,23 @@ div.productData div.row p{
 	height: 100%;
 }
 
-.shortItem:hover{
-	transform: scale(1.2);
-	box-shadow: 2px 2px 2px 2px;
-	z-index:10;
-	position:absolute;
+@media only screen and (min-width: 992px) {
+	.shortItem:hover{
+		transform: scale(1.2);
+		box-shadow: 2px 2px 2px 2px;
+		z-index:10;
+		position: sticky;
+	}
 }
+
+@media only screen and (max-width: 992px) {
+	.shortItem{
+		aspect-ratio: 1 / 1.0;
+	}
+
+}
+
+
 
 .shortItem a:hover{
 	text-decoration: none;

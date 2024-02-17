@@ -40,9 +40,9 @@
 }
 
 
-@media only screen and (max-width: 768px) {
-	.navbar{
+@media only screen and (max-width: 992px) {
+	#siteNavbar{
 		padding-left: var(--BreakpointPadingLeft);
 		padding-right: var(--BreakpointPadingRight);
 	}
- }
+}

@@ -19,11 +19,6 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-#Navbar{
-	position: fixed; /* Set the navbar to fixed position */
-  	top: 0; /* Position the navbar at the top of the page */
-}
-
 
 @keyframes logo-spin {
   from {
@@ -69,4 +64,12 @@
 	padding-top: 20px;
 	padding-bottom: 20px;
 	background-color: var(--background-color-3);
+}
+
+
+@media only screen and (max-width: 992px) {
+	#routesBody{
+		padding-left: var(--BreakpointPadingLeft);
+		padding-right: var(--BreakpointPadingRight);
+	}
 }

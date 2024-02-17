@@ -66,7 +66,7 @@ function productsToHtml(products:IShortProduct[]){
 		if(numbOfProdInRow==6){
 			numbOfProdInRow=0;
 			allRows.push(
-				<div className="row g-2" key={allRows.length}>
+				<div className="row" key={allRows.length}>
 					{row[0]}
 					{row[1]}
 					{row[2]}
@@ -79,7 +79,7 @@ function productsToHtml(products:IShortProduct[]){
 		}
 	}
 	allRows.push(
-		<div className="row g-2" key={allRows.length}>
+		<div className="row" key={allRows.length}>
 			{row[0]}
 			{row[1]}
 			{row[2]}

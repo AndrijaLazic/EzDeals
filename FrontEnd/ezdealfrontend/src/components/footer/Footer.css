@@ -7,6 +7,7 @@
 	border: 0px;
 	background-color: var(--background-color-1);
 	color: var(--NavbarFooterTextColor);
+	
 }
 
 
@@ -45,11 +46,7 @@ div.containerFooter #footer{
 }
 
 
-@media only screen and (max-width: 768px) {
-	.navbar{
-		padding-left: var(--BreakpointPadingLeft);
-		padding-right: var(--BreakpointPadingRight);
-	}
+@media only screen and (max-width: 992px) {
 	.containerFooter{
 		padding-left: var(--BreakpointPadingLeft);
 		padding-right: var(--BreakpointPadingRight);

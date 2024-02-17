@@ -6,19 +6,19 @@ class appConfig {
 		this.categories=[
 			{
 				name:"Monitori",
-				imagePath:"../../../pictures/CategoryMonitori.png",
+				imagePath:"./pictures/CategoryMonitori.png",
 				url:"/kategorije/Monitori?page=1",
 				urlParam:"Monitori"
 			},
 			{
 				name:"Racunarske komponente",
-				imagePath:"../../../pictures/CategoryRacunarskeKomponente.png",
+				imagePath:"./pictures/CategoryRacunarskeKomponente.png",
 				url:"/kategorije/RacunarskeKomponente?page=1",
 				urlParam:"RacunarskeKomponente"
 			},
 			{
 				name:"Slusalice",
-				imagePath:"../../../pictures/CategorySlusalice.png",
+				imagePath:"./pictures/CategorySlusalice.png",
 				url:"/kategorije/Slusalice?page=1",
 				urlParam:"Slusalice"
 			},

@@ -7,7 +7,7 @@ const ShortProduct = (props:any) => {
 	const productLink="/kategorije/"+product.primaryCategory+"/"+product._id;
 
 	return (
-		<div className='col-12 col-lg-4 col-xxl-2 pt-2 '>
+		<div className='col-12 col-lg-4 col-xxl-2 p-2 '>
 			<div className='shortItem'>
 				<Link to={productLink}>
 				
