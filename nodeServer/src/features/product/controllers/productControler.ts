@@ -127,18 +127,18 @@ export class ProductControler {
 
 			products = await productService.getProductsForSearch(searchInfo);
 
-			let numberofProductsInSearch: number =products.length;
-				
-			if(numberofProductsInSearch==0)
-				numberofProductsInSearch=1;
-			maxPages = Math.ceil(
-				numberofProductsInSearch / searchInfo.numberOfProducts
-			);
-
 			if (products) {
 				productCache.saveSearchProductsToCache(products, searchInfo);
 			}
 		}
+
+		let numberofProductsInSearch: number =products.length;
+				
+		if(numberofProductsInSearch==0)
+			numberofProductsInSearch=1;
+		maxPages = Math.ceil(
+			numberofProductsInSearch / searchInfo.numberOfProducts
+		);
 
 		response
 			.status(HTTP_STATUS.OK)

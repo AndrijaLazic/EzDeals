@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { SortType } from '../dataModels/product';
 import ProductsList from '../components/ListOfProducts/ProductsList';

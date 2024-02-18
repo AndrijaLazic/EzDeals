@@ -9,14 +9,21 @@ import { productService } from '../services/product.service';
 const CategoryProducts = () => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [searchParams, setSearchParams] = useSearchParams();
-	const page = searchParams.get('page') || 1;
 	const searchString = searchParams.get('searchString') || "";
 	const[maxPages,setMaxPages]=useState(1);
 	const [products, setProducts] = useState<IShortProduct[]>([]);
 
+	const pageParam=+(searchParams.get('page') || 1);
+
+	const[currentPage,setCurrentPage]=useState(pageParam);
+	
+	if(currentPage!=pageParam){
+		setCurrentPage(pageParam);
+	}
+
 	async function startSearch(){
 		const body:SearchInfo={
-			pageNum: 1,
+			pageNum: currentPage,
 			sortOrder: SortType.ByPriceAcending,
 			productCategory: "",
 			numberOfProducts: 24,
@@ -49,8 +56,8 @@ const CategoryProducts = () => {
 			<div className="row g-2"><h2>Pretraga</h2></div>
 			{products.length!=0 ? 
 				<>
-					<ProductsList page={page} products={products} sort={SortType.ByPriceAcending} setMaxPages={setMaxPages}/>
-					<Pagination maxPages={maxPages} baseUrl={"/pretraga?searchString="+searchString+"&page="} currentPage={page}/>
+					<ProductsList page={currentPage} products={products} sort={SortType.ByPriceAcending} setMaxPages={setMaxPages}/>
+					<Pagination maxPages={maxPages} baseUrl={"/pretraga?searchString="+searchString+"&page="} currentPage={currentPage}/>
 				</>:
 				<div className="row g-2 justify-content-center">
 					<NoProductsFound message="Nije pronadjen nijedan proizvod :("/>
