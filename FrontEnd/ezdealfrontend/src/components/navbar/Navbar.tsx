@@ -10,8 +10,6 @@ export default function Navbar() {
 
 	const navigate = useNavigate();
 
-	console.log("rebuild");
-
 	async function startSearch(){
 		navigate("/pretraga?searchString="+searchString.current+"&page=1");
 	}

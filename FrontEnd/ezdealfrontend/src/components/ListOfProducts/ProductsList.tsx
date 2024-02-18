@@ -14,37 +14,39 @@ function ProductsList(props: any) {
 		);
 	}
 
+	const getProducts = async() => {
 
+		let response;
+		
+		switch (props.category) {
+			case "newProducts":
+				response = await productService.getNewProducts();
+				break;
+			default:
+				response = await productService.getProductsFromCategory(props.category,props.page);
+				break;
+		}
+		if (response.error) {
+			props.setMaxPages(
+				0
+			);
+			return console.log(response);
+		}
+
+		setProducts(response.products as IShortProduct[]);
+
+		props.setMaxPages(
+			response.maxPages
+		);
+	};
 	
 	useEffect(() => {
-		const getProducts = async() => {
-
-			let response;
-			
-			switch (props.category) {
-				case "newProducts":
-					response = await productService.getNewProducts();
-					break;
-				default:
-					response = await productService.getProductsFromCategory(props.category,props.page);
-					break;
-			}
-			if (response.error) {
-				props.setMaxPages(
-					0
-				);
-				return console.log(response);
-			}
-
-			setProducts(response.products as IShortProduct[]);
-
-			props.setMaxPages(
-				response.maxPages
-			);
-		};
-
 		getProducts();
 	}, []);
+
+	useEffect(() => {
+		getProducts();
+	}, [props.page]);
 
 	
 	

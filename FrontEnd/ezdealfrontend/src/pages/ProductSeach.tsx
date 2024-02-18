@@ -50,7 +50,7 @@ const CategoryProducts = () => {
 			{products.length!=0 ? 
 				<>
 					<ProductsList page={page} products={products} sort={SortType.ByPriceAcending} setMaxPages={setMaxPages}/>
-					<Pagination maxPages={maxPages} baseUrl={"/pretraga?searchString="+searchString+"&page="}/>
+					<Pagination maxPages={maxPages} baseUrl={"/pretraga?searchString="+searchString+"&page="} currentPage={page}/>
 				</>:
 				<div className="row g-2 justify-content-center">
 					<NoProductsFound message="Nije pronadjen nijedan proizvod :("/>
