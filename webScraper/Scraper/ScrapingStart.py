@@ -27,6 +27,7 @@ from RedisMenager import RedisDatabase
 dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
 load_dotenv(dotenv_path=dotenv_path)
                 
+productCategories=os.getenv('PRODUCT_CATEGORIES').split(",")                
 
 def Scraping():
 
@@ -47,8 +48,9 @@ def Scraping():
     monitoriMenager:ProductMenager=ProductMenager("Monitori")
     racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
     slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
+    laptopoviMenager:ProductMenager=ProductMenager("Laptopovi")
 
-    visibilityThread=threading.Thread(setAllProductsVisibility([monitoriMenager,racunarskeKomponenteMenager,slusaliceMenager]))
+    visibilityThread=threading.Thread(setAllProductsVisibility([monitoriMenager,racunarskeKomponenteMenager,slusaliceMenager,laptopoviMenager]))
     visibilityThread.start()
     
 
@@ -69,6 +71,7 @@ def Scraping():
     monitoriMenager.uploadProductsToDatabase()
     racunarskeKomponenteMenager.uploadProductsToDatabase()
     slusaliceMenager.uploadProductsToDatabase()
+    laptopoviMenager.uploadProductsToDatabase()
 
     database.close_db()
 
@@ -123,17 +126,17 @@ def HistoryThreading():
     print("started history log at:")
     print(currentTime)
     dt_string = currentTime.strftime("%d/%m/%Y %H:%M")
-    t1=threading.Thread(target=HistoryLogging,args=("Monitori",dt_string))
-    t2=threading.Thread(target=HistoryLogging,args=("RacunarskeKomponente",dt_string))
-    t3=threading.Thread(target=HistoryLogging,args=("Slusalice",dt_string))
 
-    t1.start()
-    t2.start()
-    t3.start()
+    
+    threadsArray=[]
+    for category in productCategories:
+        threadsArray.append(threading.Thread(target=HistoryLogging,args=(category,dt_string)))
 
-    t1.join()
-    t2.join()
-    t3.join()
+    for thread in threadsArray:
+        thread.start()
+    
+    for thread in threadsArray:
+        thread.join()
 
     currentTime = datetime.now()
     print("ended history log at:")

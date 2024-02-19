@@ -22,6 +22,7 @@ class MongoDBpipeline:
     monitoriMenager:ProductMenager=ProductMenager("Monitori")
     racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
     slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
+    laptopoviMenager:ProductMenager=ProductMenager("Laptopovi")
     
     def open_spider(self,spider):
         self.database=Database()
@@ -42,6 +43,9 @@ class MongoDBpipeline:
 
             case "Slusalice":
                 self.slusaliceMenager.addProduct(item)
+            
+            case "Laptopovi":
+                self.laptopoviMenager.addProduct(item)
 
             
 
