@@ -22,6 +22,12 @@ class appConfig {
 				url:"/kategorije/Slusalice?page=1",
 				urlParam:"Slusalice"
 			},
+			{
+				name:"Laptopovi",
+				imagePath:"./pictures/CategoryLaptopovi.jpg",
+				url:"/kategorije/Laptopovi?page=1",
+				urlParam:"Laptopovi"
+			},
 		];
 	}
 
