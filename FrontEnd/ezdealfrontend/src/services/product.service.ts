@@ -105,6 +105,30 @@ class ProductService {
 
 		return data;
 	}
+
+	async getProductHistory(productId:string) {
+		const response = await fetch(BASE_URL+"product/history/"+productId, {
+			method: "GET",
+			headers: headers
+		});
+
+		const data = await response.json();
+		// data is returned as a json message with a status code
+
+		if (!response.ok) {
+			let message;
+
+			if (data?.message) {
+				message = data.message; // other server messages that we dont have control of
+			} else {
+				message = data; // our custom messages
+			}
+
+			return { error: true, message };
+		}
+
+		return data;
+	}
 }
 
 export const productService = new ProductService();

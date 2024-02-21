@@ -4,6 +4,7 @@ import { IProduct } from '../dataModels/product';
 import { productService } from '../services/product.service';
 import ShopCard from '../components/shopCard/ShopCard';
 import NoProductsFound from '../components/errors/NoProductsFound';
+import ProductHistoryGraph from '../components/productHistoryGraph/ProductHistoryGraph';
 
 const ProductPage = () => {
 	const { category, productId } = useParams();
@@ -47,6 +48,7 @@ const ProductPage = () => {
 	return (
 		<div className='container px-4 px-lg-5 my-5'>
 			{renderProduct(product)}
+			<ProductHistoryGraph historyID={product.historyID}/>
 		</div>
 	);
 };
@@ -62,15 +64,20 @@ function renderProduct(product: IProduct) {
 
 
 	return (
-		<div className="row gx-4 gx-lg-5 align-items-center">
-			<div className="col-md-6">
-				<img className="card-img-top mb-5 mb-md-0" src={product.image} alt="..."/>
-				<h2 className="display-5 fw-bolder">{product.name}</h2>
+		<>
+			<div className="row gx-4 gx-lg-5 align-items-center">
+				<div className="col-md-6">
+					<img className="card-img-top mb-5 mb-md-0" src={product.image} alt="..."/>
+					<h2 className="display-5 fw-bolder">{product.name}</h2>
+				</div>
+				<div className="col-md-6">
+					{shopCards}
+				</div>
 			</div>
-			<div className="col-md-6">
-				{shopCards}
+			<div className="row gx-4 gx-lg-5 align-items-center">
+
 			</div>
-		</div>
+		</>
 	);
 }
 

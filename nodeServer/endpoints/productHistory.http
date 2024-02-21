@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:5000
 @urlPath=api/product
 ####
-GET {{baseUrl}}/{{urlPath}}/history/65a54807f49650979b0f8915
+GET {{baseUrl}}/{{urlPath}}/history/65cd0b73d0b20496cc206840
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
