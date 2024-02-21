@@ -46,9 +46,9 @@ const ProductPage = () => {
 
 
 	return (
-		<div className='container px-4 px-lg-5 my-5'>
+		<div className='container mt-2'> 
 			{renderProduct(product)}
-			<ProductHistoryGraph historyID={product.historyID}/>
+			<ProductHistoryGraph product={product}/>
 		</div>
 	);
 };
@@ -65,17 +65,14 @@ function renderProduct(product: IProduct) {
 
 	return (
 		<>
-			<div className="row gx-4 gx-lg-5 align-items-center">
+			<div className="row pb-3 align-items-center">
 				<div className="col-md-6">
 					<img className="card-img-top mb-5 mb-md-0" src={product.image} alt="..."/>
-					<h2 className="display-5 fw-bolder">{product.name}</h2>
+					<h1 className="display-5 fw-bolder mt-3">{product.name}</h1>
 				</div>
 				<div className="col-md-6">
 					{shopCards}
 				</div>
-			</div>
-			<div className="row gx-4 gx-lg-5 align-items-center">
-
 			</div>
 		</>
 	);

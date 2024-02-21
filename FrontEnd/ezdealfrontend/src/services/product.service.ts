@@ -106,8 +106,8 @@ class ProductService {
 		return data;
 	}
 
-	async getProductHistory(productId:string) {
-		const response = await fetch(BASE_URL+"product/history/"+productId, {
+	async getProductHistory(historyId:string) {
+		const response = await fetch(BASE_URL+"product/history/"+historyId, {
 			method: "GET",
 			headers: headers
 		});
