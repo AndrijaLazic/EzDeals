@@ -20,10 +20,10 @@ function ProductsList(props: any) {
 		
 		switch (props.category) {
 			case "newProducts":
-				response = await productService.getNewProducts();
+				response = await productService.getNewProducts(props.currentPage);
 				break;
 			default:
-				response = await productService.getProductsFromCategory(props.category,props.page);
+				response = await productService.getProductsFromCategory(props.category,props.currentPage);
 				break;
 		}
 		if (response.error) {
@@ -46,7 +46,7 @@ function ProductsList(props: any) {
 
 	useEffect(() => {
 		getProducts();
-	}, [props.page]);
+	}, [props.currentPage]);
 
 	
 	

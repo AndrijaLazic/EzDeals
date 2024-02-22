@@ -7,9 +7,9 @@ const headers = {
 };
 
 class ProductService {
-	async getNewProducts() {
+	async getNewProducts(page:string) {
 
-		const response = await fetch(BASE_URL+"product/newProducts", {
+		const response = await fetch(BASE_URL+"product/newProducts/?page="+page, {
 			method: "GET",
 			headers: headers
 		});

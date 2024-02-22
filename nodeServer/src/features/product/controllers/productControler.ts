@@ -157,7 +157,7 @@ export class ProductControler {
 		searchInfo.searchString="";
 
 		let products: IShortProductDocument[] | null =
-			await productCache.getNewProductsFromCache();
+			await productCache.getNewProductsFromCache(searchInfo);
 		let maxPages = 1;
 
 		let numberofProductsInCategory: number | null = await productCache.getCategoryNumberOfProducts("newProducts");
@@ -193,7 +193,7 @@ export class ProductControler {
 			products=newProducts;
 
 			if (products) {
-				productCache.saveNewProductsToCache(products.slice(0,searchInfo.numberOfProducts));
+				productCache.saveNewProductsToCache(products.slice(0,searchInfo.numberOfProducts),searchInfo);
 			}
 		}
 

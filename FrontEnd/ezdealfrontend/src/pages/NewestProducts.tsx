@@ -8,8 +8,15 @@ import { useSearchParams } from 'react-router-dom';
 const NewestProducts = () => {
 	const[maxPages,setMaxPages]=useState(1);
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [searchParams, setSearchParams] = useSearchParams();
-	const page = searchParams.get('page') || 1;
+	const pageParam = +(searchParams.get('page') || 1);
+
+	const[currentPage,setCurrentPage]=useState(pageParam);
+	
+	if(currentPage!=pageParam){
+		setCurrentPage(pageParam);
+	}
 
 	return (
 		<div className='container'>
@@ -17,8 +24,8 @@ const NewestProducts = () => {
 			
 			{maxPages!=0 ? 
 				<>
-					<ProductsList page={1} sort={SortType.ByDateNewerFirst} category="newProducts" setMaxPages={setMaxPages}/>
-					<Pagination maxPages={maxPages} baseUrl={"/noviProizvodi?page="} currentPage={page}/>
+					<ProductsList currentPage={currentPage} sort={SortType.ByDateNewerFirst} category="newProducts" setMaxPages={setMaxPages}/>
+					<Pagination maxPages={maxPages} baseUrl={"/noviProizvodi?page="} currentPage={currentPage}/>
 				</>:
 				<div className="row g-2 justify-content-center">
 					<NoProductsFound message="Nije pronadjen nijedan proizvod :("/>

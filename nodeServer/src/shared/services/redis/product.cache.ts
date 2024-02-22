@@ -215,11 +215,12 @@ export class ProductCache extends BaseCache {
 	 * @param products products you want to save.
 	 */
 	public async saveNewProductsToCache(
-		products: IShortProductDocument[]
+		products: IShortProductDocument[],
+		searchInfo: SearchInfo
 	): Promise<void> {
 		try {
 			await this.client.set(
-				`newProducts`,
+				`newProducts:${searchInfo.pageNum}`,
 				JSON.stringify(products)
 			);
 		} catch (error) {
@@ -233,11 +234,12 @@ export class ProductCache extends BaseCache {
 	 * @param searchInfo information about the search
 	 */
 	public async getNewProductsFromCache(
+		searchInfo: SearchInfo
 	): Promise<IShortProductDocument[] | null> {
 		let products: IShortProductDocument[] | null = null;
 		try {
 			const result = await this.client.get(
-				`newProducts`
+				`newProducts:${searchInfo.pageNum}`
 			);
 			if (result) {
 				products = JSON.parse(result);

@@ -32,7 +32,7 @@ const CategoryProducts = () => {
 
 			{maxPages!=0 ? 
 				<>
-					<ProductsList page={currentPage} sort={SortType.ByPriceAcending} category={category} setMaxPages={setMaxPages}/>
+					<ProductsList currentPage={currentPage} sort={SortType.ByPriceAcending} category={category} setMaxPages={setMaxPages}/>
 					<Pagination maxPages={maxPages} baseUrl={"/kategorije/"+category+"?page="} currentPage={currentPage}/>
 				</>:
 				<div className="row g-2 justify-content-center">
