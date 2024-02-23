@@ -65,10 +65,10 @@ function renderProduct(product: IProduct) {
 
 	return (
 		<>
-			<div className="row pb-3 align-items-center">
-				<div className="col-md-6">
-					<img className="card-img-top mb-5 mb-md-0" src={product.image} alt="..."/>
-					<h1 className="display-5 fw-bolder mt-3">{product.name}</h1>
+			<div className="row pb-3 align-items-center justify-content-between">
+				<div className="col-md-4">
+					<img className="card-img-top mb-3 mb-md-0 px-3" src={product.image} alt="..."/>
+					<h2 className="display-5 fw-bolder">{product.name}</h2>
 				</div>
 				<div className="col-md-6">
 					{shopCards}
