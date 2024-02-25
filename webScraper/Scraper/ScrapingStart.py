@@ -49,8 +49,10 @@ def Scraping():
     racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
     slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
     laptopoviMenager:ProductMenager=ProductMenager("Laptopovi")
+    mobilniTelefoniMenager:ProductMenager=ProductMenager("MobilniTelefoni")
 
-    visibilityThread=threading.Thread(setAllProductsVisibility([monitoriMenager,racunarskeKomponenteMenager,slusaliceMenager,laptopoviMenager]))
+
+    visibilityThread=threading.Thread(setAllProductsVisibility([monitoriMenager,racunarskeKomponenteMenager,slusaliceMenager,laptopoviMenager,mobilniTelefoniMenager]))
     visibilityThread.start()
     
 
@@ -72,7 +74,8 @@ def Scraping():
     racunarskeKomponenteMenager.uploadProductsToDatabase()
     slusaliceMenager.uploadProductsToDatabase()
     laptopoviMenager.uploadProductsToDatabase()
-
+    mobilniTelefoniMenager.uploadProductsToDatabase()
+    
     database.close_db()
 
     # Record the end time

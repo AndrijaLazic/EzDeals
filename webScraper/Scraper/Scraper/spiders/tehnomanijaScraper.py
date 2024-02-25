@@ -15,8 +15,8 @@ class TehnomanijaSpider(scrapy.Spider):
         PageInfo("https://www.tehnomanija.rs/it-gaming/racunarske-komponente/procesori?p=",1,"RacunarskeKomponente"),
         PageInfo("https://www.tehnomanija.rs/it-gaming/monitori?p=",1,"Monitori"),
         PageInfo("https://www.tehnomanija.rs/tv-foto-audio-i-video/slusalice-zvucnici-i-audio-uredjaji/slusalice?p=",1,"Slusalice"),
-        PageInfo("https://www.tehnomanija.rs/it-gaming/laptopovi?p=",1,"Laptopovi")
-        
+        PageInfo("https://www.tehnomanija.rs/it-gaming/laptopovi?p=",1,"Laptopovi"),
+        PageInfo("https://www.tehnomanija.rs/telefoni-smart-satovi-i-tableti/mobilni-telefoni?p=",1,"MobilniTelefoni")
     ]
     
     def parse(self, initialResponse):
