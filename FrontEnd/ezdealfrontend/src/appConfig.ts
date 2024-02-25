@@ -28,6 +28,12 @@ class appConfig {
 				url:"/kategorije/Laptopovi?page=1",
 				urlParam:"Laptopovi"
 			},
+			{
+				name:"Mobilni telefoni",
+				imagePath:"./pictures/CategoryMobilniTelefoni.jpg",
+				url:"/kategorije/MobilniTelefoni?page=1",
+				urlParam:"MobilniTelefoni"
+			}
 		];
 	}
 
