@@ -7,6 +7,7 @@
 # useful for handling different item types with a single interface
 
 
+import os
 from dotenv import load_dotenv
 from itemadapter import ItemAdapter
 import scrapy
@@ -19,11 +20,10 @@ from Scraper.ProductMenager import ProductMenager
 
 
 class MongoDBpipeline:
-    monitoriMenager:ProductMenager=ProductMenager("Monitori")
-    racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
-    slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
-    laptopoviMenager:ProductMenager=ProductMenager("Laptopovi")
-    mobilniTelefoniMenager:ProductMenager=ProductMenager("MobilniTelefoni")
+    mapOfProductMenagers={}
+    
+    for categoryName in os.environ.get("PRODUCT_CATEGORIES").split(","):
+        mapOfProductMenagers[categoryName]=ProductMenager(categoryName)
     
     def open_spider(self,spider):
         self.database=Database()
@@ -35,21 +35,8 @@ class MongoDBpipeline:
         
 
     def process_item(self, item:Product, spider:scrapy.Spider):
-        match item.primaryCategory:
-            case "Monitori":
-                self.monitoriMenager.addProduct(item)
-
-            case "RacunarskeKomponente":
-                self.racunarskeKomponenteMenager.addProduct(item)
-
-            case "Slusalice":
-                self.slusaliceMenager.addProduct(item)
-            
-            case "Laptopovi":
-                self.laptopoviMenager.addProduct(item)
-
-            case "MobilniTelefoni":
-                self.mobilniTelefoniMenager.addProduct(item)
+        if item.primaryCategory in self.mapOfProductMenagers: 
+            self.mapOfProductMenagers[item.primaryCategory].addProduct(item)
 
             
 

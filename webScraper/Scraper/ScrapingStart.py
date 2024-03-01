@@ -31,7 +31,7 @@ load_dotenv(dotenv_path=dotenv_path)
 productCategories=os.getenv('PRODUCT_CATEGORIES').split(",")                
 
 def Scraping():
-    
+
     # Save the current stdout for later restoration
     original_stdout = sys.stdout
 
@@ -99,7 +99,6 @@ def setAllProductsVisibility(menagerArray:list[ProductMenager]):
 
     threadArray=[]
 
-    print(menagerArray)
 
     for menager in menagerArray:
         threadArray.append(threading.Thread(target=menager.setVisibilityAll(False)))
