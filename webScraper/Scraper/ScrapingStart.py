@@ -1,3 +1,4 @@
+import array
 import asyncio
 import multiprocessing
 import os
@@ -30,7 +31,7 @@ load_dotenv(dotenv_path=dotenv_path)
 productCategories=os.getenv('PRODUCT_CATEGORIES').split(",")                
 
 def Scraping():
-
+    
     # Save the current stdout for later restoration
     original_stdout = sys.stdout
 
@@ -44,15 +45,13 @@ def Scraping():
     database=Database()
 
     
+    listOfProductMenagers=[]
+    
+    for categoryName in os.environ.get("PRODUCT_CATEGORIES").split(","):
+        listOfProductMenagers.append(ProductMenager(categoryName))
+    
 
-    monitoriMenager:ProductMenager=ProductMenager("Monitori")
-    racunarskeKomponenteMenager:ProductMenager=ProductMenager("RacunarskeKomponente")
-    slusaliceMenager:ProductMenager=ProductMenager("Slusalice")
-    laptopoviMenager:ProductMenager=ProductMenager("Laptopovi")
-    mobilniTelefoniMenager:ProductMenager=ProductMenager("MobilniTelefoni")
-
-
-    visibilityThread=threading.Thread(setAllProductsVisibility([monitoriMenager,racunarskeKomponenteMenager,slusaliceMenager,laptopoviMenager,mobilniTelefoniMenager]))
+    visibilityThread=threading.Thread(setAllProductsVisibility(listOfProductMenagers))
     visibilityThread.start()
     
 
@@ -70,11 +69,9 @@ def Scraping():
     print("Scaping finished")
     print("\n\n\n\n")
     #Upload all products to a database
-    monitoriMenager.uploadProductsToDatabase()
-    racunarskeKomponenteMenager.uploadProductsToDatabase()
-    slusaliceMenager.uploadProductsToDatabase()
-    laptopoviMenager.uploadProductsToDatabase()
-    mobilniTelefoniMenager.uploadProductsToDatabase()
+
+    for menager in listOfProductMenagers:
+        menager.uploadProductsToDatabase()
     
     database.close_db()
 
