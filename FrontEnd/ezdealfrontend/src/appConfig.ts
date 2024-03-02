@@ -33,6 +33,12 @@ class appConfig {
 				imagePath:"./pictures/CategoryMobilniTelefoni.jpg",
 				url:"/kategorije/MobilniTelefoni?page=1",
 				urlParam:"MobilniTelefoni"
+			},
+			{
+				name:"Eksterni diskovi",
+				imagePath:"./pictures/CategoryEksterniDiskovi.jpg",
+				url:"/kategorije/EksterniDiskovi?page=1",
+				urlParam:"EksterniDiskovi"
 			}
 		];
 	}
