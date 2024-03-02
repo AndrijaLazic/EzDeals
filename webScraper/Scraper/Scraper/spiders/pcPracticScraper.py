@@ -16,8 +16,8 @@ class PcPracticSpider(scrapy.Spider):
         PageInfo("https://pcpractic.rs/racunari-monitori-komponente/komponente/maticne-ploce.html?p=",1,"RacunarskeKomponente"),
         PageInfo("https://pcpractic.rs/racunari-monitori-komponente/monitori.html?p=",1,"Monitori"),
         PageInfo("https://pcpractic.rs/mobilni-telefoni-i-oprema/dodatna-oprema-za-telefone/slusalice.html?p=",1,"Slusalice"),
-        PageInfo("https://pcpractic.rs/laptop-i-tablet-racunari/laptop-racunari.html?p=",1,"Laptopovi")
-        
+        PageInfo("https://pcpractic.rs/laptop-i-tablet-racunari/laptop-racunari.html?p=",1,"Laptopovi"),
+        PageInfo("https://pcpractic.rs/racunari-monitori-komponente/skladistenje-podataka/eksterni-hdd-i-ssd.html?p=",1,"EksterniDiskovi")
     ]
     
     def parse(self, initialResponse):
