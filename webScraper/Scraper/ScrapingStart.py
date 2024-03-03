@@ -64,6 +64,8 @@ def Scraping():
 
 
     process.start()  # the script will block here until all crawling jobs are finished
+    visibilityThread.join()
+
 
     print("\n\n\n\n")
     print("Scaping finished")

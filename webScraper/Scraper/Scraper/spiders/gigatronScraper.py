@@ -53,7 +53,7 @@ class GigatronscraperSpider(scrapy.Spider):
         data=response.json()
 
         if(currentPage.maxIndex==-1):
-            currentPage.maxIndex=2#data["totalPages"]
+            currentPage.maxIndex=data["totalPages"]
 
         for hit in data["hits"]["hits"]:
             rowJSON=hit["_source"]["search_result_data"]

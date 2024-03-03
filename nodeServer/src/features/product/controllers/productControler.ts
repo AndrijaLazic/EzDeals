@@ -128,7 +128,14 @@ export class ProductControler {
 			products = await productService.getProductsForSearch(searchInfo);
 
 			if (products) {
-				productCache.saveSearchProductsToCache(products, searchInfo);
+				productCache.saveNewProductsToCache(
+					products.slice
+						(
+							(searchInfo.pageNum-1)*searchInfo.numberOfProducts,
+							(searchInfo.pageNum)*searchInfo.numberOfProducts
+						),
+					searchInfo
+				);
 			}
 		}
 
@@ -142,7 +149,15 @@ export class ProductControler {
 
 		response
 			.status(HTTP_STATUS.OK)
-			.json({ message: "Products", products: products.slice(0,searchInfo.numberOfProducts), maxPages: maxPages });
+			.json({ 
+					message: "Products", 
+					products: products.slice
+						(
+							(searchInfo.pageNum-1)*searchInfo.numberOfProducts,
+							(searchInfo.pageNum)*searchInfo.numberOfProducts
+						),
+					maxPages: maxPages 
+					});
 	}
 
 	@productSearchValidation(searchInfoSchema)
@@ -172,33 +187,30 @@ export class ProductControler {
 		);
 
 		if (!products) {
+			const oldTime=(new Date(Date.now() - 23*60*60 * 1000));
+			products = await productService.getProductsForSearch(searchInfo,{dateAdded:{$gte:new Date(oldTime.toISOString())}});
 
-			products = await productService.getProductsForSearch(searchInfo);
-			const newProducts=[];
-			const currentTime=Date.now();
-			const productsLen=products.length;
-			for (let index = 0; index < searchInfo.numberOfProducts && index<productsLen ; index++) {
-				// Calculate the difference between the current date and the provided date
-				const timeDifference = currentTime - (products[index].dateAdded as Date).getTime();
-				
-				// Calculate the difference in days
-				const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-				
-				
-				if(daysDifference>=1)
-					break;
-				newProducts.push(products[index]);
-				
-			}
-			products=newProducts;
-
+			products=products.slice
+				(
+					(searchInfo.pageNum-1)*searchInfo.numberOfProducts,
+					(searchInfo.pageNum)*searchInfo.numberOfProducts
+				);
+			
 			if (products) {
-				productCache.saveNewProductsToCache(products.slice(0,searchInfo.numberOfProducts),searchInfo);
+				productCache.saveNewProductsToCache(
+					products,
+					searchInfo
+				);
 			}
 		}
 
 		response
 			.status(HTTP_STATUS.OK)
-			.json({ message: "Products", products: products.slice(0,searchInfo.numberOfProducts), maxPages: maxPages });
+			.json(
+				{ 
+					message: "Products", 
+					products: products,
+					maxPages: maxPages 
+				});
 	}
 }

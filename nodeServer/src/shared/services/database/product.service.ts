@@ -156,6 +156,7 @@ class ProductService {
 	 */
 	public async getProductsForSearch(
 		searchInfo: SearchInfo,
+		filter:any={},
 		jsonFormat: boolean = true
 	): Promise<IShortProductDocument[]> {
 		let products: IShortProductDocument[]=[];
@@ -185,19 +186,21 @@ class ProductService {
 		}
 		const newFilter=getDefaultFilter();
 		newFilter.$and.push(nameFilter);
+		newFilter.$and.push(filter);
 
 		if (jsonFormat) {
 
 			for(let i=0;i<numOfCategories;i++){
+				resultProducts=[];
 				resultProducts=await allCategories[i]
 					.find(newFilter, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
 					.sort(sortParameter)
-					.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
-					.limit(searchInfo.numberOfProducts)
+					.limit(searchInfo.numberOfProducts*searchInfo.pageNum)
 					.lean() //
 					.exec();
 				products=products.concat(resultProducts);
 			}
+			
 			products=ProductCategories.sortProducts(products,searchInfo.sortOrder);
 			return products;
 		}
@@ -208,8 +211,7 @@ class ProductService {
 					newFilter
 					, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
 				.sort(sortParameter)
-				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
-				.limit(searchInfo.numberOfProducts)
+				.limit(searchInfo.numberOfProducts*searchInfo.pageNum)
 				.exec();
 			products=products.concat(resultProducts);
 		}
@@ -230,17 +232,18 @@ class ProductService {
 		let numOfNewProducts=0;
 
 		const allCategories= await ProductCategories.getAllCategories();
-		let resultProducts=0;
 		const numOfCategories=allCategories.length;
 
 		const currentTime=(new Date(Date.now() - 23*60*60 * 1000));
 
+		const newFilter=getDefaultFilter();
+		newFilter.$and.push({dateAdded:{$gte:new Date(currentTime.toISOString())}});
 
-		
 		for(let i=0;i<numOfCategories;i++){
+			let resultProducts=0;
 			try {
 				resultProducts=await allCategories[i]
-				.countDocuments({dateAdded:{$gte:new Date(currentTime.toISOString())}})
+				.countDocuments(newFilter)
 				.exec();
 			} catch (error) {
 				log.error(error);
