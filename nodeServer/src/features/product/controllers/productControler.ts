@@ -123,10 +123,11 @@ export class ProductControler {
 
 		let maxPages = 1;
 
+		let numberofProductsInSearch: number =await productService.getNumberOfProductsForSearch(searchInfo);
+
 		if (!products) {
 
 			products = await productService.getProductsForSearch(searchInfo);
-
 			if (products) {
 				productCache.saveNewProductsToCache(
 					products.slice
@@ -139,7 +140,7 @@ export class ProductControler {
 			}
 		}
 
-		let numberofProductsInSearch: number =products.length;
+		
 				
 		if(numberofProductsInSearch==0)
 			numberofProductsInSearch=1;

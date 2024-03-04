@@ -253,6 +253,53 @@ class ProductService {
 		return numOfNewProducts;
 	}
 
+
+
+	/**
+	 * Get number of products in search
+	 * !!! This function is expensive and should not be used often !!!
+	 * @param searchInfo
+	 * @returns number
+	 */
+	public async getNumberOfProductsForSearch(
+		searchInfo: SearchInfo
+	): Promise<number> {
+		const keywordsToSearch:string[]=searchInfo.searchString.trim().split(" ");
+		
+		const keywordsToSearchLength=keywordsToSearch.length;
+		let searchString:string="";
+		for(let i=0;i<keywordsToSearchLength;i++){
+			searchString=searchString+"(?=.*"+keywordsToSearch[i]+")";
+		}
+		const regexExpression=new RegExp(searchString,"i");
+		let nameFilter={};
+		if(searchString){
+			nameFilter={
+				name:{
+					$regex:regexExpression
+				}
+			};
+		}
+		const newFilter=getDefaultFilter();
+		newFilter.$and.push(nameFilter);
+
+		const allCategories= await ProductCategories.getAllCategories();
+		const numOfCategories=allCategories.length;
+		
+		let numOfProducts=0;
+		for(let i=0;i<numOfCategories;i++){
+			let resultProducts=0;
+			try {
+				resultProducts=await allCategories[i]
+				.countDocuments(newFilter)
+				.exec();
+			} catch (error) {
+				log.error(error);
+			}
+			numOfProducts=numOfProducts+resultProducts;
+		}
+		return numOfProducts;
+	}
 }
 
 export const productService: ProductService = new ProductService();

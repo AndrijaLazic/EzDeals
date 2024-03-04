@@ -37,13 +37,14 @@ const CategoryProducts = () => {
 		}
 		setProducts(response.products);
 
+
 		setMaxPages(response.maxPages);
 	}
 
 
-	useEffect(() => {
-		startSearch();
-	}, []);
+	// useEffect(() => {
+	// 	startSearch();
+	// }, []);
 
 	useEffect(() => {
 		startSearch();
