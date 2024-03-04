@@ -117,7 +117,6 @@ export class ProductControler {
 	): Promise<void> {
 
 		const searchInfo: SearchInfo = request.body;
-
 		let products: IShortProductDocument[] | null =
 			await productCache.getSearchProductsFromCache(searchInfo);
 
@@ -128,13 +127,14 @@ export class ProductControler {
 		if (!products) {
 
 			products = await productService.getProductsForSearch(searchInfo);
+			products=products.slice
+				(
+					(searchInfo.pageNum-1)*searchInfo.numberOfProducts,
+					(searchInfo.pageNum)*searchInfo.numberOfProducts
+				);
 			if (products) {
-				productCache.saveNewProductsToCache(
-					products.slice
-						(
-							(searchInfo.pageNum-1)*searchInfo.numberOfProducts,
-							(searchInfo.pageNum)*searchInfo.numberOfProducts
-						),
+				productCache.saveSearchProductsToCache(
+					products,
 					searchInfo
 				);
 			}
@@ -151,12 +151,8 @@ export class ProductControler {
 		response
 			.status(HTTP_STATUS.OK)
 			.json({ 
-					message: "Products", 
-					products: products.slice
-						(
-							(searchInfo.pageNum-1)*searchInfo.numberOfProducts,
-							(searchInfo.pageNum)*searchInfo.numberOfProducts
-						),
+					message: "Products",
+					products:products,
 					maxPages: maxPages 
 					});
 	}
@@ -171,6 +167,8 @@ export class ProductControler {
 		searchInfo.sortOrder=SortType.ByDateNewerFirst;
 
 		searchInfo.searchString="";
+
+	
 
 		let products: IShortProductDocument[] | null =
 			await productCache.getNewProductsFromCache(searchInfo);

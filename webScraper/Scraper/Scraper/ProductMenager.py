@@ -56,7 +56,11 @@ class ProductMenager:
             if productOld is None:
                 self.productsMap[product.name]=product
                 return
-            
+            #check for duplicates, only gigatron store
+            if product.prices[0].shopname=="Gigatron":
+                for price in productOld.prices:
+                    if price.shopname==product.prices[0].shopname:
+                        return
             productOld.addPrice(product.prices[0])
             self.productsMap[product.name]=productOld
     def giveProduct(self,name:str):

@@ -38,10 +38,6 @@ class MongoDBpipeline:
         if item.primaryCategory in self.mapOfProductMenagers: 
             self.mapOfProductMenagers[item.primaryCategory].addProduct(item)
 
-            
-
-
-        
         return
     
 
