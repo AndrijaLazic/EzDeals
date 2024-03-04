@@ -32,11 +32,8 @@ class GstoreSpider(scrapy.Spider):
         for page in self.pagesToScrape:
             yield scrapy.Request(url=page.getCurrentURL(),callback=self.parsePage)
 
-    
-
     def parsePage(self,response):
         
-
         if(response.status!=200):
             print("\n")
             print("Could not access the: "+response.url)
@@ -49,7 +46,6 @@ class GstoreSpider(scrapy.Spider):
             if page.URL in response.url:
                 currentPage=page
                 break
-
 
         productsElements=response.xpath('.//div[@class="shop-product-card relative"]')
 
@@ -75,7 +71,6 @@ class GstoreSpider(scrapy.Spider):
             if price is None:
                 price=(productEl.xpath('.//div[@class="price-holder"]/span[@class="text-bold"]/span/following-sibling::text()[1]')).get()
 
-
             price=price.strip().split(",")[0]
             price=price.split(".")[0]+price.split(".")[1]
 
@@ -85,9 +80,7 @@ class GstoreSpider(scrapy.Spider):
                 (productEl.xpath('.//h2[@class="product-name"]/a/@href').get()).strip(),
                 "https://www.gstore.rs/images/gstore-final-logo-with%20background%20w%20or%20b-21.png"))
             yield product
-            
- 
-        
+
         yield scrapy.Request(url=currentPage.getCurrentURL(),callback=self.parsePage)
 
 

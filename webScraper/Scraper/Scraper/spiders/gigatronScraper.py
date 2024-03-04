@@ -32,10 +32,7 @@ class GigatronscraperSpider(scrapy.Spider):
             yield scrapy.Request(
                 url=page.getCurrentURL(),
                 callback=self.parsePage)
-                
-
     
-
     def parsePage(self,response):
         if(response.status!=200):
             print("Could not access the: "+response.url)
@@ -47,9 +44,7 @@ class GigatronscraperSpider(scrapy.Spider):
             if page.URL in response.url:
                 currentPage=page
                 break
-
-        
-                
+     
         data=response.json()
 
         if(currentPage.maxIndex==-1):
@@ -62,9 +57,6 @@ class GigatronscraperSpider(scrapy.Spider):
             product.addPrice(Price(price,"Gigatron",self.start_urls[0]+rowJSON["url"],"https://gigatron.rs/images/gigatron.png"))
             yield product
 
-        
-
-        
         if currentPage.index>currentPage.maxIndex:
             return #self.products
         
