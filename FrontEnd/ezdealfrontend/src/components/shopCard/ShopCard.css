@@ -3,11 +3,13 @@
 	border-bottom: 2px solid;
 	padding-bottom: 0px;
 	text-align: right;
+	height: 116px;
 }
 
 @media only screen and (max-width: 992px) {
 	.shopCard{
 		text-align: center;
+		height:fit-content
 	}
 }
 
@@ -27,8 +29,11 @@
 	font-weight: bold;
 }
 
-.shopImage{
+.shopImage img{
 	margin: auto;
 	width: 100%;
 }
 
+.textData{
+	height: fit-content;
+}

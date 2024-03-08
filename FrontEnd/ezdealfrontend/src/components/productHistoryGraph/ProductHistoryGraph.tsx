@@ -31,7 +31,7 @@ import 'chartjs-adapter-date-fns';
 
 
 
-const ShopCard = (props: any) => {
+const ProductHistoryGraph = (props: any) => {
 
 	const [productHistory, setProductHistory] = useState<IProductHistoryDocument>();
 
@@ -68,7 +68,7 @@ const ShopCard = (props: any) => {
 				display: false
 			}
 		},
-		tension: 0.3,
+		tension: 0.1,
 		scales: {
 			x: {
 				type:'time',
@@ -113,4 +113,4 @@ const ShopCard = (props: any) => {
 
 };
 
-export default ShopCard;
+export default ProductHistoryGraph;

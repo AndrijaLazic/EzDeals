@@ -7,11 +7,11 @@ const ShopCard = (props:any) => {
 	const price:Price=props.price as Price;
 
 	return (
-		<div className='row m-2 p-2 shopCard'>
-			<div className="col-lg-5 d-flex justify-content-center">
-				<img className='shopImage' src={price.shopImageURL}/>
+		<div className='row m-2 p-2 shopCard align-items-center'>
+			<div className="col-lg-5 d-flex shopImage">
+				<img src={price.shopImageURL}/>
 			</div>
-			<div className="col-lg-7">
+			<div className="col-lg-7 textData">
 				<div className='row '>
 					<h4 className="priceValue">
 						{price.value}
