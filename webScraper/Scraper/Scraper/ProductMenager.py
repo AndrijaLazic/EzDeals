@@ -115,7 +115,10 @@ class ProductMenager:
         #Iterating trough all items and checking if they already exist in database
         for key, val in self.productsMap.items():
             oldProduct=database.getOneProduct({'name':key},category)
-            lowestPrice=(min(val.prices, key=lambda x: x.value)).value
+            lowestPrice=val.prices[0].value
+            for price in val.prices:
+                if price.value<lowestPrice:
+                    lowestPrice=price.value
             
             if oldProduct is None:
                 
