@@ -6,6 +6,7 @@ import Pagination from '../components/Pagination/Pagination';
 import { AppConfig } from '../appConfig';
 import { ICategory } from '../dataModels/category';
 import NoProductsFound from '../components/errors/NoProductsFound';
+import FilterTab from '../components/filterTab/FilterTab';
 
 const CategoryProducts = () => {
 
@@ -32,6 +33,7 @@ const CategoryProducts = () => {
 
 			{maxPages!=0 ? 
 				<>
+					<FilterTab/>
 					<ProductsList currentPage={currentPage} sort={SortType.ByPriceAcending} category={category} setMaxPages={setMaxPages}/>
 					<Pagination maxPages={maxPages} baseUrl={"/kategorije/"+category+"?page="} currentPage={currentPage}/>
 				</>:
