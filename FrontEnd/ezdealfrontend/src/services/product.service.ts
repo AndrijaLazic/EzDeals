@@ -1,4 +1,4 @@
-import { SearchInfo } from "../dataModels/product";
+import { SearchInfo, SortType } from "../dataModels/product";
 
 const BASE_URL = `${import.meta.env.VITE_APP_BASE_ENDPOINT}/api/`;
 const headers = {
@@ -32,9 +32,9 @@ class ProductService {
 		return data;
 	}
 
-	async getProductsFromCategory(category:string,page:string) {
+	async getProductsFromCategory(category:string,page:string,sort:string) {
 
-		const response = await fetch(BASE_URL+"product/"+category+"/?page="+page, {
+		const response = await fetch(BASE_URL+"product/"+category+"/?sort="+sort+"&page="+page, {
 			method: "GET",
 			headers: headers
 		});

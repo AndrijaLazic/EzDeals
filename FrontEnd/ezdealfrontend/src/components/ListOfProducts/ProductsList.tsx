@@ -15,7 +15,6 @@ function ProductsList(props: any) {
 	}
 
 	const getProducts = async() => {
-
 		let response;
 		
 		switch (props.category) {
@@ -23,7 +22,7 @@ function ProductsList(props: any) {
 				response = await productService.getNewProducts(props.currentPage);
 				break;
 			default:
-				response = await productService.getProductsFromCategory(props.category,props.currentPage);
+				response = await productService.getProductsFromCategory(props.category,props.currentPage,props.sort);
 				break;
 		}
 		if (response.error) {
@@ -39,14 +38,10 @@ function ProductsList(props: any) {
 			response.maxPages
 		);
 	};
-	
-	useEffect(() => {
-		getProducts();
-	}, []);
 
 	useEffect(() => {
 		getProducts();
-	}, [props.currentPage]);
+	}, [props.currentPage,props.sort]);
 
 	
 	

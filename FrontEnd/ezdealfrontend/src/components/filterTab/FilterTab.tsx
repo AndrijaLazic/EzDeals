@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SortType } from "../../dataModels/product";
 import "./filterTab.css";
 import SortSelection from "./sortSelection/sortSelection";
 
 const FilterTab = (props:any) => {
-	const [selectedSortOption, setSelectedSortOption] = useState({ value: SortType.ByDateNewerFirst, label: '📆Prvo noviji' });
-
-
+	
 	const sortOptions = [
 		{ value: SortType.ByDateNewerFirst, label: '📆Prvo noviji' },
 		{ value: SortType.ByDateOlderFirst, label: '📆Prvo stariji' },
@@ -14,10 +12,21 @@ const FilterTab = (props:any) => {
 		{ value: SortType.ByPriceDecending, label: '💸Cena opadajuca' }
 	];
 
+	const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[2]);
+	
+	function handleSortChange(value:any){
+		setSelectedSortOption(value);
+		props.setCurrentSortParam(value.value);
+	}
+
+	useEffect(() => {
+		props.setCurrentSortParam(sortOptions[2].value);
+	}, []);
+	
+	
 	return (
 		<div className='row m-3'>
-			{selectedSortOption.label}
-			<SortSelection setSelectedSortOption={setSelectedSortOption} selectedSortOption={selectedSortOption} sortOptions={sortOptions}/>
+			<SortSelection handleSortChange={handleSortChange} selectedSortOption={selectedSortOption} sortOptions={sortOptions}/>
 		</div>
 	);
 };

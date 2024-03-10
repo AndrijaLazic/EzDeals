@@ -33,6 +33,7 @@ export function productSearchValidation(schema: ObjectSchema): IJoiDecorator {
 			const request: Request = args[0];
 			const category = request.params.productCategory;
 			const pageNum = request.query.page;
+			const sortOrder=request.query.sort;
 			
 			if(category){
 				request.body.productCategory=category;
@@ -40,6 +41,10 @@ export function productSearchValidation(schema: ObjectSchema): IJoiDecorator {
 				
 			if(pageNum){
 				request.body.pageNum=parseInt(request.query.page as unknown as string, 10);
+			}
+
+			if(sortOrder){
+				request.body.sortOrder=sortOrder;
 			}
 
 			const { error , value } = await Promise.resolve(schema.validate(request.body));

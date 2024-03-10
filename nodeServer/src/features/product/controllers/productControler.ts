@@ -29,6 +29,8 @@ export class ProductControler {
 	): Promise<void> {
 		const searchInfo: SearchInfo=request.body;
 
+		console.log(searchInfo)
+
 		let products: IShortProductDocument[] | null =
 			await productCache.getShortProductsFromCache(searchInfo);
 		let maxPages = 1;
