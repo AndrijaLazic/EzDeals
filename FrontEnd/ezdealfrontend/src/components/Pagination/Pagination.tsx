@@ -8,7 +8,6 @@ const Pagination = (props: any) => {
 	let pageItems = [];
 	const currentPage:number=+(props.currentPage || 1);
 
-
 	for (let index = 1; index < maxPages + 1; index++) {
 		const newUrl: string = baseUrl + index;
 		pageItems.push(

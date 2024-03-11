@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { SortType } from '../dataModels/product';
 import ProductsList from '../components/ListOfProducts/ProductsList';
 import Pagination from '../components/Pagination/Pagination';
@@ -22,7 +22,7 @@ const CategoryProducts = () => {
 
 	const[maxPages,setMaxPages]=useState(1);
 	const[currentPage,setCurrentPage]=useState(pageParam);
-	const[currentSortParam,setCurrentSortParam]=useState(sortParam);
+	const[currentSortParam,setCurrentSortParam]=useState("");
 	
 	if(currentPage!=pageParam){
 		setCurrentPage(pageParam);
@@ -33,20 +33,22 @@ const CategoryProducts = () => {
 		}
 	}
 	
+	const navigate = useNavigate();
 	function handleSetSort(value:any){
-		setCurrentSortParam(value);
+		navigate("/kategorije/"+category+"?sort="+value+"&page=1");
 	}
+
+	const baseUrl="/kategorije/"+category+"?sort="+currentSortParam+"&page=";
 
 	return (
 		<div className='container'>
 			<div className="row g-2"><h2>{categoryInfo.name}</h2></div>
 			{currentSortParam}
-
 			{maxPages!=0 ? 
 				<>
 					<FilterTab setCurrentSortParam={handleSetSort}/>
 					<ProductsList currentPage={currentPage} sort={currentSortParam} category={category} setMaxPages={setMaxPages}/>
-					<Pagination maxPages={maxPages} baseUrl={"/kategorije/"+category+"?sort="+{currentSortParam}+"&page="} currentPage={currentPage}/>
+					<Pagination maxPages={maxPages} baseUrl={baseUrl} currentPage={currentPage}/>
 				</>:
 				<div className="row g-2 justify-content-center">
 					<NoProductsFound message="Nije pronadjen nijedan proizvod :("/>
