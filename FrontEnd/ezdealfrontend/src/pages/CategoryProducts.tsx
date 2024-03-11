@@ -43,7 +43,6 @@ const CategoryProducts = () => {
 	return (
 		<div className='container'>
 			<div className="row g-2"><h2>{categoryInfo.name}</h2></div>
-			{currentSortParam}
 			{maxPages!=0 ? 
 				<>
 					<FilterTab setCurrentSortParam={handleSetSort}/>

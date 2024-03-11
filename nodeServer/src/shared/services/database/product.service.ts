@@ -46,6 +46,7 @@ class ProductService {
 				searchInfo.productCategory
 			)
 				.find(getDefaultFilter(), ["name", "image", "currentBestPrice","primaryCategory"])
+				.collation({locale: "en_US", numericOrdering: true})
 				.sort(sortParameter)
 				.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 				.limit(searchInfo.numberOfProducts)
@@ -56,6 +57,7 @@ class ProductService {
 
 		products = await ProductCategories.getCategory(searchInfo.productCategory)
 			.find(getDefaultFilter(), ["name", "image", "currentBestPrice","primaryCategory"])
+			.collation({locale: "en_US", numericOrdering: true})
 			.sort(sortParameter)
 			.skip((searchInfo.pageNum - 1) * searchInfo.numberOfProducts)
 			.limit(searchInfo.numberOfProducts)
@@ -194,6 +196,7 @@ class ProductService {
 				resultProducts=[];
 				resultProducts=await allCategories[i]
 					.find(newFilter, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
+					.collation({locale: "en_US", numericOrdering: true})
 					.sort(sortParameter)
 					.limit(searchInfo.numberOfProducts*searchInfo.pageNum)
 					.lean() //
@@ -210,6 +213,7 @@ class ProductService {
 				.find(
 					newFilter
 					, ["name", "image", "currentBestPrice","dateAdded","primaryCategory"])
+				.collation({locale: "en_US", numericOrdering: true})
 				.sort(sortParameter)
 				.limit(searchInfo.numberOfProducts*searchInfo.pageNum)
 				.exec();
