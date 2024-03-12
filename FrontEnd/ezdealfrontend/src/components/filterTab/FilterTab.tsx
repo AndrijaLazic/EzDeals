@@ -18,10 +18,6 @@ const FilterTab = (props:any) => {
 		setSelectedSortOption(value);
 		props.setCurrentSortParam(value.value);
 	}
-
-	useEffect(() => {
-		props.setCurrentSortParam(sortOptions[2].value);
-	}, []);
 	
 	
 	return (

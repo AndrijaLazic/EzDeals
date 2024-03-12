@@ -40,6 +40,8 @@ const CategoryProducts = () => {
 
 	const baseUrl="/kategorije/"+category+"?sort="+currentSortParam+"&page=";
 
+	console.log(category,pageParam)
+
 	return (
 		<div className='container'>
 			<div className="row g-2"><h2>{categoryInfo.name}</h2></div>
