@@ -56,6 +56,29 @@ const ProductHistoryGraph = (props: any) => {
 	if (!productHistory)
 		return;
 
+	let minimumTime=new Date((new Date()).getTime() - 7 * 24 * 60 * 60 * 1000);
+	let timeUnit={
+		unit:'day'
+	};
+
+	const elementHistoryDate=new Date(productHistory.history[0].date);
+	if(elementHistoryDate<minimumTime){
+		const daysDiff=daysDifference(new Date(),elementHistoryDate);
+		if(daysDiff>365){
+			timeUnit={
+				unit:'year'
+			};
+		}
+		else if(daysDiff>31){
+			timeUnit={
+				unit:'month'
+			};
+		}
+		elementHistoryDate.setDate(elementHistoryDate.getDate()-1);
+		minimumTime=elementHistoryDate;
+		
+	}
+
 	const options = {
 		responsive: true,
 		plugins: {
@@ -72,10 +95,8 @@ const ProductHistoryGraph = (props: any) => {
 		scales: {
 			x: {
 				type:'time',
-				time:{
-					unit:'day'
-				},
-				min:new Date((new Date()).getTime() - 7 * 24 * 60 * 60 * 1000),
+				time:timeUnit,
+				min:minimumTime,
 				max:new Date()
 			}
 		}
@@ -106,11 +127,18 @@ const ProductHistoryGraph = (props: any) => {
 	};
 
 	return (
-		<div className="row mt-5 align-items-center">
+		<div className="row mt-5" style={{width:"100%"}}>
 			<Line options={options} data={data} />
 		</div>
 	);
 
 };
+
+
+function daysDifference(date1:Date,date2:Date){
+	const diff = Math.floor(date1.getTime() - date2.getTime());
+   const day = 1000 * 60 * 60 * 24;
+	return Math.floor(diff/day);
+}
 
 export default ProductHistoryGraph;

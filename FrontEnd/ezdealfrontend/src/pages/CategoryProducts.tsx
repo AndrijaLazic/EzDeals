@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { SortType } from '../dataModels/product';
 import ProductsList from '../components/ListOfProducts/ProductsList';
@@ -40,7 +40,6 @@ const CategoryProducts = () => {
 
 	const baseUrl="/kategorije/"+category+"?sort="+currentSortParam+"&page=";
 
-	console.log(category,pageParam)
 
 	return (
 		<div className='container'>

@@ -13,7 +13,6 @@ const ProductPage = () => {
 
 	useEffect(() => {
 		const getProducts = async() => {
-
 			const response = await productService.getSingleProduct(productId!, category!);
 
 			if (response.error) {
@@ -36,7 +35,6 @@ const ProductPage = () => {
 			</div>
 		);
 	}
-
 	if (!product) {
 		return(
 			<div className="row g-2 justify-content-center">
@@ -44,7 +42,7 @@ const ProductPage = () => {
 		);
 	}
 
-
+	
 	return (
 		<div className='container mt-2'> 
 			{renderProduct(product)}
