@@ -68,7 +68,7 @@ class TehnomanijaSpider(scrapy.Spider):
                 price,
                 "Tehnomanija",
                 (productEl.xpath('.//a[@class="product-item-link"]/@href').get()).strip(),
-                "https://www.tehnomanija.rs/media/logo/stores/1/tehnomanija-logo-white.png"))
+                "https://www.uzmiracun.rs/images/logo-partneri-original/tehnomanija-logo.png"))
             yield product
             
  
