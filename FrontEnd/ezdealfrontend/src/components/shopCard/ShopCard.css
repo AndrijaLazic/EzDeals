@@ -3,13 +3,28 @@
 	border-bottom: 2px solid;
 	padding-bottom: 0px;
 	text-align: right;
-	height: 116px;
+}
+.shopCard .shopImage img{
+	object-fit: contain;
+	max-width: 100%;
+}
+
+.shopCard .shopImage{
+	
+	aspect-ratio:1/0.5;
+	
 }
 
 @media only screen and (max-width: 992px) {
 	.shopCard{
 		text-align: center;
-		height:fit-content
+		aspect-ratio: 2 / 1;
+		width: 100%;
+		height: 100%;
+	}
+	.shopCard .shopImage{
+		width: 100%;
+		height: 50%;
 	}
 }
 
@@ -29,10 +44,7 @@
 	font-weight: bold;
 }
 
-.shopImage img{
-	margin: auto;
-	width: 100%;
-}
+
 
 .textData{
 	height: fit-content;

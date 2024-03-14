@@ -127,7 +127,7 @@ const ProductHistoryGraph = (props: any) => {
 	};
 
 	return (
-		<div className="row mt-5" style={{width:"100%"}}>
+		<div className="row mt-5 graphCanvas">
 			<Line options={options} data={data} />
 		</div>
 	);

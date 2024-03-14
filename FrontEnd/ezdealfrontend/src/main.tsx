@@ -11,7 +11,7 @@ import NewestProducts from "./pages/NewestProducts.tsx";
 import ProductSeach from "./pages/ProductSeach.tsx";
 import CategoriesSelection from "./pages/CategoriesSelection.tsx";
 import CategoryProducts from "./pages/CategoryProducts.tsx";
-import ProductPage from "./pages/ProductPage.tsx";
+import ProductPage from "./pages/ProductPage/ProductPage.tsx";
 
 const router = createBrowserRouter([
 	{
