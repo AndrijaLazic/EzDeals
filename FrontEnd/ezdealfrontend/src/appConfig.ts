@@ -1,7 +1,10 @@
+import { ICarouselElement } from "./dataModels/carouselElement";
 import { ICategory } from "./dataModels/category";
 
 class appConfig {
 	private categories:ICategory[];
+	private carouselElements:ICarouselElement[];
+
 	constructor() {
 		this.categories=[
 			{
@@ -41,6 +44,16 @@ class appConfig {
 				urlParam:"EksterniDiskovi"
 			}
 		];
+		this.carouselElements=[
+			{
+				imagePath:"./pictures/carousel/carouselDefault.jpg",
+				id:0
+			},
+			{
+				imagePath:"./pictures/CategoryRacunarskeKomponente.png",
+				id:1
+			}
+		];
 	}
 
 	public getCategories(): ICategory[] {
@@ -52,6 +65,9 @@ class appConfig {
 			category => category.urlParam === urlParam)[0];
 	}
 
+	public getCarouselData(): ICarouselElement[] {
+		return this.carouselElements;
+	}
 }
 
 export const AppConfig: appConfig = new appConfig();
