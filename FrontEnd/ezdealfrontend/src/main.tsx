@@ -7,7 +7,7 @@ import './index.css';
 import './App.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import NewestProducts from "./pages/NewestProducts.tsx";
+import NewestProducts from "./pages/NewestProducts/NewestProducts.tsx";
 import ProductSeach from "./pages/ProductSeach.tsx";
 import CategoriesSelection from "./pages/CategoriesSelection.tsx";
 import CategoryProducts from "./pages/CategoryProducts.tsx";

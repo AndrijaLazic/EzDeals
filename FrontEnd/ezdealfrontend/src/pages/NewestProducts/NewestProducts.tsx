@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import ProductsList from '../components/ListOfProducts/ProductsList';
-import { SortType } from '../dataModels/product';
-import Pagination from '../components/Pagination/Pagination';
-import NoProductsFound from '../components/errors/NoProductsFound';
+import ProductsList from '../../components/ListOfProducts/ProductsList';
+import { SortType } from '../../dataModels/product';
+import Pagination from '../../components/Pagination/Pagination';
+import NoProductsFound from '../../components/errors/NoProductsFound';
 import { useSearchParams } from 'react-router-dom';
-import Carousel from '../components/carousel/Carousel';
-
+import Carousel from '../../components/carousel/Carousel';
+import "./NewestProducts.css";
 const NewestProducts = () => {
 	const[maxPages,setMaxPages]=useState(1);
 
@@ -22,7 +22,7 @@ const NewestProducts = () => {
 	return (
 		<div>
 			<Carousel/>
-			<div className="row g-2"><h2>Najnoviji proizvodi</h2></div>
+			<div className="row mt-3"><h2 id='pageHeading'>Najnoviji proizvodi</h2></div>
 			
 			{maxPages!=0 ? 
 				<>

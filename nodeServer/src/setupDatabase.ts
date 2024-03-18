@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Logger } from "winston";
 import { config } from "./config";
 import { RedisFactory } from "./shared/services/redis/RedisFactory";
-
+const fs = require('fs');
 const log: Logger = config.createLogger("setupDatabase");
 
 class Database {
@@ -13,13 +13,19 @@ class Database {
 	_connect() {
 		const MongoDBConnectionString = process.env.MongoDBConnectionString;
 		const MongoDBName = process.env.MongoDBName;
+
+		const mongodbSettings = JSON.parse(fs.readFileSync('./src/mongodbSettings.json', 'utf8'));
+
 		if (!MongoDBConnectionString || !MongoDBName) {
 			log.error("MongoDB connection string is not provided.");
 			process.exit(1);
 		}
 		const connString = MongoDBConnectionString + "/" + MongoDBName;
 		mongoose
-			.connect(connString)
+			.connect(
+				connString,
+				mongodbSettings
+				)
 			.then(() => {
 				log.info("Connected to MongoDB:" + connString);
 				RedisFactory.connect();
