@@ -16,9 +16,9 @@ const ShortProduct = (props:any) => {
 					</div>
 			
 					<div className='productData'>
-						<div className="productName"><h5>{product.name}</h5></div>
+						<div className="productName"><p>{product.name}</p></div>
 
-						<div className='productPrice'>{product.currentBestPrice} din.</div>
+						<div className='productPrice'><p>{product.currentBestPrice} din.</p></div>
 						
 					</div>
 				

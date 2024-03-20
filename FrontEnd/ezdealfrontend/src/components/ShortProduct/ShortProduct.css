@@ -5,27 +5,39 @@
 	
 }
 
-.productData div.productPrice{
+.productData .productPrice{
 	font-weight: bold;
-	word-wrap: break-word;
 	height: 30%;
 	color: var(--ProductPriceColor1);
+	container-type: inline-size;
+	overflow: hidden;
 }
+.productData .productPrice p{
+	font-size: 9cqi;
+}
+
+
 
 .productData .productName{
 	height: 70%;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-bottom: 0px;
+	color: var(--ProductTextColor1);
+	container-type: inline-size;
+	overflow: hidden;
+	font-weight: bold;
 	
 }
-
-.productData .productName h5{
-	height: fit-content;
+.productData .productName > p{
+	font-size: 9cqi;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 	overflow: hidden;
-	max-height: 100%;
-	color: var(--ProductTextColor1);
+	width: 100%;
 }
+
 
 
 div.productData div.row p{
@@ -60,9 +72,6 @@ div.productData div.row p{
 }
 
 @media only screen and (max-width: 992px) {
-	.shortItem{
-		aspect-ratio: 1 / 1.0;
-	}
 
 }
 
