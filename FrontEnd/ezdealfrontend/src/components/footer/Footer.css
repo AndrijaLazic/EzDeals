@@ -1,5 +1,4 @@
-
-.containerFooter{
+.containerFooter {
 	width: 100vw;
 	max-width: 100%;
 	padding-left: var(--padingLeft);
@@ -7,48 +6,43 @@
 	border: 0px;
 	background-color: var(--background-color-1);
 	color: var(--NavbarFooterTextColor);
-	
 }
 
-
-
-
-div.containerFooter #footer{
+div.containerFooter #footer {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	border: 0px;
 }
 
-#siteNavbar{
+#siteNavbar {
 	font-size: 20px;
 }
 
-#siteNavbar a.navbar-brand{
+#siteNavbar a.navbar-brand {
 	padding: 0px;
 }
 
-#siteNavbar a{
+#siteNavbar a {
 	color: var(--navbar-text-color);
 }
-#siteNavbar div .input-group-append button{
-	border-color: var(--background-color-2)!important;
+#siteNavbar div .input-group-append button {
+	border-color: var(--background-color-2) !important;
 }
-#siteNavbar button.navbar-toggler span.navbar-toggler-icon{
-	background-image:url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")!important;
+#siteNavbar button.navbar-toggler span.navbar-toggler-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
-#siteNavbar button.navbar-toggler{
+#siteNavbar button.navbar-toggler {
 	border-color: var(--background-color-2);
 }
 
-.input-group{
+.input-group {
 	margin: auto;
 }
 
-
 @media only screen and (max-width: 992px) {
-	.containerFooter{
+	.containerFooter {
 		padding-left: var(--BreakpointPadingLeft);
 		padding-right: var(--BreakpointPadingRight);
 	}
- }
+}
