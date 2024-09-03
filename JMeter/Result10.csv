@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1717702238652,3,GetNewProducts,200,OK,Thread Group 1-1,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,3,0,0
+1717702238752,3,GetNewProducts,200,OK,Thread Group 1-2,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,3,0,1
+1717702238852,3,GetNewProducts,200,OK,Thread Group 1-3,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,3,0,1
+1717702238952,3,GetNewProducts,200,OK,Thread Group 1-4,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,3,0,0
+1717702239052,3,GetNewProducts,200,OK,Thread Group 1-5,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,3,0,0
+1717702239152,2,GetNewProducts,200,OK,Thread Group 1-6,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,2,0,0
+1717702239252,2,GetNewProducts,200,OK,Thread Group 1-7,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,2,0,0
+1717702239352,2,GetNewProducts,200,OK,Thread Group 1-8,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,2,0,1
+1717702239453,2,GetNewProducts,200,OK,Thread Group 1-9,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,2,0,0
+1717702239553,2,GetNewProducts,200,OK,Thread Group 1-10,text,true,,1864,150,1,1,http://localhost:5000/api/product/newProducts/?page=1,2,0,0
