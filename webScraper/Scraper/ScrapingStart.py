@@ -25,7 +25,7 @@ from Scraper.HistoryMenager import HistoryMenager
 from RedisMenager import RedisDatabase
 # Record the start time
 
-dotenv_path =os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
+dotenv_path = os.path.abspath(os.path.join(os.getcwd(),Path('../../.env')))
 load_dotenv(dotenv_path=dotenv_path)
                 
 productCategories=os.getenv('PRODUCT_CATEGORIES').split(",")                
